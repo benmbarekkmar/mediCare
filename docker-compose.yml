@@ -1,0 +1,20 @@
+services:
+  fuseki:
+    image: stain/jena-fuseki:latest
+    container_name: medicare-fuseki
+    ports:
+      - "3030:3030"
+    environment:
+      # medicare       : the working dataset (npm run load-ontology)
+      # medicare_test  : empty dataset the integration suite clears and refills
+      FUSEKI_DATASET_1: medicare
+      FUSEKI_DATASET_2: medicare_test
+      ADMIN_PASSWORD: ${FUSEKI_ADMIN_PASSWORD:-medicare}
+    volumes:
+      # stain/jena-fuseki keeps its TDB2 databases under /fuseki/databases,
+      # so this is the directory that has to survive a "docker compose down".
+      - fuseki-data:/fuseki/databases
+    restart: unless-stopped
+
+volumes:
+  fuseki-data:

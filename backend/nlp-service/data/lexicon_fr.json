@@ -1,0 +1,699 @@
+{
+  "_comment": "Hand written French vocabulary. The ontology itself is English only, so these surfaces are what lets a French question resolve to an ontology term. Accents are folded away at match time, both forms are listed anyway for readability.",
+  "classes": {
+    "Patient": [
+      "patient",
+      "patiente",
+      "malade",
+      "personne",
+      "malades",
+      "personnes"
+    ],
+    "ChildPatient": [
+      "enfant",
+      "pediatre",
+      "patient enfant",
+      "enfants"
+    ],
+    "AdultPatient": [
+      "adulte",
+      "patient adulte",
+      "adultes"
+    ],
+    "ElderlyPatient": [
+      "senior",
+      "personne agee",
+      "patient age",
+      "aged",
+      "seniors",
+      "personnes agees"
+    ],
+    "ChronicPatient": [
+      "patient chronique",
+      "maladie chronique",
+      "chronique",
+      "patients chroniques"
+    ],
+    "EmergencyPatient": [
+      "patient en urgence",
+      "cas d urgence",
+      "releve",
+      "patients en urgence"
+    ],
+    "Doctor": [
+      "medecin",
+      "docteur",
+      "praticien",
+      "physicien",
+      "medecins",
+      "docteurs",
+      "praticiens"
+    ],
+    "GeneralPractitioner": [
+      "medecin generaliste",
+      "generaliste",
+      "medecin traitant"
+    ],
+    "EmergencyPhysician": [
+      "medecin urgentiste",
+      "urgentiste"
+    ],
+    "Cardiologist": [
+      "cardiologue",
+      "cardiologie"
+    ],
+    "Dermatologist": [
+      "dermatologue",
+      "dermatologie"
+    ],
+    "Neurologist": [
+      "neurologue",
+      "neurologie"
+    ],
+    "Disease": [
+      "maladie",
+      "pathologie",
+      "affection",
+      "maladies",
+      "pathologies",
+      "affections"
+    ],
+    "InfectiousDisease": [
+      "maladie infectieuse",
+      "infection"
+    ],
+    "ChronicDisease": [
+      "maladie chronique"
+    ],
+    "CardiovascularDisease": [
+      "maladie cardiovasculaire",
+      "maladie cardiaque"
+    ],
+    "RespiratoryDisease": [
+      "maladie respiratoire",
+      "affection pulmonaire"
+    ],
+    "Symptom": [
+      "symptome",
+      "signe clinique",
+      "symptomes",
+      "signes cliniques"
+    ],
+    "Fever": [
+      "fievre",
+      "temperature elevee"
+    ],
+    "Headache": [
+      "mal de tete",
+      "cephalee"
+    ],
+    "Cough": [
+      "toux",
+      "tousser"
+    ],
+    "Fatigue": [
+      "fatigue",
+      "epuisement",
+      "asthenie"
+    ],
+    "ChestPain": [
+      "douleur thoracique",
+      "douleur a la poitrine",
+      "oppression thoracique"
+    ],
+    "SkinRash": [
+      "eruption cutanee",
+      "boutons",
+      "demangeaison",
+      "rougeur"
+    ],
+    "Treatment": [
+      "traitement",
+      "prise en charge",
+      "therapie",
+      "traitements",
+      "therapies"
+    ],
+    "MedicationTreatment": [
+      "traitement medicamenteux"
+    ],
+    "SurgicalTreatment": [
+      "traitement chirurgical",
+      "chirurgie",
+      "operation"
+    ],
+    "Physiotherapy": [
+      "kinesitherapie",
+      "physiotherapie",
+      "reeducation"
+    ],
+    "Medication": [
+      "medicament",
+      "drogue",
+      "produit pharmaceutique",
+      "traitement pharmacologique",
+      "medicaments",
+      "drogues"
+    ],
+    "Antibiotic": [
+      "antibiotique"
+    ],
+    "Analgesic": [
+      "antalgique",
+      "analgésique"
+    ],
+    "Antiviral": [
+      "antiviral"
+    ],
+    "Antihypertensive": [
+      "antihypertenseur",
+      "traitement de l hypertension"
+    ],
+    "Antidiabetic": [
+      "antidiabetique"
+    ],
+    "MedicalTest": [
+      "examen",
+      "test medical",
+      "analyse",
+      "examen complementaire",
+      "examens",
+      "analyses",
+      "tests"
+    ],
+    "BloodTest": [
+      "analyse de sang",
+      "prise de sang",
+      "test sanguin",
+      "analyses sanguines"
+    ],
+    "UrineTest": [
+      "analyse d urine",
+      "bandelette urinaire"
+    ],
+    "XRay": [
+      "radiographie",
+      "radio",
+      "rayon x",
+      "radiographies"
+    ],
+    "MRI": [
+      "irm",
+      "imagerie par resonance magnetique"
+    ],
+    "CTScan": [
+      "scanner",
+      "tomodensitometrie",
+      "tensio-scanner"
+    ],
+    "Hospital": [
+      "hopital",
+      "clinique",
+      "etablissement",
+      "centre hospitalier",
+      "hopitaux",
+      "cliniques",
+      "etablissements"
+    ],
+    "PublicHospital": [
+      "hopital public"
+    ],
+    "PrivateHospital": [
+      "hopital prive",
+      "clinique privee"
+    ],
+    "UniversityHospital": [
+      "centre hospitalier universitaire",
+      "hopital universitaire"
+    ],
+    "MedicalAppointment": [
+      "rendez-vous",
+      "rdv",
+      "rendez vous medical",
+      "rendez vous"
+    ],
+    "Consultation": [
+      "consultation",
+      "visite",
+      "visites"
+    ],
+    "FollowUpAppointment": [
+      "consultation de suivi",
+      "suivi",
+      "controle"
+    ],
+    "EmergencyAppointment": [
+      "consultation d urgence",
+      "rendez vous d urgence"
+    ],
+    "MedicalDepartment": [
+      "service",
+      "departement",
+      "unite",
+      "service hospitalier",
+      "services",
+      "departements",
+      "unites"
+    ],
+    "CardiologyDepartment": [
+      "service de cardiologie",
+      "service cardiologie"
+    ],
+    "DermatologyDepartment": [
+      "service de dermatologie",
+      "service dermatologie"
+    ],
+    "NeurologyDepartment": [
+      "service de neurologie",
+      "service neurologie"
+    ],
+    "EmergencyDepartment": [
+      "service des urgences",
+      "urgences",
+      "service d accueil des urgences"
+    ],
+    "GeneralMedicineDepartment": [
+      "service de medecine generale",
+      "medecine generale"
+    ]
+  },
+  "individuals": {
+    "Appendicitis": [
+      "appendicite"
+    ],
+    "Migraine": [
+      "migraine"
+    ],
+    "Influenza": [
+      "grippe",
+      "grippal"
+    ],
+    "Pneumonia": [
+      "pneumonie",
+      "infection pulmonaire"
+    ],
+    "Eczema": [
+      "eczema",
+      "dermatite atopique"
+    ],
+    "Asthma": [
+      "asthme"
+    ],
+    "Diabetes": [
+      "diabete",
+      "glycemie"
+    ],
+    "Hypertension": [
+      "hypertension",
+      "hypertension arterielle",
+      "tension elevee"
+    ],
+    "Fever_01": [
+      "fievre"
+    ],
+    "Headache_01": [
+      "mal de tete"
+    ],
+    "Cough_01": [
+      "toux"
+    ],
+    "Fatigue_01": [
+      "fatigue"
+    ],
+    "ChestPain_01": [
+      "douleur thoracique"
+    ],
+    "SkinRash_01": [
+      "eruption cutanee"
+    ],
+    "Paracetamol": [
+      "paracetamol",
+      "doliprane",
+      "acetaminophene"
+    ],
+    "Ibuprofen": [
+      "ibuprofene",
+      "advil"
+    ],
+    "Amoxicillin": [
+      "amoxicilline",
+      "clamox"
+    ],
+    "Metformin": [
+      "metformine",
+      "riomet"
+    ],
+    "Amlodipine": [
+      "amlodipine",
+      "norvasc"
+    ],
+    "Ramipril": [
+      "ramipril"
+    ],
+    "Oseltamivir": [
+      "oseltamivir",
+      "tamiflu"
+    ],
+    "Salbutamol": [
+      "salbutamol",
+      "ventoline"
+    ],
+    "Hydrocortisone": [
+      "hydrocortisone"
+    ],
+    "Cefazolin": [
+      "cefazoline"
+    ],
+    "AppendectomySurgery": [
+      "appendicectomie"
+    ],
+    "DiabetesTreatment": [
+      "traitement du diabete"
+    ],
+    "HypertensionTreatment": [
+      "traitement de l hypertension"
+    ],
+    "InfluenzaTreatment": [
+      "traitement de la grippe"
+    ],
+    "MigraineTreatment": [
+      "traitement de la migraine"
+    ],
+    "PneumoniaTreatment": [
+      "traitement de la pneumonie"
+    ],
+    "EczemaTreatment": [
+      "traitement de l eczema"
+    ],
+    "RespiratoryPhysiotherapy": [
+      "kinesitherapie respiratoire"
+    ],
+    "CardiologyDepartment_01": [
+      "service de cardiologie 01"
+    ],
+    "CardiologyDepartment_02": [
+      "service de cardiologie 02"
+    ],
+    "DermatologyDepartment_01": [
+      "service de dermatologie 01"
+    ],
+    "NeurologyDepartment_01": [
+      "service de neurologie 01"
+    ],
+    "EmergencyDepartment_01": [
+      "urgences 01"
+    ],
+    "EmergencyDepartment_02": [
+      "urgences 02"
+    ],
+    "GeneralMedicineDepartment_01": [
+      "medecine generale 01"
+    ],
+    "GeneralMedicineDepartment_02": [
+      "medecine generale 02"
+    ],
+    "Hospital_Rabta": [
+      "la rabta",
+      "hopital la rabta"
+    ],
+    "Hospital_CharlesNicolle": [
+      "charles nicolle",
+      "hopital charles nicolle"
+    ],
+    "Hospital_CliniqueAlAmal": [
+      "clinique al amal",
+      "al amal"
+    ],
+    "Hospital_UniversityHospital_01": [
+      "hopital universitaire",
+      "centre hospitalier universitaire"
+    ],
+    "Doctor_Ali": [
+      "docteur ali",
+      "dr ali"
+    ],
+    "Doctor_Hatem": [
+      "docteur hatem",
+      "dr hatem"
+    ],
+    "Doctor_Mohamed": [
+      "docteur mohamed",
+      "dr mohamed"
+    ],
+    "Doctor_Nadia": [
+      "docteur nadia",
+      "dr nadia"
+    ],
+    "Doctor_Rim": [
+      "docteur rim",
+      "dr rim"
+    ],
+    "Doctor_Salma": [
+      "docteur salma",
+      "dr salma"
+    ],
+    "Doctor_Sami": [
+      "docteur sami",
+      "dr sami"
+    ],
+    "Doctor_Walid": [
+      "docteur walid",
+      "dr walid"
+    ],
+    "Patient_Ahmed": [
+      "ahmed",
+      "ahmed ben ali"
+    ],
+    "Patient_Fatma": [
+      "fatma",
+      "fatma gharsallah"
+    ],
+    "Patient_Hichem": [
+      "hichem",
+      "hichem karray"
+    ],
+    "Patient_Karim": [
+      "karim",
+      "karim mejri"
+    ],
+    "Patient_Leila": [
+      "leila",
+      "leila bouazizi"
+    ],
+    "Patient_Mariam": [
+      "mariam",
+      "mariam haddad"
+    ],
+    "Patient_Nour": [
+      "nour",
+      "nour ben youssef"
+    ],
+    "Patient_Omar": [
+      "omar",
+      "omar chaabane"
+    ],
+    "Patient_Sara": [
+      "sara",
+      "sara trabelsi"
+    ],
+    "Patient_Youssef": [
+      "youssef",
+      "youssef ben salah"
+    ]
+  },
+  "properties": {
+    "hasName": [
+      "nom",
+      "appelle"
+    ],
+    "hasAge": [
+      "age",
+      "ans"
+    ],
+    "hasGender": [
+      "sexe",
+      "genre"
+    ],
+    "hasBloodType": [
+      "groupe sanguin",
+      "groupe de sang"
+    ],
+    "hasPhoneNumber": [
+      "telephone",
+      "numero"
+    ],
+    "treatedBy": [
+      "medecin",
+      "pris en charge par",
+      "suivi par",
+      "consulte"
+    ],
+    "hasDisease": [
+      "maladie",
+      "souffre de",
+      "pathologie",
+      "diagnostique"
+    ],
+    "hasSymptom": [
+      "symptome",
+      "provoque",
+      "se manifeste par"
+    ],
+    "hasTreatment": [
+      "traitement",
+      "soigne par",
+      "therapeutique"
+    ],
+    "usesMedication": [
+      "medicament",
+      "prescrit",
+      "prend"
+    ],
+    "undergoesTest": [
+      "analyse",
+      "examen",
+      "a passe une"
+    ],
+    "hasAppointment": [
+      "rendez-vous",
+      "consultation prevue"
+    ],
+    "appointmentOf": [
+      "patient du rendez-vous"
+    ],
+    "appointmentDate": [
+      "date du rendez-vous",
+      "prevu le"
+    ],
+    "appointmentStatus": [
+      "statut",
+      "etat du rendez-vous"
+    ],
+    "belongsToDepartment": [
+      "service",
+      "dans le service"
+    ],
+    "worksIn": [
+      "travaille dans",
+      "exerce au service",
+      "service"
+    ],
+    "locatedIn": [
+      "situé dans",
+      "se trouve a",
+      "hopital"
+    ],
+    "followedInDepartment": [
+      "suivi dans le service"
+    ],
+    "followedInHospital": [
+      "suivi a l hopital"
+    ],
+    "medicationDosage": [
+      "dosage",
+      "posologie",
+      "dose"
+    ],
+    "treatmentDuration": [
+      "duree",
+      "combien de temps"
+    ],
+    "testResult": [
+      "resultat",
+      "conclusion"
+    ],
+    "testDate": [
+      "date de l analyse",
+      "date de l examen"
+    ],
+    "diseaseDescription": [
+      "description",
+      "symptomes de",
+      "qu est ce que"
+    ],
+    "doctorLicenseNumber": [
+      "numero de permis",
+      "agre",
+      "licence"
+    ],
+    "diseaseName": [
+      "nom de la maladie"
+    ],
+    "doctorName": [
+      "nom du medecin"
+    ],
+    "hospitalName": [
+      "nom de l hopital"
+    ],
+    "departmentName": [
+      "nom du service"
+    ]
+  },
+  "values": {
+    "Pending": [
+      "en attente",
+      "en attente de confirmation",
+      "non confirme",
+      "attente"
+    ],
+    "Confirmed": [
+      "confirme",
+      "valide",
+      "confirmes",
+      "confirmees",
+      "valides"
+    ],
+    "Completed": [
+      "termine",
+      "effectue",
+      "honore",
+      "termines",
+      "terminees",
+      "effectues"
+    ],
+    "Cancelled": [
+      "annule",
+      "annules",
+      "annulees",
+      "annulation"
+    ],
+    "Male": [
+      "homme",
+      "masculin",
+      "male",
+      "hommes"
+    ],
+    "Female": [
+      "femme",
+      "féminin",
+      "feminin",
+      "femmes"
+    ],
+    "A+": [
+      "groupe a positif",
+      "a pos"
+    ],
+    "A-": [
+      "groupe a negatif",
+      "a neg"
+    ],
+    "B+": [
+      "groupe b positif"
+    ],
+    "B-": [
+      "groupe b negatif"
+    ],
+    "AB+": [
+      "groupe ab positif"
+    ],
+    "AB-": [
+      "groupe ab negatif"
+    ],
+    "O+": [
+      "groupe o positif"
+    ],
+    "O-": [
+      "groupe o negatif"
+    ]
+  }
+}

@@ -1,0 +1,870 @@
+@prefix : <http://www.semanticweb.org/kmarb/ontologies/2026/8/medical-care-ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@base <http://www.semanticweb.org/kmarb/ontologies/2026/8/medical-care-ontology> .
+
+<http://www.semanticweb.org/kmarb/ontologies/2026/8/medical-care-ontology> rdf:type owl:Ontology ;
+    dc:title "Medical Care Ontology"@en ;
+    dc:creator "Zeineb Ghezaiel, Kmar Ben Mbarek, Abir Ben Brahem, Oussema Bani, Jacem Guesmi" ;
+    rdfs:comment "Ontology modelling medical care: patients, doctors, diseases, symptoms, treatments, medications, tests, hospitals, appointments and departments."@en ;
+    owl:versionInfo "2.0" .
+
+# ================= ANNOTATION PROPERTIES =================
+skos:altLabel rdf:type owl:AnnotationProperty .
+dc:title rdf:type owl:AnnotationProperty .
+dc:creator rdf:type owl:AnnotationProperty .
+
+# ================= OBJECT PROPERTIES =================
+:hasDisease rdf:type owl:ObjectProperty, owl:IrreflexiveProperty ;
+    rdfs:domain :Patient ; rdfs:range :Disease ; owl:inverseOf :isDiseaseOf ;
+    rdfs:label "has disease"@en .
+:isDiseaseOf rdf:type owl:ObjectProperty, owl:IrreflexiveProperty ;
+    rdfs:domain :Disease ; rdfs:range :Patient ;
+    rdfs:label "is disease of"@en .
+
+:treatedBy rdf:type owl:ObjectProperty, owl:IrreflexiveProperty ;
+    rdfs:domain :Patient ; rdfs:range :Doctor ; owl:inverseOf :treats ;
+    rdfs:label "treated by"@en .
+:treats rdf:type owl:ObjectProperty, owl:IrreflexiveProperty ;
+    rdfs:domain :Doctor ; rdfs:range :Patient ;
+    rdfs:label "treats"@en .
+
+:hasSymptom rdf:type owl:ObjectProperty, owl:IrreflexiveProperty ;
+    rdfs:domain :Disease ; rdfs:range :Symptom ; owl:inverseOf :isSymptomOf ;
+    rdfs:label "has symptom"@en .
+:isSymptomOf rdf:type owl:ObjectProperty, owl:IrreflexiveProperty ;
+    rdfs:domain :Symptom ; rdfs:range :Disease ;
+    rdfs:label "is symptom of"@en .
+
+:hasTreatment rdf:type owl:ObjectProperty, owl:IrreflexiveProperty ;
+    rdfs:domain :Disease ; rdfs:range :Treatment ; owl:inverseOf :isTreatmentOf ;
+    rdfs:label "has treatment"@en .
+:isTreatmentOf rdf:type owl:ObjectProperty, owl:IrreflexiveProperty ;
+    rdfs:domain :Treatment ; rdfs:range :Disease ;
+    rdfs:label "is treatment of"@en .
+
+:usesMedication rdf:type owl:ObjectProperty, owl:IrreflexiveProperty ;
+    rdfs:domain :Treatment ; rdfs:range :Medication ; owl:inverseOf :isUsedIn ;
+    rdfs:label "uses medication"@en .
+:isUsedIn rdf:type owl:ObjectProperty, owl:IrreflexiveProperty ;
+    rdfs:domain :Medication ; rdfs:range :Treatment ;
+    rdfs:label "is used in"@en .
+
+:undergoesTest rdf:type owl:ObjectProperty, owl:IrreflexiveProperty ;
+    rdfs:domain :Patient ; rdfs:range :MedicalTest ; owl:inverseOf :isTestOf ;
+    rdfs:label "undergoes test"@en .
+:isTestOf rdf:type owl:ObjectProperty, owl:IrreflexiveProperty ;
+    rdfs:domain :MedicalTest ; rdfs:range :Patient ;
+    rdfs:label "is test of"@en .
+
+:hasAppointment rdf:type owl:ObjectProperty, owl:IrreflexiveProperty ;
+    rdfs:domain :Patient ; rdfs:range :MedicalAppointment ; owl:inverseOf :appointmentOf ;
+    rdfs:label "has appointment"@en .
+:appointmentOf rdf:type owl:ObjectProperty, owl:IrreflexiveProperty ;
+    rdfs:domain :MedicalAppointment ; rdfs:range :Patient ;
+    rdfs:label "appointment of"@en .
+
+:worksIn rdf:type owl:ObjectProperty, owl:IrreflexiveProperty, owl:FunctionalProperty ;
+    rdfs:domain :Doctor ; rdfs:range :MedicalDepartment ; owl:inverseOf :hasDoctor ;
+    rdfs:label "works in"@en .
+:hasDoctor rdf:type owl:ObjectProperty, owl:IrreflexiveProperty ;
+    rdfs:domain :MedicalDepartment ; rdfs:range :Doctor ;
+    rdfs:label "has doctor"@en .
+
+:locatedIn rdf:type owl:ObjectProperty, owl:IrreflexiveProperty, owl:FunctionalProperty ;
+    rdfs:domain :MedicalDepartment ; rdfs:range :Hospital ; owl:inverseOf :hasDepartment ;
+    rdfs:label "located in"@en .
+:hasDepartment rdf:type owl:ObjectProperty, owl:IrreflexiveProperty ;
+    rdfs:domain :Hospital ; rdfs:range :MedicalDepartment ;
+    rdfs:label "has department"@en .
+
+:belongsToDepartment rdf:type owl:ObjectProperty, owl:IrreflexiveProperty, owl:FunctionalProperty ;
+    rdfs:domain :MedicalAppointment ; rdfs:range :MedicalDepartment ; owl:inverseOf :includesAppointment ;
+    rdfs:label "belongs to department"@en .
+:includesAppointment rdf:type owl:ObjectProperty, owl:IrreflexiveProperty ;
+    rdfs:domain :MedicalDepartment ; rdfs:range :MedicalAppointment ;
+    rdfs:label "includes appointment"@en .
+
+:followedInDepartment rdf:type owl:ObjectProperty ;
+    rdfs:domain :Patient ; rdfs:range :MedicalDepartment ;
+    owl:propertyChainAxiom ( :treatedBy :worksIn ) ;
+    rdfs:label "followed in department"@en .
+
+:followedInHospital rdf:type owl:ObjectProperty ;
+    rdfs:domain :Patient ; rdfs:range :Hospital ;
+    owl:propertyChainAxiom ( :followedInDepartment :locatedIn ) ;
+    rdfs:label "followed in hospital"@en .
+
+# ================= DATA PROPERTIES =================
+:hasName rdf:type owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :Patient ; rdfs:range xsd:string ; rdfs:label "has name"@en .
+:hasAge rdf:type owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :Patient ; rdfs:range xsd:integer ; rdfs:label "has age"@en .
+:hasGender rdf:type owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :Patient ; rdfs:range [ a rdfs:Datatype ; owl:oneOf ( "Male" "Female" ) ] ; rdfs:label "has gender"@en .
+:hasBloodType rdf:type owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :Patient ; rdfs:range [ a rdfs:Datatype ; owl:oneOf ( "A+" "A-" "B+" "B-" "AB+" "AB-" "O+" "O-" ) ] ; rdfs:label "has blood type"@en .
+:hasPhoneNumber rdf:type owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :Patient ; rdfs:range xsd:string ; rdfs:label "has phone number"@en .
+:doctorName rdf:type owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :Doctor ; rdfs:range xsd:string ; rdfs:label "doctor name"@en .
+:doctorLicenseNumber rdf:type owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :Doctor ; rdfs:range xsd:string ; rdfs:label "doctor license number"@en .
+:diseaseName rdf:type owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :Disease ; rdfs:range xsd:string ; rdfs:label "disease name"@en .
+:diseaseDescription rdf:type owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :Disease ; rdfs:range xsd:string ; rdfs:label "disease description"@en .
+:testResult rdf:type owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :MedicalTest ; rdfs:range xsd:string ; rdfs:label "test result"@en .
+:testDate rdf:type owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :MedicalTest ; rdfs:range xsd:dateTime ; rdfs:label "test date"@en .
+:appointmentDate rdf:type owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :MedicalAppointment ; rdfs:range xsd:dateTime ; rdfs:label "appointment date"@en .
+:appointmentStatus rdf:type owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :MedicalAppointment ; rdfs:range [ a rdfs:Datatype ; owl:oneOf ( "Pending" "Confirmed" "Completed" "Cancelled" ) ] ; rdfs:label "appointment status"@en .
+:hospitalName rdf:type owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :Hospital ; rdfs:range xsd:string ; rdfs:label "hospital name"@en .
+:medicationDosage rdf:type owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :Medication ; rdfs:range xsd:string ; rdfs:label "medication dosage"@en .
+:symptomName rdf:type owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :Symptom ; rdfs:range xsd:string ; rdfs:label "symptom name"@en .
+:treatmentName rdf:type owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :Treatment ; rdfs:range xsd:string ; rdfs:label "treatment name"@en .
+:treatmentDuration rdf:type owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :Treatment ; rdfs:range xsd:string ; rdfs:label "treatment duration"@en .
+:medicationName rdf:type owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :Medication ; rdfs:range xsd:string ; rdfs:label "medication name"@en .
+:departmentName rdf:type owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :MedicalDepartment ; rdfs:range xsd:string ; rdfs:label "department name"@en .
+
+# ================= CLASSES =================
+:Patient rdf:type owl:Class ;
+    rdfs:label "Patient"@en .
+:Doctor rdf:type owl:Class ;
+    rdfs:label "Doctor"@en .
+:Disease rdf:type owl:Class ;
+    rdfs:label "Disease"@en .
+:Symptom rdf:type owl:Class ;
+    rdfs:label "Symptom"@en .
+:Treatment rdf:type owl:Class ;
+    rdfs:label "Treatment"@en .
+:Medication rdf:type owl:Class ;
+    rdfs:label "Medication"@en .
+:MedicalTest rdf:type owl:Class ;
+    rdfs:label "Medical Test"@en .
+:Hospital rdf:type owl:Class ;
+    rdfs:label "Hospital"@en .
+:MedicalAppointment rdf:type owl:Class ;
+    rdfs:label "Medical Appointment"@en .
+:MedicalDepartment rdf:type owl:Class ;
+    rdfs:label "Medical Department"@en .
+:AdultPatient rdf:type owl:Class ;
+    rdfs:subClassOf :Patient ;
+    rdfs:label "Adult Patient"@en .
+:ChildPatient rdf:type owl:Class ;
+    rdfs:subClassOf :Patient ;
+    rdfs:label "Child Patient"@en .
+:ElderlyPatient rdf:type owl:Class ;
+    rdfs:subClassOf :Patient ;
+    rdfs:label "Elderly Patient"@en .
+:GeneralPractitioner rdf:type owl:Class ;
+    rdfs:subClassOf :Doctor ;
+    rdfs:label "General Practitioner"@en .
+:EmergencyPhysician rdf:type owl:Class ;
+    rdfs:subClassOf :Doctor ;
+    rdfs:label "Emergency Physician"@en .
+:Cardiologist rdf:type owl:Class ;
+    rdfs:subClassOf :Doctor ;
+    rdfs:label "Cardiologist"@en .
+:Dermatologist rdf:type owl:Class ;
+    rdfs:subClassOf :Doctor ;
+    rdfs:label "Dermatologist"@en .
+:Neurologist rdf:type owl:Class ;
+    rdfs:subClassOf :Doctor ;
+    rdfs:label "Neurologist"@en .
+:InfectiousDisease rdf:type owl:Class ;
+    rdfs:subClassOf :Disease ;
+    rdfs:label "Infectious Disease"@en .
+:ChronicDisease rdf:type owl:Class ;
+    rdfs:subClassOf :Disease ;
+    rdfs:label "Chronic Disease"@en .
+:CardiovascularDisease rdf:type owl:Class ;
+    rdfs:subClassOf :Disease ;
+    rdfs:label "Cardiovascular Disease"@en .
+:RespiratoryDisease rdf:type owl:Class ;
+    rdfs:subClassOf :Disease ;
+    rdfs:label "Respiratory Disease"@en .
+:Fever rdf:type owl:Class ;
+    rdfs:subClassOf :Symptom ;
+    rdfs:label "Fever"@en .
+:Headache rdf:type owl:Class ;
+    rdfs:subClassOf :Symptom ;
+    rdfs:label "Headache"@en .
+:Cough rdf:type owl:Class ;
+    rdfs:subClassOf :Symptom ;
+    rdfs:label "Cough"@en .
+:Fatigue rdf:type owl:Class ;
+    rdfs:subClassOf :Symptom ;
+    rdfs:label "Fatigue"@en .
+:ChestPain rdf:type owl:Class ;
+    rdfs:subClassOf :Symptom ;
+    rdfs:label "Chest Pain"@en .
+:SkinRash rdf:type owl:Class ;
+    rdfs:subClassOf :Symptom ;
+    rdfs:label "Skin Rash"@en .
+:MedicationTreatment rdf:type owl:Class ;
+    rdfs:subClassOf :Treatment ;
+    rdfs:label "Medication Treatment"@en .
+:SurgicalTreatment rdf:type owl:Class ;
+    rdfs:subClassOf :Treatment ;
+    rdfs:label "Surgical Treatment"@en .
+:Physiotherapy rdf:type owl:Class ;
+    rdfs:subClassOf :Treatment ;
+    rdfs:label "Physiotherapy"@en .
+:Antibiotic rdf:type owl:Class ;
+    rdfs:subClassOf :Medication ;
+    rdfs:label "Antibiotic"@en .
+:Analgesic rdf:type owl:Class ;
+    rdfs:subClassOf :Medication ;
+    rdfs:label "Analgesic"@en .
+:Antiviral rdf:type owl:Class ;
+    rdfs:subClassOf :Medication ;
+    rdfs:label "Antiviral"@en .
+:Antihypertensive rdf:type owl:Class ;
+    rdfs:subClassOf :Medication ;
+    rdfs:label "Antihypertensive"@en .
+:Antidiabetic rdf:type owl:Class ;
+    rdfs:subClassOf :Medication ;
+    rdfs:label "Antidiabetic"@en .
+:BloodTest rdf:type owl:Class ;
+    rdfs:subClassOf :MedicalTest ;
+    rdfs:label "Blood Test"@en .
+:UrineTest rdf:type owl:Class ;
+    rdfs:subClassOf :MedicalTest ;
+    rdfs:label "Urine Test"@en .
+:XRay rdf:type owl:Class ;
+    rdfs:subClassOf :MedicalTest ;
+    rdfs:label "X-Ray"@en .
+:MRI rdf:type owl:Class ;
+    rdfs:subClassOf :MedicalTest ;
+    rdfs:label "MRI"@en .
+:CTScan rdf:type owl:Class ;
+    rdfs:subClassOf :MedicalTest ;
+    rdfs:label "CT Scan"@en .
+:PublicHospital rdf:type owl:Class ;
+    rdfs:subClassOf :Hospital ;
+    rdfs:label "Public Hospital"@en .
+:PrivateHospital rdf:type owl:Class ;
+    rdfs:subClassOf :Hospital ;
+    rdfs:label "Private Hospital"@en .
+:UniversityHospital rdf:type owl:Class ;
+    rdfs:subClassOf :Hospital ;
+    rdfs:label "University Hospital"@en .
+:Consultation rdf:type owl:Class ;
+    rdfs:subClassOf :MedicalAppointment ;
+    rdfs:label "Consultation"@en .
+:FollowUpAppointment rdf:type owl:Class ;
+    rdfs:subClassOf :MedicalAppointment ;
+    rdfs:label "Follow Up Appointment"@en .
+:EmergencyAppointment rdf:type owl:Class ;
+    rdfs:subClassOf :MedicalAppointment ;
+    rdfs:label "Emergency Appointment"@en .
+:CardiologyDepartment rdf:type owl:Class ;
+    rdfs:subClassOf :MedicalDepartment ;
+    rdfs:label "Cardiology Department"@en .
+:DermatologyDepartment rdf:type owl:Class ;
+    rdfs:subClassOf :MedicalDepartment ;
+    rdfs:label "Dermatology Department"@en .
+:NeurologyDepartment rdf:type owl:Class ;
+    rdfs:subClassOf :MedicalDepartment ;
+    rdfs:label "Neurology Department"@en .
+:EmergencyDepartment rdf:type owl:Class ;
+    rdfs:subClassOf :MedicalDepartment ;
+    rdfs:label "Emergency Department"@en .
+:GeneralMedicineDepartment rdf:type owl:Class ;
+    rdfs:subClassOf :MedicalDepartment ;
+    rdfs:label "General Medicine Department"@en .
+:ChronicPatient rdf:type owl:Class ;
+    rdfs:subClassOf :Patient ;
+    rdfs:label "Chronic Patient"@en .
+:EmergencyPatient rdf:type owl:Class ;
+    rdfs:subClassOf :Patient ;
+    rdfs:label "Emergency Patient"@en .
+
+# ================= DISJOINTNESS =================
+[ rdf:type owl:AllDisjointClasses ; owl:members ( :Patient :Doctor :Disease :Symptom :Treatment :Medication :MedicalTest :Hospital :MedicalAppointment :MedicalDepartment ) ] .
+[ rdf:type owl:AllDisjointClasses ; owl:members ( :AdultPatient :ChildPatient :ElderlyPatient ) ] .
+[ rdf:type owl:AllDisjointClasses ; owl:members ( :GeneralPractitioner :EmergencyPhysician :Cardiologist :Dermatologist :Neurologist ) ] .
+[ rdf:type owl:AllDisjointClasses ; owl:members ( :Fever :Headache :Cough :Fatigue :ChestPain :SkinRash ) ] .
+[ rdf:type owl:AllDisjointClasses ; owl:members ( :MedicationTreatment :SurgicalTreatment :Physiotherapy ) ] .
+[ rdf:type owl:AllDisjointClasses ; owl:members ( :Antibiotic :Analgesic :Antiviral :Antihypertensive :Antidiabetic ) ] .
+[ rdf:type owl:AllDisjointClasses ; owl:members ( :BloodTest :UrineTest :XRay :MRI :CTScan ) ] .
+[ rdf:type owl:AllDisjointClasses ; owl:members ( :PublicHospital :PrivateHospital :UniversityHospital ) ] .
+[ rdf:type owl:AllDisjointClasses ; owl:members ( :Consultation :FollowUpAppointment :EmergencyAppointment ) ] .
+[ rdf:type owl:AllDisjointClasses ; owl:members ( :CardiologyDepartment :DermatologyDepartment :NeurologyDepartment :EmergencyDepartment :GeneralMedicineDepartment ) ] .
+
+# ================= RESTRICTIONS (SubClassOf) =================
+:Patient rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :treatedBy ; owl:someValuesFrom :Doctor ] .
+:Patient rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :hasDisease ; owl:someValuesFrom :Disease ] .
+:Patient rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :hasName ; owl:someValuesFrom xsd:string ] .
+:Patient rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :hasAge ; owl:someValuesFrom xsd:integer ] .
+:Doctor rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :worksIn ; owl:qualifiedCardinality 1 ; owl:onClass :MedicalDepartment ] .
+:Doctor rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :doctorName ; owl:someValuesFrom xsd:string ] .
+:Doctor rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :doctorLicenseNumber ; owl:someValuesFrom xsd:string ] .
+:MedicalDepartment rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :locatedIn ; owl:qualifiedCardinality 1 ; owl:onClass :Hospital ] .
+:MedicalAppointment rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :belongsToDepartment ; owl:qualifiedCardinality 1 ; owl:onClass :MedicalDepartment ] .
+:MedicalAppointment rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :appointmentDate ; owl:someValuesFrom xsd:dateTime ] .
+:Disease rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :hasSymptom ; owl:someValuesFrom :Symptom ] .
+:Disease rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :hasTreatment ; owl:someValuesFrom :Treatment ] .
+:MedicationTreatment rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :usesMedication ; owl:someValuesFrom :Medication ] .
+:Cardiologist rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :worksIn ; owl:someValuesFrom :CardiologyDepartment ] .
+:Dermatologist rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :worksIn ; owl:someValuesFrom :DermatologyDepartment ] .
+:Neurologist rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :worksIn ; owl:someValuesFrom :NeurologyDepartment ] .
+:EmergencyPhysician rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :worksIn ; owl:someValuesFrom :EmergencyDepartment ] .
+:GeneralPractitioner rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :worksIn ; owl:someValuesFrom :GeneralMedicineDepartment ] .
+:EmergencyAppointment rdfs:subClassOf [ rdf:type owl:Restriction ; owl:onProperty :belongsToDepartment ; owl:someValuesFrom :EmergencyDepartment ] .
+
+# ================= CLASSES DEFINIES (EquivalentTo) =================
+:ChildPatient owl:equivalentClass [ rdf:type owl:Class ; owl:intersectionOf ( :Patient [ rdf:type owl:Restriction ; owl:onProperty :hasAge ; owl:someValuesFrom [ rdf:type rdfs:Datatype ; owl:onDatatype xsd:integer ; owl:withRestrictions ( [ xsd:maxExclusive 18 ] ) ] ] ) ] .
+:AdultPatient owl:equivalentClass [ rdf:type owl:Class ; owl:intersectionOf ( :Patient [ rdf:type owl:Restriction ; owl:onProperty :hasAge ; owl:someValuesFrom [ rdf:type rdfs:Datatype ; owl:onDatatype xsd:integer ; owl:withRestrictions ( [ xsd:minInclusive 18 ] [ xsd:maxExclusive 65 ] ) ] ] ) ] .
+:ElderlyPatient owl:equivalentClass [ rdf:type owl:Class ; owl:intersectionOf ( :Patient [ rdf:type owl:Restriction ; owl:onProperty :hasAge ; owl:someValuesFrom [ rdf:type rdfs:Datatype ; owl:onDatatype xsd:integer ; owl:withRestrictions ( [ xsd:minInclusive 65 ] ) ] ] ) ] .
+:ChronicPatient owl:equivalentClass [ rdf:type owl:Class ; owl:intersectionOf ( :Patient [ rdf:type owl:Restriction ; owl:onProperty :hasDisease ; owl:someValuesFrom :ChronicDisease ] ) ] .
+:EmergencyPatient owl:equivalentClass [ rdf:type owl:Class ; owl:intersectionOf ( :Patient [ rdf:type owl:Restriction ; owl:onProperty :hasAppointment ; owl:someValuesFrom :EmergencyAppointment ] ) ] .
+:Doctor owl:hasKey ( :doctorLicenseNumber ) .
+:Hospital owl:hasKey ( :hospitalName ) .
+
+# ================= INDIVIDUALS =================
+:Fever_01 rdf:type owl:NamedIndividual, :Fever ;
+    :isSymptomOf :Influenza , :Appendicitis , :Pneumonia ;
+    :symptomName "Fever" ;
+    rdfs:label "Fever"@en ;
+    skos:altLabel "high temperature"@en .
+:Headache_01 rdf:type owl:NamedIndividual, :Headache ;
+    :isSymptomOf :Diabetes , :Hypertension , :Influenza , :Migraine ;
+    :symptomName "Headache" ;
+    rdfs:label "Headache"@en ;
+    skos:altLabel "head pain"@en .
+:Cough_01 rdf:type owl:NamedIndividual, :Cough ;
+    :isSymptomOf :Influenza , :Asthma , :Pneumonia ;
+    :symptomName "Cough" ;
+    rdfs:label "Cough"@en .
+:Fatigue_01 rdf:type owl:NamedIndividual, :Fatigue ;
+    :isSymptomOf :Diabetes , :Hypertension , :Asthma ;
+    :symptomName "Fatigue" ;
+    rdfs:label "Fatigue"@en ;
+    skos:altLabel "tiredness"@en .
+:ChestPain_01 rdf:type owl:NamedIndividual, :ChestPain ;
+    :isSymptomOf :Hypertension , :Pneumonia ;
+    :symptomName "Chest pain" ;
+    rdfs:label "Chest Pain"@en ;
+    skos:altLabel "chest discomfort"@en .
+:SkinRash_01 rdf:type owl:NamedIndividual, :SkinRash ;
+    :isSymptomOf :Eczema ;
+    :symptomName "Skin rash" ;
+    rdfs:label "Skin Rash"@en ;
+    skos:altLabel "itching"@en ;
+    skos:altLabel "redness"@en .
+:Diabetes rdf:type owl:NamedIndividual, :ChronicDisease ;
+    :hasSymptom :Fatigue_01 , :Headache_01 ;
+    :hasTreatment :DiabetesTreatment ;
+    :isDiseaseOf :Patient_Ahmed , :Patient_Nour ;
+    :diseaseName "Diabetes" ;
+    :diseaseDescription "Chronic metabolic disease" ;
+    rdfs:label "Diabetes"@en ;
+    skos:altLabel "diabetes mellitus"@en .
+:Hypertension rdf:type owl:NamedIndividual, :CardiovascularDisease, :ChronicDisease ;
+    :hasSymptom :ChestPain_01 , :Fatigue_01 , :Headache_01 ;
+    :hasTreatment :HypertensionTreatment ;
+    :isDiseaseOf :Patient_Mariam , :Patient_Karim ;
+    :diseaseName "Hypertension" ;
+    :diseaseDescription "High blood pressure condition" ;
+    rdfs:label "Hypertension"@en ;
+    skos:altLabel "high blood pressure"@en .
+:Influenza rdf:type owl:NamedIndividual, :InfectiousDisease ;
+    :hasSymptom :Cough_01 , :Fever_01 , :Headache_01 ;
+    :hasTreatment :InfluenzaTreatment ;
+    :isDiseaseOf :Patient_Sara ;
+    :diseaseName "Influenza" ;
+    :diseaseDescription "Viral respiratory infection" ;
+    rdfs:label "Influenza"@en ;
+    skos:altLabel "flu"@en .
+:Asthma rdf:type owl:NamedIndividual, :RespiratoryDisease, :ChronicDisease ;
+    :hasSymptom :Cough_01 , :Fatigue_01 ;
+    :hasTreatment :RespiratoryPhysiotherapy ;
+    :isDiseaseOf :Patient_Youssef ;
+    :diseaseName "Asthma" ;
+    :diseaseDescription "Chronic respiratory condition" ;
+    rdfs:label "Asthma"@en .
+:Appendicitis rdf:type owl:NamedIndividual, :InfectiousDisease ;
+    :hasSymptom :Fever_01 ;
+    :hasTreatment :AppendectomySurgery ;
+    :isDiseaseOf :Patient_Hichem ;
+    :diseaseName "Appendicitis" ;
+    :diseaseDescription "Inflammation of the appendix" ;
+    rdfs:label "Appendicitis"@en .
+:Pneumonia rdf:type owl:NamedIndividual, :InfectiousDisease, :RespiratoryDisease ;
+    :hasSymptom :Cough_01 , :Fever_01 , :ChestPain_01 ;
+    :hasTreatment :PneumoniaTreatment ;
+    :isDiseaseOf :Patient_Fatma ;
+    :diseaseName "Pneumonia" ;
+    :diseaseDescription "Lung infection" ;
+    rdfs:label "Pneumonia"@en ;
+    skos:altLabel "lung infection"@en .
+:Migraine rdf:type owl:NamedIndividual, :Disease ;
+    :hasSymptom :Headache_01 ;
+    :hasTreatment :MigraineTreatment ;
+    :isDiseaseOf :Patient_Leila ;
+    :diseaseName "Migraine" ;
+    :diseaseDescription "Recurrent severe headache disorder" ;
+    rdfs:label "Migraine"@en .
+:Eczema rdf:type owl:NamedIndividual, :ChronicDisease ;
+    :hasSymptom :SkinRash_01 ;
+    :hasTreatment :EczemaTreatment ;
+    :isDiseaseOf :Patient_Omar ;
+    :diseaseName "Eczema" ;
+    :diseaseDescription "Inflammatory skin condition" ;
+    rdfs:label "Eczema"@en ;
+    skos:altLabel "atopic dermatitis"@en .
+:DiabetesTreatment rdf:type owl:NamedIndividual, :MedicationTreatment ;
+    :usesMedication :Metformin ;
+    :isTreatmentOf :Diabetes ;
+    :treatmentName "Diabetes medication therapy" ;
+    :treatmentDuration "Lifelong" ;
+    rdfs:label "Diabetes Treatment" .
+:HypertensionTreatment rdf:type owl:NamedIndividual, :MedicationTreatment ;
+    :usesMedication :Amlodipine , :Ramipril ;
+    :isTreatmentOf :Hypertension ;
+    :treatmentName "Hypertension medication therapy" ;
+    :treatmentDuration "Lifelong" ;
+    rdfs:label "Hypertension Treatment" .
+:InfluenzaTreatment rdf:type owl:NamedIndividual, :MedicationTreatment ;
+    :usesMedication :Oseltamivir , :Paracetamol ;
+    :isTreatmentOf :Influenza ;
+    :treatmentName "Antiviral therapy" ;
+    :treatmentDuration "5 days" ;
+    rdfs:label "Influenza Treatment" .
+:PneumoniaTreatment rdf:type owl:NamedIndividual, :MedicationTreatment ;
+    :usesMedication :Amoxicillin , :Paracetamol ;
+    :isTreatmentOf :Pneumonia ;
+    :treatmentName "Antibiotic therapy" ;
+    :treatmentDuration "7 days" ;
+    rdfs:label "Pneumonia Treatment" .
+:MigraineTreatment rdf:type owl:NamedIndividual, :MedicationTreatment ;
+    :usesMedication :Ibuprofen ;
+    :isTreatmentOf :Migraine ;
+    :treatmentName "Pain relief therapy" ;
+    :treatmentDuration "As needed" ;
+    rdfs:label "Migraine Treatment" .
+:EczemaTreatment rdf:type owl:NamedIndividual, :MedicationTreatment ;
+    :usesMedication :Hydrocortisone ;
+    :isTreatmentOf :Eczema ;
+    :treatmentName "Topical corticosteroid therapy" ;
+    :treatmentDuration "2 weeks" ;
+    rdfs:label "Eczema Treatment" .
+:AppendectomySurgery rdf:type owl:NamedIndividual, :SurgicalTreatment ;
+    :usesMedication :Cefazolin ;
+    :isTreatmentOf :Appendicitis ;
+    :treatmentName "Appendectomy" ;
+    :treatmentDuration "1 day" ;
+    rdfs:label "Appendectomy Surgery" .
+:RespiratoryPhysiotherapy rdf:type owl:NamedIndividual, :Physiotherapy ;
+    :usesMedication :Salbutamol ;
+    :isTreatmentOf :Asthma ;
+    :treatmentName "Respiratory physiotherapy" ;
+    :treatmentDuration "6 weeks" ;
+    rdfs:label "Respiratory Physiotherapy" .
+:Metformin rdf:type owl:NamedIndividual, :Antidiabetic ;
+    :isUsedIn :DiabetesTreatment ;
+    :medicationName "Metformin" ;
+    :medicationDosage "500 mg" ;
+    rdfs:label "Metformin" .
+:Paracetamol rdf:type owl:NamedIndividual, :Analgesic ;
+    :isUsedIn :InfluenzaTreatment , :PneumoniaTreatment ;
+    :medicationName "Paracetamol" ;
+    :medicationDosage "500 mg" ;
+    rdfs:label "Paracetamol" .
+:Amoxicillin rdf:type owl:NamedIndividual, :Antibiotic ;
+    :isUsedIn :PneumoniaTreatment ;
+    :medicationName "Amoxicillin" ;
+    :medicationDosage "1 g" ;
+    rdfs:label "Amoxicillin" .
+:Amlodipine rdf:type owl:NamedIndividual, :Antihypertensive ;
+    :isUsedIn :HypertensionTreatment ;
+    :medicationName "Amlodipine" ;
+    :medicationDosage "5 mg" ;
+    rdfs:label "Amlodipine" .
+:Ramipril rdf:type owl:NamedIndividual, :Antihypertensive ;
+    :isUsedIn :HypertensionTreatment ;
+    :medicationName "Ramipril" ;
+    :medicationDosage "5 mg" ;
+    rdfs:label "Ramipril" .
+:Oseltamivir rdf:type owl:NamedIndividual, :Antiviral ;
+    :isUsedIn :InfluenzaTreatment ;
+    :medicationName "Oseltamivir" ;
+    :medicationDosage "75 mg" ;
+    rdfs:label "Oseltamivir" .
+:Ibuprofen rdf:type owl:NamedIndividual, :Analgesic ;
+    :isUsedIn :MigraineTreatment ;
+    :medicationName "Ibuprofen" ;
+    :medicationDosage "400 mg" ;
+    rdfs:label "Ibuprofen" .
+:Hydrocortisone rdf:type owl:NamedIndividual, :Medication ;
+    :isUsedIn :EczemaTreatment ;
+    :medicationName "Hydrocortisone" ;
+    :medicationDosage "1% cream" ;
+    rdfs:label "Hydrocortisone" .
+:Cefazolin rdf:type owl:NamedIndividual, :Antibiotic ;
+    :isUsedIn :AppendectomySurgery ;
+    :medicationName "Cefazolin" ;
+    :medicationDosage "1 g" ;
+    rdfs:label "Cefazolin" .
+:Salbutamol rdf:type owl:NamedIndividual, :Medication ;
+    :isUsedIn :RespiratoryPhysiotherapy ;
+    :medicationName "Salbutamol" ;
+    :medicationDosage "100 mcg" ;
+    rdfs:label "Salbutamol" .
+:Hospital_CharlesNicolle rdf:type owl:NamedIndividual, :PublicHospital ;
+    :hasDepartment :CardiologyDepartment_01 , :DermatologyDepartment_01 , :EmergencyDepartment_01 , :GeneralMedicineDepartment_01 ;
+    :hospitalName "Charles Nicolle Hospital" ;
+    rdfs:label "Charles Nicolle Hospital" .
+:Hospital_Rabta rdf:type owl:NamedIndividual, :PublicHospital ;
+    :hasDepartment :NeurologyDepartment_01 , :EmergencyDepartment_02 ;
+    :hospitalName "La Rabta Hospital" ;
+    rdfs:label "La Rabta Hospital" .
+:Hospital_CliniqueAlAmal rdf:type owl:NamedIndividual, :PrivateHospital ;
+    :hasDepartment :GeneralMedicineDepartment_02 ;
+    :hospitalName "Clinique Al Amal" ;
+    rdfs:label "Clinique Al Amal" .
+:Hospital_UniversityHospital_01 rdf:type owl:NamedIndividual, :UniversityHospital ;
+    :hasDepartment :CardiologyDepartment_02 ;
+    :hospitalName "University Hospital Center" ;
+    rdfs:label "University Hospital Center" .
+:CardiologyDepartment_01 rdf:type owl:NamedIndividual, :CardiologyDepartment ;
+    :locatedIn :Hospital_CharlesNicolle ;
+    :hasDoctor :Doctor_Ali ;
+    :includesAppointment :Appointment_003 ;
+    :departmentName "Cardiology Department - Charles Nicolle Hospital" ;
+    rdfs:label "Cardiology Department 01" .
+:DermatologyDepartment_01 rdf:type owl:NamedIndividual, :DermatologyDepartment ;
+    :locatedIn :Hospital_CharlesNicolle ;
+    :hasDoctor :Doctor_Nadia ;
+    :includesAppointment :Appointment_007 ;
+    :departmentName "Dermatology Department - Charles Nicolle Hospital" ;
+    rdfs:label "Dermatology Department 01" .
+:EmergencyDepartment_01 rdf:type owl:NamedIndividual, :EmergencyDepartment ;
+    :locatedIn :Hospital_CharlesNicolle ;
+    :hasDoctor :Doctor_Sami ;
+    :includesAppointment :Appointment_001 , :Appointment_010 ;
+    :departmentName "Emergency Department - Charles Nicolle Hospital" ;
+    rdfs:label "Emergency Department 01" .
+:GeneralMedicineDepartment_01 rdf:type owl:NamedIndividual, :GeneralMedicineDepartment ;
+    :locatedIn :Hospital_CharlesNicolle ;
+    :hasDoctor :Doctor_Salma ;
+    :includesAppointment :Appointment_002 , :Appointment_004 ;
+    :departmentName "General Medicine Department - Charles Nicolle Hospital" ;
+    rdfs:label "General Medicine Department 01" .
+:NeurologyDepartment_01 rdf:type owl:NamedIndividual, :NeurologyDepartment ;
+    :locatedIn :Hospital_Rabta ;
+    :hasDoctor :Doctor_Hatem ;
+    :includesAppointment :Appointment_006 ;
+    :departmentName "Neurology Department - La Rabta Hospital" ;
+    rdfs:label "Neurology Department 01" .
+:EmergencyDepartment_02 rdf:type owl:NamedIndividual, :EmergencyDepartment ;
+    :locatedIn :Hospital_Rabta ;
+    :hasDoctor :Doctor_Walid ;
+    :includesAppointment :Appointment_008 ;
+    :departmentName "Emergency Department - La Rabta Hospital" ;
+    rdfs:label "Emergency Department 02" .
+:CardiologyDepartment_02 rdf:type owl:NamedIndividual, :CardiologyDepartment ;
+    :locatedIn :Hospital_UniversityHospital_01 ;
+    :hasDoctor :Doctor_Mohamed ;
+    :includesAppointment :Appointment_005 ;
+    :departmentName "Cardiology Department - University Hospital Center" ;
+    rdfs:label "Cardiology Department 02" .
+:GeneralMedicineDepartment_02 rdf:type owl:NamedIndividual, :GeneralMedicineDepartment ;
+    :locatedIn :Hospital_CliniqueAlAmal ;
+    :hasDoctor :Doctor_Rim ;
+    :includesAppointment :Appointment_009 ;
+    :departmentName "General Medicine Department - Clinique Al Amal" ;
+    rdfs:label "General Medicine Department 02" .
+:Doctor_Ali rdf:type owl:NamedIndividual, :Cardiologist ;
+    :worksIn :CardiologyDepartment_01 ;
+    :treats :Patient_Mariam ;
+    :doctorName "Ali Trabelsi" ;
+    :doctorLicenseNumber "MED-45821" ;
+    rdfs:label "Dr. Ali Trabelsi" .
+:Doctor_Hatem rdf:type owl:NamedIndividual, :Neurologist ;
+    :worksIn :NeurologyDepartment_01 ;
+    :treats :Patient_Leila ;
+    :doctorName "Hatem Mansour" ;
+    :doctorLicenseNumber "MED-51983" ;
+    rdfs:label "Dr. Hatem Mansour" .
+:Doctor_Nadia rdf:type owl:NamedIndividual, :Dermatologist ;
+    :worksIn :DermatologyDepartment_01 ;
+    :treats :Patient_Omar ;
+    :doctorName "Nadia Gharbi" ;
+    :doctorLicenseNumber "MED-62947" ;
+    rdfs:label "Dr. Nadia Gharbi" .
+:Doctor_Salma rdf:type owl:NamedIndividual, :GeneralPractitioner ;
+    :worksIn :GeneralMedicineDepartment_01 ;
+    :treats :Patient_Ahmed , :Patient_Sara , :Patient_Youssef ;
+    :doctorName "Salma Ben Amor" ;
+    :doctorLicenseNumber "MED-36214" ;
+    rdfs:label "Dr. Salma Ben Amor" .
+:Doctor_Mohamed rdf:type owl:NamedIndividual, :Cardiologist ;
+    :worksIn :CardiologyDepartment_02 ;
+    :treats :Patient_Karim ;
+    :doctorName "Mohamed Jlassi" ;
+    :doctorLicenseNumber "MED-71254" ;
+    rdfs:label "Dr. Mohamed Jlassi" .
+:Doctor_Rim rdf:type owl:NamedIndividual, :GeneralPractitioner ;
+    :worksIn :GeneralMedicineDepartment_02 ;
+    :treats :Patient_Nour ;
+    :doctorName "Rim Ben Salem" ;
+    :doctorLicenseNumber "MED-84631" ;
+    rdfs:label "Dr. Rim Ben Salem" .
+:Doctor_Sami rdf:type owl:NamedIndividual, :EmergencyPhysician ;
+    :worksIn :EmergencyDepartment_01 ;
+    :treats :Patient_Hichem ;
+    :doctorName "Sami Hamdi" ;
+    :doctorLicenseNumber "MED-27395" ;
+    rdfs:label "Dr. Sami Hamdi" .
+:Doctor_Walid rdf:type owl:NamedIndividual, :EmergencyPhysician ;
+    :worksIn :EmergencyDepartment_02 ;
+    :treats :Patient_Fatma ;
+    :doctorName "Walid Khemiri" ;
+    :doctorLicenseNumber "MED-93518" ;
+    rdfs:label "Dr. Walid Khemiri" .
+:BloodTest_001 rdf:type owl:NamedIndividual, :BloodTest ;
+    :isTestOf :Patient_Ahmed ;
+    :testDate "2026-09-20T09:30:00"^^xsd:dateTime ;
+    :testResult "Normal" ;
+    rdfs:label "Blood Test 001" .
+:XRay_001 rdf:type owl:NamedIndividual, :XRay ;
+    :isTestOf :Patient_Sara ;
+    :testDate "2026-09-21T14:00:00"^^xsd:dateTime ;
+    :testResult "No abnormality detected" ;
+    rdfs:label "X Ray 001" .
+:MRI_001 rdf:type owl:NamedIndividual, :MRI ;
+    :isTestOf :Patient_Mariam ;
+    :testDate "2026-09-22T10:00:00"^^xsd:dateTime ;
+    :testResult "Normal" ;
+    rdfs:label "MRI 001" .
+:BloodTest_002 rdf:type owl:NamedIndividual, :BloodTest ;
+    :isTestOf :Patient_Karim ;
+    :testDate "2026-10-15T08:30:00"^^xsd:dateTime ;
+    :testResult "Elevated cholesterol" ;
+    rdfs:label "Blood Test 002" .
+:CTScan_001 rdf:type owl:NamedIndividual, :CTScan ;
+    :isTestOf :Patient_Leila ;
+    :testDate "2026-10-20T10:30:00"^^xsd:dateTime ;
+    :testResult "No abnormality detected" ;
+    rdfs:label "CT Scan 001" .
+:UrineTest_001 rdf:type owl:NamedIndividual, :UrineTest ;
+    :isTestOf :Patient_Fatma ;
+    :testDate "2026-10-22T09:00:00"^^xsd:dateTime ;
+    :testResult "Normal" ;
+    rdfs:label "Urine Test 001" .
+:XRay_002 rdf:type owl:NamedIndividual, :XRay ;
+    :isTestOf :Patient_Fatma ;
+    :testDate "2026-10-24T11:00:00"^^xsd:dateTime ;
+    :testResult "Lung opacity detected" ;
+    rdfs:label "X Ray 002" .
+:BloodTest_003 rdf:type owl:NamedIndividual, :BloodTest ;
+    :isTestOf :Patient_Omar ;
+    :testDate "2026-10-12T08:45:00"^^xsd:dateTime ;
+    :testResult "Elevated IgE level" ;
+    rdfs:label "Blood Test 003" .
+:XRay_003 rdf:type owl:NamedIndividual, :XRay ;
+    :isTestOf :Patient_Youssef ;
+    :testDate "2026-10-10T09:45:00"^^xsd:dateTime ;
+    :testResult "No abnormality detected" ;
+    rdfs:label "X Ray 003" .
+:BloodTest_004 rdf:type owl:NamedIndividual, :BloodTest ;
+    :isTestOf :Patient_Nour ;
+    :testDate "2026-10-18T08:00:00"^^xsd:dateTime ;
+    :testResult "High blood glucose" ;
+    rdfs:label "Blood Test 004" .
+:BloodTest_005 rdf:type owl:NamedIndividual, :BloodTest ;
+    :isTestOf :Patient_Hichem ;
+    :testDate "2026-10-26T22:15:00"^^xsd:dateTime ;
+    :testResult "Elevated white blood cell count" ;
+    rdfs:label "Blood Test 005" .
+:Appointment_001 rdf:type owl:NamedIndividual, :EmergencyAppointment ;
+    :belongsToDepartment :EmergencyDepartment_01 ;
+    :appointmentOf :Patient_Ahmed ;
+    :appointmentDate "2026-09-25T10:00:00"^^xsd:dateTime ;
+    :appointmentStatus "Confirmed" ;
+    rdfs:label "Appointment 001" .
+:Appointment_002 rdf:type owl:NamedIndividual, :FollowUpAppointment ;
+    :belongsToDepartment :GeneralMedicineDepartment_01 ;
+    :appointmentOf :Patient_Sara ;
+    :appointmentDate "2026-09-30T10:00:00"^^xsd:dateTime ;
+    :appointmentStatus "Pending" ;
+    rdfs:label "Appointment 002" .
+:Appointment_003 rdf:type owl:NamedIndividual, :Consultation ;
+    :belongsToDepartment :CardiologyDepartment_01 ;
+    :appointmentOf :Patient_Mariam ;
+    :appointmentDate "2026-09-28T10:00:00"^^xsd:dateTime ;
+    :appointmentStatus "Confirmed" ;
+    rdfs:label "Appointment 003" .
+:Appointment_004 rdf:type owl:NamedIndividual, :Consultation ;
+    :belongsToDepartment :GeneralMedicineDepartment_01 ;
+    :appointmentOf :Patient_Youssef ;
+    :appointmentDate "2026-10-01T10:00:00"^^xsd:dateTime ;
+    :appointmentStatus "Pending" ;
+    rdfs:label "Appointment 004" .
+:Appointment_005 rdf:type owl:NamedIndividual, :Consultation ;
+    :belongsToDepartment :CardiologyDepartment_02 ;
+    :appointmentOf :Patient_Karim ;
+    :appointmentDate "2026-11-03T09:00:00"^^xsd:dateTime ;
+    :appointmentStatus "Confirmed" ;
+    rdfs:label "Appointment 005" .
+:Appointment_006 rdf:type owl:NamedIndividual, :FollowUpAppointment ;
+    :belongsToDepartment :NeurologyDepartment_01 ;
+    :appointmentOf :Patient_Leila ;
+    :appointmentDate "2026-11-05T11:00:00"^^xsd:dateTime ;
+    :appointmentStatus "Pending" ;
+    rdfs:label "Appointment 006" .
+:Appointment_007 rdf:type owl:NamedIndividual, :Consultation ;
+    :belongsToDepartment :DermatologyDepartment_01 ;
+    :appointmentOf :Patient_Omar ;
+    :appointmentDate "2026-11-04T15:30:00"^^xsd:dateTime ;
+    :appointmentStatus "Confirmed" ;
+    rdfs:label "Appointment 007" .
+:Appointment_008 rdf:type owl:NamedIndividual, :EmergencyAppointment ;
+    :belongsToDepartment :EmergencyDepartment_02 ;
+    :appointmentOf :Patient_Fatma ;
+    :appointmentDate "2026-10-25T08:15:00"^^xsd:dateTime ;
+    :appointmentStatus "Completed" ;
+    rdfs:label "Appointment 008" .
+:Appointment_009 rdf:type owl:NamedIndividual, :Consultation ;
+    :belongsToDepartment :GeneralMedicineDepartment_02 ;
+    :appointmentOf :Patient_Nour ;
+    :appointmentDate "2026-11-06T10:00:00"^^xsd:dateTime ;
+    :appointmentStatus "Confirmed" ;
+    rdfs:label "Appointment 009" .
+:Appointment_010 rdf:type owl:NamedIndividual, :EmergencyAppointment ;
+    :belongsToDepartment :EmergencyDepartment_01 ;
+    :appointmentOf :Patient_Hichem ;
+    :appointmentDate "2026-10-26T22:40:00"^^xsd:dateTime ;
+    :appointmentStatus "Completed" ;
+    rdfs:label "Appointment 010" .
+:Patient_Ahmed rdf:type owl:NamedIndividual, :AdultPatient ;
+    :hasDisease :Diabetes ;
+    :treatedBy :Doctor_Salma ;
+    :undergoesTest :BloodTest_001 ;
+    :hasAppointment :Appointment_001 ;
+    :followedInDepartment :GeneralMedicineDepartment_01 ;
+    :followedInHospital :Hospital_CharlesNicolle ;
+    :hasName "Ahmed Ben Ali" ;
+    :hasAge 45 ;
+    :hasGender "Male" ;
+    :hasBloodType "O+" ;
+    :hasPhoneNumber "22123456" ;
+    rdfs:label "Ahmed Ben Ali" .
+:Patient_Sara rdf:type owl:NamedIndividual, :AdultPatient ;
+    :hasDisease :Influenza ;
+    :treatedBy :Doctor_Salma ;
+    :undergoesTest :XRay_001 ;
+    :hasAppointment :Appointment_002 ;
+    :followedInDepartment :GeneralMedicineDepartment_01 ;
+    :followedInHospital :Hospital_CharlesNicolle ;
+    :hasName "Sara Trabelsi" ;
+    :hasAge 28 ;
+    :hasGender "Female" ;
+    :hasBloodType "A+" ;
+    :hasPhoneNumber "22567891" ;
+    rdfs:label "Sara Trabelsi" .
+:Patient_Youssef rdf:type owl:NamedIndividual, :ChildPatient ;
+    :hasDisease :Asthma ;
+    :treatedBy :Doctor_Salma ;
+    :undergoesTest :XRay_003 ;
+    :hasAppointment :Appointment_004 ;
+    :followedInDepartment :GeneralMedicineDepartment_01 ;
+    :followedInHospital :Hospital_CharlesNicolle ;
+    :hasName "Youssef Ben Salah" ;
+    :hasAge 17 ;
+    :hasGender "Male" ;
+    :hasBloodType "B+" ;
+    :hasPhoneNumber "23987654" ;
+    rdfs:label "Youssef Ben Salah" .
+:Patient_Mariam rdf:type owl:NamedIndividual, :ElderlyPatient ;
+    :hasDisease :Hypertension ;
+    :treatedBy :Doctor_Ali ;
+    :undergoesTest :MRI_001 ;
+    :hasAppointment :Appointment_003 ;
+    :followedInDepartment :CardiologyDepartment_01 ;
+    :followedInHospital :Hospital_CharlesNicolle ;
+    :hasName "Mariam Haddad" ;
+    :hasAge 67 ;
+    :hasGender "Female" ;
+    :hasBloodType "AB+" ;
+    :hasPhoneNumber "20112233" ;
+    rdfs:label "Mariam Haddad" .
+:Patient_Karim rdf:type owl:NamedIndividual, :AdultPatient ;
+    :hasDisease :Hypertension ;
+    :treatedBy :Doctor_Mohamed ;
+    :undergoesTest :BloodTest_002 ;
+    :hasAppointment :Appointment_005 ;
+    :followedInDepartment :CardiologyDepartment_02 ;
+    :followedInHospital :Hospital_UniversityHospital_01 ;
+    :hasName "Karim Mejri" ;
+    :hasAge 52 ;
+    :hasGender "Male" ;
+    :hasBloodType "B-" ;
+    :hasPhoneNumber "98456123" ;
+    rdfs:label "Karim Mejri" .
+:Patient_Leila rdf:type owl:NamedIndividual, :AdultPatient ;
+    :hasDisease :Migraine ;
+    :treatedBy :Doctor_Hatem ;
+    :undergoesTest :CTScan_001 ;
+    :hasAppointment :Appointment_006 ;
+    :followedInDepartment :NeurologyDepartment_01 ;
+    :followedInHospital :Hospital_Rabta ;
+    :hasName "Leila Bouazizi" ;
+    :hasAge 34 ;
+    :hasGender "Female" ;
+    :hasBloodType "A-" ;
+    :hasPhoneNumber "55321987" ;
+    rdfs:label "Leila Bouazizi" .
+:Patient_Omar rdf:type owl:NamedIndividual, :ChildPatient ;
+    :hasDisease :Eczema ;
+    :treatedBy :Doctor_Nadia ;
+    :undergoesTest :BloodTest_003 ;
+    :hasAppointment :Appointment_007 ;
+    :followedInDepartment :DermatologyDepartment_01 ;
+    :followedInHospital :Hospital_CharlesNicolle ;
+    :hasName "Omar Chaabane" ;
+    :hasAge 8 ;
+    :hasGender "Male" ;
+    :hasBloodType "O-" ;
+    :hasPhoneNumber "29874512" ;
+    rdfs:label "Omar Chaabane" .
+:Patient_Fatma rdf:type owl:NamedIndividual, :ElderlyPatient ;
+    :hasDisease :Pneumonia ;
+    :treatedBy :Doctor_Walid ;
+    :undergoesTest :XRay_002 , :UrineTest_001 ;
+    :hasAppointment :Appointment_008 ;
+    :followedInDepartment :EmergencyDepartment_02 ;
+    :followedInHospital :Hospital_Rabta ;
+    :hasName "Fatma Gharsallah" ;
+    :hasAge 74 ;
+    :hasGender "Female" ;
+    :hasBloodType "AB-" ;
+    :hasPhoneNumber "21456987" ;
+    rdfs:label "Fatma Gharsallah" .
+:Patient_Nour rdf:type owl:NamedIndividual, :AdultPatient ;
+    :hasDisease :Diabetes ;
+    :treatedBy :Doctor_Rim ;
+    :undergoesTest :BloodTest_004 ;
+    :hasAppointment :Appointment_009 ;
+    :followedInDepartment :GeneralMedicineDepartment_02 ;
+    :followedInHospital :Hospital_CliniqueAlAmal ;
+    :hasName "Nour Ben Youssef" ;
+    :hasAge 41 ;
+    :hasGender "Female" ;
+    :hasBloodType "A+" ;
+    :hasPhoneNumber "24789654" ;
+    rdfs:label "Nour Ben Youssef" .
+:Patient_Hichem rdf:type owl:NamedIndividual, :AdultPatient ;
+    :hasDisease :Appendicitis ;
+    :treatedBy :Doctor_Sami ;
+    :undergoesTest :BloodTest_005 ;
+    :hasAppointment :Appointment_010 ;
+    :followedInDepartment :EmergencyDepartment_01 ;
+    :followedInHospital :Hospital_CharlesNicolle ;
+    :hasName "Hichem Karray" ;
+    :hasAge 29 ;
+    :hasGender "Male" ;
+    :hasBloodType "O+" ;
+    :hasPhoneNumber "97654321" ;
+    rdfs:label "Hichem Karray" .
+
+# ================= ALL DIFFERENT =================
+[ rdf:type owl:AllDifferent ; owl:distinctMembers ( :Fever_01 :Headache_01 :Cough_01 :Fatigue_01 :ChestPain_01 :SkinRash_01 :Diabetes :Hypertension :Influenza :Asthma :Appendicitis :Pneumonia :Migraine :Eczema :DiabetesTreatment :HypertensionTreatment :InfluenzaTreatment :PneumoniaTreatment :MigraineTreatment :EczemaTreatment :AppendectomySurgery :RespiratoryPhysiotherapy :Metformin :Paracetamol :Amoxicillin :Amlodipine :Ramipril :Oseltamivir :Ibuprofen :Hydrocortisone :Cefazolin :Salbutamol :Hospital_CharlesNicolle :Hospital_Rabta :Hospital_CliniqueAlAmal :Hospital_UniversityHospital_01 :CardiologyDepartment_01 :DermatologyDepartment_01 :EmergencyDepartment_01 :GeneralMedicineDepartment_01 :NeurologyDepartment_01 :EmergencyDepartment_02 :CardiologyDepartment_02 :GeneralMedicineDepartment_02 :Doctor_Ali :Doctor_Hatem :Doctor_Nadia :Doctor_Salma :Doctor_Mohamed :Doctor_Rim :Doctor_Sami :Doctor_Walid :BloodTest_001 :XRay_001 :MRI_001 :BloodTest_002 :CTScan_001 :UrineTest_001 :XRay_002 :BloodTest_003 :XRay_003 :BloodTest_004 :BloodTest_005 :Appointment_001 :Appointment_002 :Appointment_003 :Appointment_004 :Appointment_005 :Appointment_006 :Appointment_007 :Appointment_008 :Appointment_009 :Appointment_010 :Patient_Ahmed :Patient_Sara :Patient_Youssef :Patient_Mariam :Patient_Karim :Patient_Leila :Patient_Omar :Patient_Fatma :Patient_Nour :Patient_Hichem ) ] .

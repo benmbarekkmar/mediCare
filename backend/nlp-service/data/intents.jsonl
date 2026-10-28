@@ -1,0 +1,318 @@
+{"text": "Does Mariam have hypertension?", "intent": "ask_boolean", "lang": "en"}
+{"text": "Does Ahmed suffer from diabetes?", "intent": "ask_boolean", "lang": "en"}
+{"text": "Is Dr. Ali treated by the cardiology department?", "intent": "ask_boolean", "lang": "en"}
+{"text": "Has Karim taken an MRI?", "intent": "ask_boolean", "lang": "en"}
+{"text": "Does diabetes cause fatigue?", "intent": "ask_boolean", "lang": "en"}
+{"text": "Is HypertensionTreatment using Amlodipine?", "intent": "ask_boolean", "lang": "en"}
+{"text": "Est ce que Mariam souffre dhypertension ?", "intent": "ask_boolean", "lang": "fr"}
+{"text": "Est ce que Ahmed est suivi par le docteur hatem ?", "intent": "ask_boolean", "lang": "fr"}
+{"text": "Est ce que le diabete provoque la fatigue ?", "intent": "ask_boolean", "lang": "fr"}
+{"text": "Y a t il un traitement de la grippe qui prend oseltamivir ?", "intent": "ask_boolean", "lang": "fr"}
+{"text": "Est ce que la pneumonie a un traitement ?", "intent": "ask_boolean", "lang": "fr"}
+{"text": "Does Sara have asthma?", "intent": "ask_boolean", "lang": "en"}
+{"text": "Dosage of Metformin", "intent": "medication_dosage", "lang": "en"}
+{"text": "What is the dosage of Paracetamol?", "intent": "medication_dosage", "lang": "en"}
+{"text": "How much Amlodipine should be taken?", "intent": "medication_dosage", "lang": "en"}
+{"text": "Posology of Amoxicillin", "intent": "medication_dosage", "lang": "en"}
+{"text": "What dose of Ibuprofen is documented?", "intent": "medication_dosage", "lang": "en"}
+{"text": "Quelle est la posologie du metformin ?", "intent": "medication_dosage", "lang": "fr"}
+{"text": "Donne moi la posologie de lamoxicilline", "intent": "medication_dosage", "lang": "fr"}
+{"text": "Combien de doliprane faut il prendre ?", "intent": "medication_dosage", "lang": "fr"}
+{"text": "Quelle dose de paracetamol ?", "intent": "medication_dosage", "lang": "fr"}
+{"text": "Posologie recommandee pour ramipril", "intent": "medication_dosage", "lang": "fr"}
+{"text": "How long does the DiabetesTreatment last?", "intent": "treatment_duration", "lang": "en"}
+{"text": "What is the duration of the InfluenzaTreatment?", "intent": "treatment_duration", "lang": "en"}
+{"text": "How many days does the pneumonia treatment take?", "intent": "treatment_duration", "lang": "en"}
+{"text": "Treatment duration for appendicitis", "intent": "treatment_duration", "lang": "en"}
+{"text": "Combien de temps dure le traitement du diabete ?", "intent": "treatment_duration", "lang": "fr"}
+{"text": "Quelle est la duree du traitement de la grippe ?", "intent": "treatment_duration", "lang": "fr"}
+{"text": "Duree prevue pour la kinesitherapie respiratoire", "intent": "treatment_duration", "lang": "fr"}
+{"text": "Jusqua quand suivre le traitement de lhypertension ?", "intent": "treatment_duration", "lang": "fr"}
+{"text": "Who is the doctor of Ahmed?", "intent": "patient_doctor", "lang": "en"}
+{"text": "Which doctor treats Mariam?", "intent": "patient_doctor", "lang": "en"}
+{"text": "Who follows Sara?", "intent": "patient_doctor", "lang": "en"}
+{"text": "What physician is Karim assigned to?", "intent": "patient_doctor", "lang": "en"}
+{"text": "Which medecin takes care of Fatma?", "intent": "patient_doctor", "lang": "en"}
+{"text": "Qui est le medecin de ahmed ?", "intent": "patient_doctor", "lang": "fr"}
+{"text": "Quel docteur suit mariam ?", "intent": "patient_doctor", "lang": "fr"}
+{"text": "Qui prend en charge karim ?", "intent": "patient_doctor", "lang": "fr"}
+{"text": "Le medecin traitant de sara", "intent": "patient_doctor", "lang": "fr"}
+{"text": "Chez quel praticien est hichem ?", "intent": "patient_doctor", "lang": "fr"}
+{"text": "Which patients are followed by Dr. Hatem?", "intent": "doctor_patients", "lang": "en"}
+{"text": "List the patients of doctor ali", "intent": "doctor_patients", "lang": "en"}
+{"text": "How many people does Dr. Nadia treat?", "intent": "doctor_patients", "lang": "en"}
+{"text": "Give me the patients attended by rim", "intent": "doctor_patients", "lang": "en"}
+{"text": "Quels sont les patients du docteur hatem ?", "intent": "doctor_patients", "lang": "fr"}
+{"text": "Liste les malades suivis par dr nadia", "intent": "doctor_patients", "lang": "fr"}
+{"text": "Qui est suivi par le docteur sami ?", "intent": "doctor_patients", "lang": "fr"}
+{"text": "Les patients du docteur walid", "intent": "doctor_patients", "lang": "fr"}
+{"text": "Which hospital does Dr. Ali work in?", "intent": "doctor_hospital", "lang": "en"}
+{"text": "What hospital employs Hatem?", "intent": "doctor_hospital", "lang": "en"}
+{"text": "For which hospital does Rim work?", "intent": "doctor_hospital", "lang": "en"}
+{"text": "Dans quel hopital travaille le docteur mohamed ?", "intent": "doctor_hospital", "lang": "fr"}
+{"text": "Le docteur sami exerce dans quel etablissement ?", "intent": "doctor_hospital", "lang": "fr"}
+{"text": "Hopital du docteur rim", "intent": "doctor_hospital", "lang": "fr"}
+{"text": "Which department does Dr. Salma work in?", "intent": "doctor_department", "lang": "en"}
+{"text": "What service is Hatem assigned to?", "intent": "doctor_department", "lang": "en"}
+{"text": "Le docteur ali travaille dans quel service ?", "intent": "doctor_department", "lang": "fr"}
+{"text": "Service du docteur nadia", "intent": "doctor_department", "lang": "fr"}
+{"text": "Dans quelle unite exerce dr walid ?", "intent": "doctor_department", "lang": "fr"}
+{"text": "Which hospital hosts the neurology department?", "intent": "department_hospital", "lang": "en"}
+{"text": "What hospital is the cardiology department in?", "intent": "department_hospital", "lang": "en"}
+{"text": "Where is the emergency department located?", "intent": "department_hospital", "lang": "en"}
+{"text": "Which establishment contains dermatology?", "intent": "department_hospital", "lang": "en"}
+{"text": "Dans quel hopital se trouve le service de neurologie ?", "intent": "department_hospital", "lang": "fr"}
+{"text": "Ou est situe le service de cardiologie ?", "intent": "department_hospital", "lang": "fr"}
+{"text": "Quel hopital heberge les urgences ?", "intent": "department_hospital", "lang": "fr"}
+{"text": "Le service de medecine generale est dans quel etablissement ?", "intent": "department_hospital", "lang": "fr"}
+{"text": "Which doctors work in the cardiology department?", "intent": "department_doctors", "lang": "en"}
+{"text": "List the doctors of the neurology service", "intent": "department_doctors", "lang": "en"}
+{"text": "What staff does the emergency department have?", "intent": "department_doctors", "lang": "en"}
+{"text": "Quels medecins travaillent au service de cardiologie ?", "intent": "department_doctors", "lang": "fr"}
+{"text": "Liste les praticiens du service de neurologie", "intent": "department_doctors", "lang": "fr"}
+{"text": "Le personnel medical des urgences", "intent": "department_doctors", "lang": "fr"}
+{"text": "Which departments does Charles Nicolle Hospital have?", "intent": "hospital_departments", "lang": "en"}
+{"text": "List the services of La Rabta Hospital", "intent": "hospital_departments", "lang": "en"}
+{"text": "What units exist in Clinique Al Amal?", "intent": "hospital_departments", "lang": "en"}
+{"text": "Quels sont les services de l hopital charles nicolle ?", "intent": "hospital_departments", "lang": "fr"}
+{"text": "Liste les departements de la rabta", "intent": "hospital_departments", "lang": "fr"}
+{"text": "Les unites de la clinique al amal", "intent": "hospital_departments", "lang": "fr"}
+{"text": "Which doctors work at La Rabta Hospital?", "intent": "hospital_doctors", "lang": "en"}
+{"text": "List the physicians of Charles Nicolle", "intent": "hospital_doctors", "lang": "en"}
+{"text": "Quels medecins exerce a l hopital charles nicolle ?", "intent": "hospital_doctors", "lang": "fr"}
+{"text": "Les docteurs de la clinique al amal", "intent": "hospital_doctors", "lang": "fr"}
+{"text": "Which patients are followed in Charles Nicolle Hospital?", "intent": "followed_in_hospital", "lang": "en"}
+{"text": "People treated at La Rabta Hospital", "intent": "followed_in_hospital", "lang": "en"}
+{"text": "Show the patients of Clinique Al Amal", "intent": "followed_in_hospital", "lang": "en"}
+{"text": "Quels patients sont suivis a l hopital la rabta ?", "intent": "followed_in_hospital", "lang": "fr"}
+{"text": "Les malades pris en charge a charles nicolle", "intent": "followed_in_hospital", "lang": "fr"}
+{"text": "Medications used for hypertension", "intent": "disease_medications", "lang": "en"}
+{"text": "What drugs treat diabetes?", "intent": "disease_medications", "lang": "en"}
+{"text": "Which medication is prescribed for asthma?", "intent": "disease_medications", "lang": "en"}
+{"text": "What pills for influenza?", "intent": "disease_medications", "lang": "en"}
+{"text": "Quels medicaments pour lhypertension ?", "intent": "disease_medications", "lang": "fr"}
+{"text": "Quels médicaments sont prescrits pour le diabete ?", "intent": "disease_medications", "lang": "fr"}
+{"text": "Que prendre en cas d asthme ?", "intent": "disease_medications", "lang": "fr"}
+{"text": "Liste les medicaments utilises contre la grippe", "intent": "disease_medications", "lang": "fr"}
+{"text": "Which medications are in DiabetesTreatment?", "intent": "treatment_medications", "lang": "en"}
+{"text": "Drugs used by the HypertensionTreatment", "intent": "treatment_medications", "lang": "en"}
+{"text": "What does the PneumoniaTreatment contain?", "intent": "treatment_medications", "lang": "en"}
+{"text": "Quels medicaments compose le traitement de la grippe ?", "intent": "treatment_medications", "lang": "fr"}
+{"text": "Les drogues utilisees par le traitement du diabete", "intent": "treatment_medications", "lang": "fr"}
+{"text": "How to treat diabetes?", "intent": "disease_treatments", "lang": "en"}
+{"text": "Which treatments exist for hypertension?", "intent": "disease_treatments", "lang": "en"}
+{"text": "What is the therapy for pneumonia?", "intent": "disease_treatments", "lang": "en"}
+{"text": "Care options for asthma", "intent": "disease_treatments", "lang": "en"}
+{"text": "Quels sont les traitements du diabete ?", "intent": "disease_treatments", "lang": "fr"}
+{"text": "Comment soigner lhypertension ?", "intent": "disease_treatments", "lang": "fr"}
+{"text": "Prise en charge de la pneumonie", "intent": "disease_treatments", "lang": "fr"}
+{"text": "Quelle therapie pour l asthme ?", "intent": "disease_treatments", "lang": "fr"}
+{"text": "Which symptoms does diabetes have?", "intent": "disease_symptoms", "lang": "en"}
+{"text": "What are the symptoms of hypertension?", "intent": "disease_symptoms", "lang": "en"}
+{"text": "Symptoms of influenza", "intent": "disease_symptoms", "lang": "en"}
+{"text": "What does appendicitis manifest as?", "intent": "disease_symptoms", "lang": "en"}
+{"text": "Signs of asthma", "intent": "disease_symptoms", "lang": "en"}
+{"text": "Quels sont les symptomes de la grippe ?", "intent": "disease_symptoms", "lang": "fr"}
+{"text": "Symptomes du diabete", "intent": "disease_symptoms", "lang": "fr"}
+{"text": "Comment se manifeste lhypertension ?", "intent": "disease_symptoms", "lang": "fr"}
+{"text": "Quels signes cliniques pour l appendicite ?", "intent": "disease_symptoms", "lang": "fr"}
+{"text": "Which diseases cause chest pain?", "intent": "symptom_diseases", "lang": "en"}
+{"text": "What illness has fever as a symptom?", "intent": "symptom_diseases", "lang": "en"}
+{"text": "Diseases related to headache", "intent": "symptom_diseases", "lang": "en"}
+{"text": "Quelles maladies provoquent la fatigue ?", "intent": "symptom_diseases", "lang": "fr"}
+{"text": "Quel pathologie donne une toux ?", "intent": "symptom_diseases", "lang": "fr"}
+{"text": "Maladies associees a une eruption cutanee", "intent": "symptom_diseases", "lang": "fr"}
+{"text": "Which patients have diabetes?", "intent": "disease_patients", "lang": "en"}
+{"text": "List the people suffering from hypertension", "intent": "disease_patients", "lang": "en"}
+{"text": "Who is affected by asthma?", "intent": "disease_patients", "lang": "en"}
+{"text": "Quels patients ont un diabete ?", "intent": "disease_patients", "lang": "fr"}
+{"text": "Liste les personnes souffrant dhypertension", "intent": "disease_patients", "lang": "fr"}
+{"text": "Qui est atteint dosthme ?", "intent": "disease_patients", "lang": "fr"}
+{"text": "Which diseases does Ahmed have?", "intent": "patient_diseases", "lang": "en"}
+{"text": "What illness affects Mariam?", "intent": "patient_diseases", "lang": "en"}
+{"text": "Diagnosis of Karim", "intent": "patient_diseases", "lang": "en"}
+{"text": "Quelles maladies pour ahmed ?", "intent": "patient_diseases", "lang": "fr"}
+{"text": "De quoi souffre mariam ?", "intent": "patient_diseases", "lang": "fr"}
+{"text": "Pathologies connues de karim", "intent": "patient_diseases", "lang": "fr"}
+{"text": "Which tests did Sara undergo?", "intent": "patient_tests", "lang": "en"}
+{"text": "List the analyses of Ahmed", "intent": "patient_tests", "lang": "en"}
+{"text": "What exams has Fatma done?", "intent": "patient_tests", "lang": "en"}
+{"text": "Quels examens a passe sara ?", "intent": "patient_tests", "lang": "fr"}
+{"text": "Liste les analyses de ahmed", "intent": "patient_tests", "lang": "fr"}
+{"text": "Examens passes par fatma", "intent": "patient_tests", "lang": "fr"}
+{"text": "Which appointments does Youssef have?", "intent": "patient_appointments", "lang": "en"}
+{"text": "List the visits of Mariam", "intent": "patient_appointments", "lang": "en"}
+{"text": "Appointments booked for Omar", "intent": "patient_appointments", "lang": "en"}
+{"text": "Quels rendez vous pour youssef ?", "intent": "patient_appointments", "lang": "fr"}
+{"text": "Liste les consultations de mariam", "intent": "patient_appointments", "lang": "fr"}
+{"text": "Rendez vous pris par omar", "intent": "patient_appointments", "lang": "fr"}
+{"text": "Which tests have a positive result?", "intent": "tests_by_result", "lang": "en"}
+{"text": "Show negative test results", "intent": "tests_by_result", "lang": "en"}
+{"text": "Blood work with abnormal conclusion", "intent": "tests_by_result", "lang": "en"}
+{"text": "Quels examens ont un resultat positif ?", "intent": "tests_by_result", "lang": "fr"}
+{"text": "Resultat negatif des analyses", "intent": "tests_by_result", "lang": "fr"}
+{"text": "Examens dont la conclusion est normale", "intent": "tests_by_result", "lang": "fr"}
+{"text": "List all blood tests", "intent": "tests_by_type", "lang": "en"}
+{"text": "Which MRI exams exist?", "intent": "tests_by_type", "lang": "en"}
+{"text": "Show the X-Ray tests", "intent": "tests_by_type", "lang": "en"}
+{"text": "Analyse de sang effectuees", "intent": "tests_by_type", "lang": "fr"}
+{"text": "Liste les irm realisees", "intent": "tests_by_type", "lang": "fr"}
+{"text": "Quelles radiographies existent ?", "intent": "tests_by_type", "lang": "fr"}
+{"text": "Doctors working in cardiology", "intent": "doctors_by_specialty", "lang": "en"}
+{"text": "Which doctors are dermatologists?", "intent": "doctors_by_specialty", "lang": "en"}
+{"text": "List the neurologists", "intent": "doctors_by_specialty", "lang": "en"}
+{"text": "Are there general practitioners?", "intent": "doctors_by_specialty", "lang": "en"}
+{"text": "Medecins travaillant en cardiologie", "intent": "doctors_by_specialty", "lang": "fr"}
+{"text": "Quels sont les dermatologues ?", "intent": "doctors_by_specialty", "lang": "fr"}
+{"text": "Liste les neurologues", "intent": "doctors_by_specialty", "lang": "fr"}
+{"text": "Y a t il des medecins generalistes ?", "intent": "doctors_by_specialty", "lang": "fr"}
+{"text": "List the antibiotics", "intent": "medications_by_class", "lang": "en"}
+{"text": "Which medications are analgesics?", "intent": "medications_by_class", "lang": "en"}
+{"text": "What antivirals exist?", "intent": "medications_by_class", "lang": "en"}
+{"text": "Give me the antihypertensive drugs", "intent": "medications_by_class", "lang": "en"}
+{"text": "Liste les antibiotiques", "intent": "medications_by_class", "lang": "fr"}
+{"text": "Quels sont les antalgiques ?", "intent": "medications_by_class", "lang": "fr"}
+{"text": "Medicaments antidiabetiques disponibles", "intent": "medications_by_class", "lang": "fr"}
+{"text": "Which hospitals are public?", "intent": "hospitals_by_type", "lang": "en"}
+{"text": "List the private hospitals", "intent": "hospitals_by_type", "lang": "en"}
+{"text": "What university hospitals exist?", "intent": "hospitals_by_type", "lang": "en"}
+{"text": "Quels hopitaux sont publics ?", "intent": "hospitals_by_type", "lang": "fr"}
+{"text": "Liste les cliniques privees", "intent": "hospitals_by_type", "lang": "fr"}
+{"text": "List the cardiology departments", "intent": "departments_by_type", "lang": "en"}
+{"text": "Which emergency departments exist?", "intent": "departments_by_type", "lang": "en"}
+{"text": "Neurology departments available", "intent": "departments_by_type", "lang": "en"}
+{"text": "Quels sont les services de cardiologie ?", "intent": "departments_by_type", "lang": "fr"}
+{"text": "Liste les services des urgences", "intent": "departments_by_type", "lang": "fr"}
+{"text": "Which hospitals have a cardiology department?", "intent": "hospitals_by_department_type", "lang": "en"}
+{"text": "List the hospitals with an emergency service", "intent": "hospitals_by_department_type", "lang": "en"}
+{"text": "What hospitals contain a neurology department?", "intent": "hospitals_by_department_type", "lang": "en"}
+{"text": "Quels hopitaux ont un service de cardiologie ?", "intent": "hospitals_by_department_type", "lang": "fr"}
+{"text": "Dans quels hopitaux trouve t on un service des urgences ?", "intent": "hospitals_by_department_type", "lang": "fr"}
+{"text": "Appointments in the cardiology department", "intent": "appointments_by_department", "lang": "en"}
+{"text": "Which consultations are booked in neurology?", "intent": "appointments_by_department", "lang": "en"}
+{"text": "Rendez vous du service de medecine generale", "intent": "appointments_by_department", "lang": "fr"}
+{"text": "Consultations prevues aux urgences", "intent": "appointments_by_department", "lang": "fr"}
+{"text": "How many appointments are pending?", "intent": "appointments_by_status", "lang": "en"}
+{"text": "List the confirmed appointments", "intent": "appointments_by_status", "lang": "en"}
+{"text": "Which visits are cancelled?", "intent": "appointments_by_status", "lang": "en"}
+{"text": "Appointments with status completed", "intent": "appointments_by_status", "lang": "en"}
+{"text": "Quels rendez vous sont en attente ?", "intent": "appointments_by_status", "lang": "fr"}
+{"text": "Liste les consultations confirmees", "intent": "appointments_by_status", "lang": "fr"}
+{"text": "Rendez vous annules", "intent": "appointments_by_status", "lang": "fr"}
+{"text": "List the emergency appointments", "intent": "appointments_by_type", "lang": "en"}
+{"text": "Which follow up appointments exist?", "intent": "appointments_by_type", "lang": "en"}
+{"text": "Show simple consultations", "intent": "appointments_by_type", "lang": "en"}
+{"text": "Quels sont les rendez vous d urgence ?", "intent": "appointments_by_type", "lang": "fr"}
+{"text": "Liste les consultations de suivi", "intent": "appointments_by_type", "lang": "fr"}
+{"text": "What are the upcoming appointments?", "intent": "upcoming_appointments", "lang": "en"}
+{"text": "List future appointments", "intent": "upcoming_appointments", "lang": "en"}
+{"text": "Which visits are scheduled next?", "intent": "upcoming_appointments", "lang": "en"}
+{"text": "Appointments planned today", "intent": "upcoming_appointments", "lang": "en"}
+{"text": "Quels sont les prochains rendez vous ?", "intent": "upcoming_appointments", "lang": "fr"}
+{"text": "Liste les consultations a venir", "intent": "upcoming_appointments", "lang": "fr"}
+{"text": "Rendez vous prevus aujourdhui", "intent": "upcoming_appointments", "lang": "fr"}
+{"text": "Appointments after 2026-11-01", "intent": "appointments_by_date", "lang": "en"}
+{"text": "Which appointments are on 2026-10-15?", "intent": "appointments_by_date", "lang": "en"}
+{"text": "Appointments between 2026-11-01 and 2026-11-30", "intent": "appointments_by_date", "lang": "en"}
+{"text": "Visits before 2026-12-01", "intent": "appointments_by_date", "lang": "en"}
+{"text": "Rendez vous apres le 2026-11-01", "intent": "appointments_by_date", "lang": "fr"}
+{"text": "Quels rdv le 2026-10-20 ?", "intent": "appointments_by_date", "lang": "fr"}
+{"text": "Consultations avant 2026-12-01", "intent": "appointments_by_date", "lang": "fr"}
+{"text": "List the patients older than 40", "intent": "patients_by_age_comparator", "lang": "en"}
+{"text": "Patients under 18", "intent": "patients_by_age_comparator", "lang": "en"}
+{"text": "Which patients are between 20 and 40?", "intent": "patients_by_age_comparator", "lang": "en"}
+{"text": "Patients aged more than 65", "intent": "patients_by_age_comparator", "lang": "en"}
+{"text": "Give me patients younger than 30", "intent": "patients_by_age_comparator", "lang": "en"}
+{"text": "Liste les patients de plus de 40 ans", "intent": "patients_by_age_comparator", "lang": "fr"}
+{"text": "Patients ages moins de 18 ans", "intent": "patients_by_age_comparator", "lang": "fr"}
+{"text": "Quels patients ont entre 20 et 40 ans ?", "intent": "patients_by_age_comparator", "lang": "fr"}
+{"text": "Personnes agées de plus de 65 ans", "intent": "patients_by_age_comparator", "lang": "fr"}
+{"text": "List the child patients", "intent": "patients_by_age_group", "lang": "en"}
+{"text": "Which patients are adults?", "intent": "patients_by_age_group", "lang": "en"}
+{"text": "Show elderly patients", "intent": "patients_by_age_group", "lang": "en"}
+{"text": "How many seniors are followed?", "intent": "patients_by_age_group", "lang": "en"}
+{"text": "Liste les patients enfants", "intent": "patients_by_age_group", "lang": "fr"}
+{"text": "Quels sont les patients adultes ?", "intent": "patients_by_age_group", "lang": "fr"}
+{"text": "Personnes agees suivies", "intent": "patients_by_age_group", "lang": "fr"}
+{"text": "Which patients have blood type O negative?", "intent": "patients_by_blood_type", "lang": "en"}
+{"text": "Patients with A positive group", "intent": "patients_by_blood_type", "lang": "en"}
+{"text": "Show the patients with blood group AB positive", "intent": "patients_by_blood_type", "lang": "en"}
+{"text": "Quels patients sont du groupe A positif ?", "intent": "patients_by_blood_type", "lang": "fr"}
+{"text": "Patients du groupe O negatif", "intent": "patients_by_blood_type", "lang": "fr"}
+{"text": "List the female patients", "intent": "patients_by_gender", "lang": "en"}
+{"text": "Which patients are male?", "intent": "patients_by_gender", "lang": "en"}
+{"text": "Women followed in the hospital", "intent": "patients_by_gender", "lang": "en"}
+{"text": "Liste les patientes femmes", "intent": "patients_by_gender", "lang": "fr"}
+{"text": "Quels patients sont des hommes ?", "intent": "patients_by_gender", "lang": "fr"}
+{"text": "Which patients are emergency cases?", "intent": "emergency_patients", "lang": "en"}
+{"text": "List patients needing emergency care", "intent": "emergency_patients", "lang": "en"}
+{"text": "Emergency cases handled", "intent": "emergency_patients", "lang": "en"}
+{"text": "Quels patients sont en urgence ?", "intent": "emergency_patients", "lang": "fr"}
+{"text": "Liste des urgences relevees", "intent": "emergency_patients", "lang": "fr"}
+{"text": "Patients with chronic diseases", "intent": "chronic_patients", "lang": "en"}
+{"text": "Which patients are chronic?", "intent": "chronic_patients", "lang": "en"}
+{"text": "Long term illness patients", "intent": "chronic_patients", "lang": "en"}
+{"text": "Quels patients sont chroniques ?", "intent": "chronic_patients", "lang": "fr"}
+{"text": "Patients atteints de maladie chronique", "intent": "chronic_patients", "lang": "fr"}
+{"text": "What are the most common diseases?", "intent": "top_diseases_by_patients", "lang": "en"}
+{"text": "Top diseases by number of patients", "intent": "top_diseases_by_patients", "lang": "en"}
+{"text": "Which illnesses are the most frequent?", "intent": "top_diseases_by_patients", "lang": "en"}
+{"text": "Rank the diseases by patient count", "intent": "top_diseases_by_patients", "lang": "en"}
+{"text": "Quelles sont les maladies les plus frequentes ?", "intent": "top_diseases_by_patients", "lang": "fr"}
+{"text": "Classement des pathologies par nombre de patients", "intent": "top_diseases_by_patients", "lang": "fr"}
+{"text": "Which medications are the most prescribed?", "intent": "top_medications_by_diseases", "lang": "en"}
+{"text": "Top medications by number of diseases treated", "intent": "top_medications_by_diseases", "lang": "en"}
+{"text": "Les medicaments les plus prescrits", "intent": "top_medications_by_diseases", "lang": "fr"}
+{"text": "Quels medicaments traitent le plus de maladies ?", "intent": "top_medications_by_diseases", "lang": "fr"}
+{"text": "How many patients does each doctor have?", "intent": "patients_per_doctor", "lang": "en"}
+{"text": "Patient count per doctor", "intent": "patients_per_doctor", "lang": "en"}
+{"text": "Workload of every physician", "intent": "patients_per_doctor", "lang": "en"}
+{"text": "Combien de patients par medecin ?", "intent": "patients_per_doctor", "lang": "fr"}
+{"text": "Charge patient de chaque praticien", "intent": "patients_per_doctor", "lang": "fr"}
+{"text": "Which doctors have no patients?", "intent": "doctors_without_patients", "lang": "en"}
+{"text": "Doctors without patients", "intent": "doctors_without_patients", "lang": "en"}
+{"text": "Any unassigned physician?", "intent": "doctors_without_patients", "lang": "en"}
+{"text": "Quels medecins n ont aucun patient ?", "intent": "doctors_without_patients", "lang": "fr"}
+{"text": "Praticiens sans patient suivi", "intent": "doctors_without_patients", "lang": "fr"}
+{"text": "Describe Dr. Hatem", "intent": "describe_individual", "lang": "en"}
+{"text": "Give me the details of Charles Nicolle Hospital", "intent": "describe_individual", "lang": "en"}
+{"text": "Full record of Metformin", "intent": "describe_individual", "lang": "en"}
+{"text": "What do we know about Diabetes?", "intent": "describe_individual", "lang": "en"}
+{"text": "Profile of the patient Karim", "intent": "describe_individual", "lang": "en"}
+{"text": "Decrire le docteur hatem", "intent": "describe_individual", "lang": "fr"}
+{"text": "Donne moi la fiche de l hopital la rabta", "intent": "describe_individual", "lang": "fr"}
+{"text": "Tout savoir sur le diabete", "intent": "describe_individual", "lang": "fr"}
+{"text": "Dossier complet de metformine", "intent": "describe_individual", "lang": "fr"}
+{"text": "What is diabetes?", "intent": "disease_description", "lang": "en"}
+{"text": "Give me the description of hypertension", "intent": "disease_description", "lang": "en"}
+{"text": "Definition of asthma", "intent": "disease_description", "lang": "en"}
+{"text": "Tell me about influenza", "intent": "disease_description", "lang": "en"}
+{"text": "Disease description of pneumonia", "intent": "disease_description", "lang": "en"}
+{"text": "Quest ce que le diabete ?", "intent": "disease_description", "lang": "fr"}
+{"text": "Description de la maladie asthme", "intent": "disease_description", "lang": "fr"}
+{"text": "Parle moi de la grippe", "intent": "disease_description", "lang": "fr"}
+{"text": "Definition de l appendicite", "intent": "disease_description", "lang": "fr"}
+{"text": "Search for entities named \"cardio\"", "intent": "search_by_keyword", "lang": "en"}
+{"text": "Find individuals containing \"amol\"", "intent": "search_by_keyword", "lang": "en"}
+{"text": "Look for records matching \"nicolle\"", "intent": "search_by_keyword", "lang": "en"}
+{"text": "Chercher tout ce qui contient \"rabta\"", "intent": "search_by_keyword", "lang": "fr"}
+{"text": "Trouver les entites nommees \"pram\"", "intent": "search_by_keyword", "lang": "fr"}
+{"text": "Recherche le mot \"tamiflu\"", "intent": "search_by_keyword", "lang": "fr"}
+{"text": "How many patients are registered?", "intent": "count_instances", "lang": "en"}
+{"text": "Count the doctors", "intent": "count_instances", "lang": "en"}
+{"text": "What is the total number of hospitals?", "intent": "count_instances", "lang": "en"}
+{"text": "How many medications exist?", "intent": "count_instances", "lang": "en"}
+{"text": "Number of diseases in the ontology", "intent": "count_instances", "lang": "en"}
+{"text": "Combien de patients inscrits ?", "intent": "count_instances", "lang": "fr"}
+{"text": "Compte les medecins", "intent": "count_instances", "lang": "fr"}
+{"text": "Nombre total d hopitaux", "intent": "count_instances", "lang": "fr"}
+{"text": "Combien de medicaments existent ?", "intent": "count_instances", "lang": "fr"}
+{"text": "List all patients", "intent": "list_instances", "lang": "en"}
+{"text": "Show every hospital", "intent": "list_instances", "lang": "en"}
+{"text": "Give me the diseases", "intent": "list_instances", "lang": "en"}
+{"text": "Enumerate the symptoms", "intent": "list_instances", "lang": "en"}
+{"text": "Which departments exist?", "intent": "list_instances", "lang": "en"}
+{"text": "Liste tous les patients", "intent": "list_instances", "lang": "fr"}
+{"text": "Montre tous les hopitaux", "intent": "list_instances", "lang": "fr"}
+{"text": "Donne moi la liste des maladies", "intent": "list_instances", "lang": "fr"}
+{"text": "Quels sont les symptomes connus ?", "intent": "list_instances", "lang": "fr"}

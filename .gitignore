@@ -1,0 +1,30 @@
+# dependencies
+node_modules/
+.venv/
+backend/nlp-service/.venv/
+
+# builds
+dist/
+out-tsc/
+coverage/
+
+# runtime data (audit trail, accounts) and secrets
+backend/data/
+*.db
+*.db-shm
+*.db-wal
+.env
+.env.local
+
+# python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# test and tool artefacts
+test-results/
+playwright-report/
+npm-debug.log*
+*.log
+.DS_Store
+Thumbs.db
