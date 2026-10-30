@@ -179,6 +179,12 @@ export async function planPatientDerivation(
   // resolved from the doctor side so brand new patients (no stored treatedBy yet) are handled.
   const doctorIris = [...new Set(perPatient.flatMap((p) => p.doctors))];
   const doctorChain = await chainsFromDoctors(doctorIris, excluded);
+  const departmentIris = [...new Set([
+    ...[...doctorChain.values()].flatMap((chain) => (chain.department ? [chain.department] : [])),
+    ...Object.values(overrides.doctorDepartment ?? {}).map(asIri),
+    ...Object.keys(overrides.departmentHospital ?? {}).map(asIri),
+  ])];
+  const hospitalsByDepartment = await hospitalsFromDepartments(departmentIris);
 
   const typesFor = (iri: string, overrideMap?: Record<string, string[]>): string[] => {
     const id = localOf(iri);
@@ -217,10 +223,9 @@ export async function planPatientDerivation(
       if (!dep || excluded.has(dep)) continue;
       departmentIds.add(dep);
       const overrideHos = overrides.departmentHospital?.[localOf(dep)];
-      const hos = overrideHos ? asIri(overrideHos) : fromGraph?.hospital;
+      const hos = overrideHos ? asIri(overrideHos) : hospitalsByDepartment.get(dep);
       if (hos && !excluded.has(hos)) hospitalIds.add(hos);
     }
-
     syncLinks(add, remove, iri, 'followedInDepartment', departmentIds, storedDeptLinks.get(iri) ?? []);
     syncLinks(add, remove, iri, 'followedInHospital', hospitalIds, storedHospLinks.get(iri) ?? []);
   }
@@ -251,6 +256,22 @@ async function chainsFromDoctors(
       department: previous.department ?? (dep && !excluded.has(dep) ? dep : undefined),
       hospital: previous.hospital ?? (hos && !excluded.has(hos) ? hos : undefined),
     });
+  }
+  return out;
+}
+
+/** Resolve the hospital from the selected department, including a pending doctor move. */
+async function hospitalsFromDepartments(departmentIris: string[]): Promise<Map<string, string>> {
+  if (departmentIris.length === 0) return new Map();
+  const rows = await run(`SELECT DISTINCT ?dep ?h WHERE {
+      VALUES ?dep { ${valuesList(departmentIris)} }
+      { ?dep ${iriToken('locatedIn')} ?h } UNION { ?h ${iriToken('hasDepartment')} ?dep }
+    }`);
+  const out = new Map<string, string>();
+  for (const row of rows) {
+    const dep = row['dep']?.value;
+    const hospital = row['h']?.value;
+    if (dep && hospital && !out.has(dep)) out.set(dep, hospital);
   }
   return out;
 }

@@ -28,10 +28,11 @@ export function errorHandler(
       ? err
       : new AppError(500, 'INTERNAL_ERROR', 'Unexpected server error', isTest ? err : undefined);
 
+  const safePath = req.path.replace(/(\/api\/patients)\/[^/]+(?=\/|$)/i, '$1/:id');
   if (appError.status >= 500) {
-    logger.error({ err, path: req.path, method: req.method }, 'request failed');
+    logger.error({ code: appError.code, status: appError.status, path: safePath, method: req.method }, 'request failed');
   } else {
-    logger.warn({ path: req.path, method: req.method, code: appError.code }, appError.message);
+    logger.warn({ path: safePath, method: req.method, code: appError.code, status: appError.status }, 'request rejected');
   }
 
   const body: ErrorBody = {

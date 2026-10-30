@@ -73,7 +73,7 @@ describe('NLP role policy', () => {
   });
 
   it('scopes doctor rows to the patients they follow', () => {
-    const rows = [
+    const rows: Record<string, string>[] = [
       { p: `${ONT}Patient_Ahmed`, name: 'Ahmed' },
       { p: `${ONT}Patient_Mariam`, name: 'Mariam' },
       { h: `${ONT}CHU_Nord` },

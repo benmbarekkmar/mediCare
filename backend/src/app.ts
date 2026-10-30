@@ -40,6 +40,15 @@ export function createApp(): Express {
   app.use(
     pinoHttp({
       logger,
+      serializers: {
+        req: (req) => {
+          const pathname = typeof req.url === 'string' ? req.url.split('?')[0] ?? '' : '';
+          return {
+            method: req.method,
+            url: pathname.replace(/(\/api\/patients)\/[^/]+(?=\/|$)/i, '$1/:id'),
+          };
+        },
+      },
       genReqId: (req) => (req.headers['x-request-id'] as string) ?? undefined,
       customLogLevel: (_req, res, err) => (err || res.statusCode >= 500 ? 'error' : res.statusCode >= 400 ? 'warn' : 'info'),
     }),

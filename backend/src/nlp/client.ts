@@ -38,6 +38,9 @@ export interface NlpParse {
   pipeline: NlpPipelineStep[];
   allowedRoles: string[];
   classifierScores: Record<string, number>;
+  /** Short factual response composed by the API from the executed rows. */
+  reply?: string;
+  safety?: string;
 }
 
 export interface NlpHealth {
@@ -67,6 +70,8 @@ interface RawParse {
   pipeline?: NlpPipelineStep[];
   allowed_roles?: string[];
   classifier_scores?: Record<string, number>;
+  reply?: string;
+  safety?: string;
 }
 
 const toParse = (raw: RawParse): NlpParse => ({
@@ -86,6 +91,8 @@ const toParse = (raw: RawParse): NlpParse => ({
   pipeline: raw.pipeline ?? [],
   allowedRoles: raw.allowed_roles ?? [],
   classifierScores: raw.classifier_scores ?? {},
+  reply: raw.reply,
+  safety: raw.safety,
 });
 
 /** HTTP client for the Python NLP micro-service (spaCy + RapidFuzz + scikit-learn). */
@@ -128,12 +135,14 @@ export class NlpClient {
     locale?: string;
     limit?: number;
     ownPatient?: string;
+    history?: string[];
   }): Promise<NlpParse> {
     return this.request<RawParse>('post', '/ask', {
       question: payload.question,
       locale: payload.locale,
       limit: payload.limit,
       own_patient: payload.ownPatient,
+      history: payload.history,
     }).then(toParse);
   }
 

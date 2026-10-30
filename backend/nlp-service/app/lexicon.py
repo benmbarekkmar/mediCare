@@ -7,7 +7,10 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from .config import DATA_DIR, settings
+from rdflib import Graph, Literal, OWL, RDF, RDFS, URIRef
+from rdflib.namespace import SKOS
+
+from .config import BASE_DIR, DATA_DIR, settings
 from .fuseki import VOCABULARY_QUERY, select
 from .normalize import normalize
 
@@ -43,6 +46,7 @@ WORD_RE = re.compile(r"[a-z0-9+#-]+")
 
 # an individual whose local name is pure CamelCase can also be typed as one word
 CAMEL_RE = re.compile(r"[A-Z][a-z0-9]+(?:[A-Z][a-z0-9]+)+")
+ONTOLOGY_TTL = BASE_DIR.parent / "ontology" / "MedicCare_final_fuseki_en.ttl"
 
 # English spellings of the literal ranges, the French ones live in lexicon_fr.json
 VALUE_SYNONYMS_EN = {
@@ -91,6 +95,11 @@ CURATED_CLASS_SURFACES = {
 }
 
 
+CURATED_INDIVIDUAL_SURFACES = {
+    "Influenza": ["flu", "flue"],
+}
+
+
 @dataclass
 class Term:
     """One vocabulary entry: a surface form that resolves to one ontology term."""
@@ -125,7 +134,7 @@ class Lexicon:
         self.loaded_from_store = False
         self.store_error = ""
 
-    def build(self, fr_path: Path | None = None) -> None:
+    def build(self, fr_path: Path | None = None, ontology_path: Path | None = None) -> None:
         self.terms, self.by_surface = [], {}
         self.classes, self.individuals, self.properties = {}, {}, {}
         self.loaded_from_store = False
@@ -135,6 +144,7 @@ class Lexicon:
             self.loaded_from_store = True
         except Exception as err:  # a cold store must not stop the service
             rows, self.store_error = [], str(err)
+            rows = _read_turtle_vocabulary(ontology_path or ONTOLOGY_TTL)
         self._add_store_rows(rows)
         self._add_french(fr_path or (DATA_DIR / "lexicon_fr.json"))
         self._add_values()
@@ -235,6 +245,9 @@ class Lexicon:
         for local, surfaces in CURATED_CLASS_SURFACES.items():
             for text in surfaces:
                 self._register(Term(normalize(text), "en", "class", ONT + local, local, "", "curated"))
+        for local, surfaces in CURATED_INDIVIDUAL_SURFACES.items():
+            for text in surfaces:
+                self._register(Term(normalize(text), "en", "individual", ONT + local, local, "Disease", "curated"))
         for local in APPOINTMENT_STATUSES:
             self._register(Term(normalize(local), "en", "value", "", local, "AppointmentStatus", "ontology"))
         for local in GENDERS:
@@ -294,6 +307,77 @@ class Lexicon:
 
 def words_of(text: str) -> list[str]:
     return WORD_RE.findall(normalize(text))
+
+
+def _read_turtle_vocabulary(path: Path) -> list[dict[str, str]]:
+    """Extract labelled ontology terms from the local Turtle using RDFLib.
+
+    Fuseki remains the live vocabulary source once available. RDFLib parses this
+    bundled snapshot when Fuseki is cold and preserves RDF labels and relations
+    without depending on Turtle text formatting.
+    """
+    if not path.is_file():
+        return []
+    graph = Graph()
+    graph.parse(path.resolve().as_uri(), format="turtle")
+    class_types = (OWL.Class, RDFS.Class)
+    class_nodes = {
+        subject
+        for class_type in class_types
+        for subject in graph.subjects(RDF.type, class_type)
+        if isinstance(subject, URIRef) and str(subject).startswith(ONT)
+    }
+    property_types = {
+        OWL.ObjectProperty: "object",
+        OWL.DatatypeProperty: "datatype",
+        OWL.AnnotationProperty: "annotation",
+    }
+    label_properties = {RDFS.label, SKOS.altLabel}
+    rows: list[dict[str, str]] = []
+    for subject in set(graph.subjects()):
+        if not isinstance(subject, URIRef) or not str(subject).startswith(ONT):
+            continue
+        types = set(graph.objects(subject, RDF.type))
+        if subject in class_nodes:
+            kind = "class"
+            parents = [parent for parent in graph.objects(subject, RDFS.subClassOf) if isinstance(parent, URIRef)]
+        elif OWL.NamedIndividual in types:
+            kind = "individual"
+            parents = [parent for parent in types if parent in class_nodes]
+        else:
+            kind = next((value for rdf_type, value in property_types.items() if rdf_type in types), "")
+            parents = []
+        if not kind:
+            continue
+
+        labels: list[tuple[str, str]] = []
+        for predicate, value in graph.predicate_objects(subject):
+            if not isinstance(value, Literal):
+                continue
+            predicate_local = str(predicate).rsplit("#", 1)[-1]
+            if predicate not in label_properties and predicate_local not in {
+                "hasName", "doctorName", "diseaseName", "symptomName", "treatmentName",
+                "medicationName", "hospitalName", "departmentName", "testType", "appointmentType",
+            }:
+                continue
+            language = (value.language or "en").lower()
+            if language not in ("en", "en-us", "en-gb"):
+                continue
+            surface = str(value).strip()
+            label_kind = "skos:altLabel" if predicate == SKOS.altLabel else "label"
+            if surface and (surface, label_kind) not in labels:
+                labels.append((surface, label_kind))
+
+        for surface, label_kind in labels:
+            for parent in parents or [""]:
+                rows.append({
+                    "term": str(subject),
+                    "label": surface if label_kind == "label" else "",
+                    "alt": surface if label_kind == "skos:altLabel" else "",
+                    "kind": kind,
+                    "parent": str(parent) if parent else "",
+                })
+    return rows
 
 
 lexicon = Lexicon()

@@ -18,6 +18,8 @@ export interface Session {
   email: string;
   role: Role;
   linkedId: string | null;
+  createdAt: string;
+  lastLoginAt: string | null;
   accessToken: string;
   refreshToken: string;
 }
@@ -60,6 +62,8 @@ export async function login(role: Role, email = EMAIL_BY_ROLE[role]): Promise<Se
     email,
     role: body.user.role,
     linkedId: body.user.linkedId ?? null,
+    createdAt: body.user.createdAt,
+    lastLoginAt: body.user.lastLoginAt,
     accessToken: body.accessToken,
     refreshToken: body.refreshToken,
   };

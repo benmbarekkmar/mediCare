@@ -5,6 +5,7 @@ import type { Action } from './auth/middleware';
 import { WRITABLE_FIELDS } from './http/guards';
 import { ROLES } from './auth/model';
 import { env } from './config/env';
+import { REFERENCE_KEYS } from './routes/public.routes';
 
 /**
  * OpenAPI 3 document served at /api/docs. Entity CRUD paths are generated from
@@ -108,6 +109,42 @@ const entityPaths = (): Record<string, object> => {
   return paths;
 };
 
+/** Anonymous read-only catalogues expose reference knowledge through a patient-safe projection. */
+const publicPaths = (): Record<string, object> => {
+  const paths: Record<string, object> = {};
+  for (const key of REFERENCE_KEYS) {
+    const def = ENTITY_DEFS[key];
+    paths[`/api/public/${key}`] = {
+      get: {
+        tags: ['public'],
+        summary: `Browse public ${def.plural} catalogue`,
+        description: 'Anonymous, read-only reference data. Patient-targeting relations are omitted from the public projection.',
+        parameters: [
+          ...['page', 'pageSize', 'sort', 'order', 'q'].map((name) => ({
+            name,
+            in: 'query',
+            schema: { type: name === 'page' || name === 'pageSize' ? 'integer' : 'string' },
+            description: paramDoc(name),
+          })),
+        ],
+        responses: { 200: { description: 'Patient-safe page of reference entries', content: { 'application/json': { schema: { $ref: '#/components/schemas/Page' } } } } },
+      },
+    };
+    paths[`/api/public/${key}/{id}`] = {
+      get: {
+        tags: ['public'],
+        summary: `Read one public ${def.label.toLowerCase()} entry`,
+        description: 'Anonymous, read-only reference data. Patient-targeting relations are omitted from the public projection.',
+        parameters: idParam,
+        responses: {
+          200: { description: 'Patient-safe reference entry', content: { 'application/json': { schema: { $ref: '#/components/schemas/Individual' } } } },
+          404: { description: 'Not found' },
+        },
+      },
+    };
+  }
+  return paths;
+};
 const idParam = [{ name: 'id', in: 'path', required: true, schema: { type: 'string' }, description: 'Individual local name, e.g. Patient_Ahmed' }];
 
 /** The registry stays the single source of the phone format the self-registration form mirrors. */
@@ -276,7 +313,7 @@ export const openApiDocument = {
             maxLength: patientPhoneField?.maxLength ?? 20,
             description: 'same format the patients registry declares for :hasPhoneNumber',
           },
-          address: { type: 'string', maxLength: 200, description: 'recorded in the REGISTER audit entry; :Patient declares no address property' },
+          address: { type: 'string', maxLength: 200, description: 'accepted at registration but omitted from the ontology and audit trail' },
           locale: { type: 'string', enum: ['en', 'fr'], description: 'UI language of the account, defaults to fr' },
         },
       },
@@ -304,6 +341,7 @@ export const openApiDocument = {
     },
   },
   paths: {
+    ...publicPaths(),
     '/api/status': { get: { tags: ['admin'], summary: 'API and triple store health', responses: { 200: { description: 'status' } } } },
     '/api/auth/login': {
       post: {
@@ -325,7 +363,7 @@ export const openApiDocument = {
         tags: ['auth'],
         summary: 'Patient self-registration: creates the Patient individual and its PATIENT account',
         description:
-          'Public route, behind the authentication rate limiter. The order is fixed: the e-mail uniqueness check (409), then the Patient individual through the ontology writer - class closure, rdfs:label equal to fullName, :hasAge and the derived age class computed from birthDate - then the linked account. If the account insert fails, the individual created a moment before is deleted again so no orphan Patient stays in the store. Success is audited with action REGISTER (never the password). address is kept in the audit trail only: the ontology declares no address datatype property on :Patient.',
+          'Public route, behind the authentication rate limiter. The order is fixed: the e-mail uniqueness check (409), then the Patient individual through the ontology writer - class closure, rdfs:label equal to fullName, :hasAge and the derived age class computed from birthDate - then the linked account. If the account insert fails, the individual created a moment before is deleted again so no orphan Patient stays in the store. Success is audited with action REGISTER (never the password). The REGISTER audit entry records the action and outcome but omits personal registration fields, including the address.',
         requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/Register' } } } },
         responses: {
           201: { description: 'Account and Patient individual created', content: { 'application/json': { schema: { $ref: '#/components/schemas/Registration' } } } },
@@ -402,7 +440,7 @@ export const openApiDocument = {
     '/api/nlp/ask': {
       post: {
         tags: ['semantic'],
-        summary: 'Natural language question (EN/FR) to SPARQL: spaCy NER + RapidFuzz entity linking + scikit-learn intent classifier, executed through the read-only gate (ADMIN)',
+        summary: 'Natural language question (EN/FR) to SPARQL: spaCy NER + RapidFuzz entity linking + scikit-learn intent classifier, executed through the read-only gate (ADMIN, DOCTOR, PATIENT); patient rows are scoped by role',
         security: [{ bearerAuth: [] }],
         requestBody: { required: true, content: { 'application/json': { schema: { type: 'object', required: ['question'], properties: { question: { type: 'string' }, locale: { type: 'string', enum: ['en', 'fr'] }, limit: { type: 'integer' } } } } } },
         responses: { 200: { description: 'intent, entities, generated SPARQL, pipeline trace and answer rows' } },

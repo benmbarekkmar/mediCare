@@ -207,7 +207,7 @@ export class OntologyWriter {
     await sparql.update(
       withPrefixes(compose([explicitUpdate(derivation.remove, [...add, ...derivation.add])])),
     );
-    logger.info({ entity: key, id }, 'individual created');
+    logger.info({ entity: key }, 'individual created');
     return this.fetch(def, id);
   }
 
@@ -285,7 +285,7 @@ export class OntologyWriter {
     const derivation = await this.derivationPlan(def, state);
     const operation = explicitUpdate([...remove, ...derivation.remove], [...add, ...derivation.add]);
     await sparql.update(withPrefixes(compose(operation ? [operation] : [])));
-    logger.info({ entity: key, id }, 'individual updated');
+    logger.info({ entity: key }, 'individual updated');
     return this.fetch(def, id);
   }
 
@@ -309,7 +309,7 @@ export class OntologyWriter {
         .flatMap((rel) => relationIds(current.relations[rel.field]));
       const ids = [...new Set([id, ...cascaded])];
       await sparql.update(withPrefixes(removalOperation(ids)));
-      logger.info({ entity: key, id, cascaded }, 'individual deleted with cascade');
+      logger.info({ entity: key, cascaded: cascaded.length }, 'individual deleted with cascade');
       return { deleted: ids };
     }
 
@@ -361,7 +361,7 @@ export class OntologyWriter {
     if (explicit) operations.push(explicit);
     operations.push(removalOperation([id]));
     await sparql.update(withPrefixes(compose(operations)));
-    logger.info({ entity: key, id, reassigned: options.reassignTo ?? null }, 'individual deleted');
+    logger.info({ entity: key }, 'individual deleted');
     return { deleted: [id], reassigned: options.reassignTo };
   }
 
@@ -524,8 +524,11 @@ export class OntologyWriter {
       const lists = await patientRelationLists(linked);
       for (const [pid, values] of Object.entries(lists)) {
         overrides.patients![pid] = {
-          doctors: relTargetField(def) === 'doctors' ? recompute(values.doctors, state.id, state.relations) : values.doctors,
-          diseases: relTargetField(def) === 'diseases' ? recompute(values.diseases, state.id, state.relations) : values.diseases,
+          // Doctor and disease patient links are read-only on those entities. Their
+          // writable relations (department, symptoms, treatments) must never replace
+          // the patient's doctor or disease list.
+          doctors: values.doctors,
+          diseases: values.diseases,
           appointments:
             def.key === 'appointments'
               ? [...new Set([...values.appointments.filter((a) => a !== state.id), state.id])]
@@ -547,18 +550,6 @@ export class OntologyWriter {
 
     return planPatientDerivation(patientIds, overrides);
   }
-}
-
-const relTargetField = (def: EntityDef): 'doctors' | 'diseases' | null => {
-  if (def.key === 'doctors') return 'doctors';
-  if (def.key === 'diseases') return 'diseases';
-  return null;
-};
-
-/** drop the edited individual from a patient list and add the authoritative new links */
-function recompute(list: string[], self: string, relations: Record<string, string[]>): string[] {
-  const replacement = Object.values(relations).flat();
-  return [...new Set([...list.filter((v) => v !== self), ...replacement])];
 }
 
 /** remove the deleted individual, optionally replaced by the reassignment target */

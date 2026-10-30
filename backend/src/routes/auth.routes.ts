@@ -82,7 +82,7 @@ const registerSchema = z
     birthDate: birthDateSchema,
     gender: z.enum(GENDER_VALUES),
     phone: phoneSchema.optional(),
-    // the ontology declares no address property on :Patient: kept in the audit trail
+    // the ontology has no address property; audit sanitization omits this field too
     address: z.string().trim().max(200).optional(),
     locale: z.enum(['en', 'fr']).optional(),
   })
@@ -117,13 +117,12 @@ const requireBirthDate = (value: string): Date => {
 };
 
 /** Compensating action of the registration: an individual without its account is an orphan. */
-async function deletePatientQuietly(patientId: string, reason: unknown): Promise<void> {
-  const message = reason instanceof Error ? reason.message : String(reason);
+async function deletePatientQuietly(patientId: string): Promise<void> {
   try {
     await ontologyWriter.remove('patients', patientId);
-    logger.warn({ patientId, reason: message }, 'registration rolled back, individual deleted');
-  } catch (err) {
-    logger.error({ err, patientId, reason: message }, 'registration rollback failed');
+    logger.warn('registration rolled back, individual deleted');
+  } catch {
+    logger.error('registration rollback failed');
   }
 }
 
@@ -165,9 +164,11 @@ authRouter.post(
       throw unauthorized('Wrong email or password');
     }
     users.touchLogin(user.id);
-    const issued = tokens.pair(user);
-    audit({ action: 'LOGIN', status: 200, req, user });
-    res.json({ ...issued, user: toPublicUser(user) });
+    const loggedInUser = users.byId(user.id);
+    if (!loggedInUser) throw unauthorized('Account no longer exists');
+    const issued = tokens.pair(loggedInUser);
+    audit({ action: 'LOGIN', status: 200, req, user: loggedInUser });
+    res.json({ ...issued, user: toPublicUser(loggedInUser) });
   }),
 );
 
@@ -197,8 +198,10 @@ authRouter.get(
   authenticate,
   asyncHandler(async (req, res) => {
     const user = currentUser(req);
+    const account = users.byId(user.id);
+    if (!account || !account.active) throw unauthorized('Account is disabled or no longer exists');
     const profile = await linkedProfile(user.role, user.linkedId);
-    res.json({ user, profile });
+    res.json({ user: toPublicUser(account), profile });
   }),
 );
 
@@ -270,7 +273,7 @@ authRouter.post(
         locale: input.locale,
       });
     } catch (err) {
-      await deletePatientQuietly(individual.id, err);
+      await deletePatientQuietly(individual.id);
       throw err;
     }
 

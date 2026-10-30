@@ -7,7 +7,7 @@ vocabulary query, and no LLM API is used anywhere in the pipeline.
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Annotated, Any
 
 from fastapi import Body, FastAPI, HTTPException
 from pydantic import BaseModel, Field
@@ -22,7 +22,7 @@ from .pipeline import NlpPipeline
 app = FastAPI(
     title="MedicCare NLP service",
     version="1.0.0",
-    description="French/English natural language to SPARQL over the MedicCare medical-care ontology, without any LLM API.",
+    description="Local spaCy/scikit-learn natural language to SPARQL over the MedicCare ontology; Arabic and Tunisian Derja cues use a curated local lexicon. No LLM API.",
 )
 pipeline = NlpPipeline()
 
@@ -31,6 +31,7 @@ class AskRequest(BaseModel):
     question: str = Field(min_length=2, max_length=400)
     locale: str | None = None
     limit: int | None = Field(default=None, ge=1, le=500)
+    history: list[Annotated[str, Field(min_length=2, max_length=400)]] = Field(default_factory=list, max_length=6)
     # injected by the back-end from the access token, never from the question text
     own_patient: str | None = Field(default=None, pattern=r"^Patient_[A-Za-z0-9_]+$")
 
@@ -42,12 +43,12 @@ class TranslateRequest(BaseModel):
 
 @app.post("/ask")
 def ask(request: AskRequest) -> dict[str, Any]:
-    return _run(lambda: pipeline.ask(request.question, request.locale, request.limit, request.own_patient))
+    return _run(lambda: pipeline.ask(request.question, request.locale, request.limit, request.own_patient, request.history))
 
 
 @app.post("/parse")
 def parse(request: AskRequest) -> dict[str, Any]:
-    return _run(lambda: pipeline.parse(request.question, request.locale))
+    return _run(lambda: pipeline.parse(request.question, request.locale, request.history))
 
 
 @app.post("/translate")
@@ -62,7 +63,7 @@ def health() -> dict[str, Any]:
     return {
         "ok": bool(pipeline.status["ready"]) and store["ok"],
         "version": "1.0.0",
-        "language": "en+fr",
+        "language": "en+fr+ar+tn (Arabic/Derja use the local French vocabulary bridge)",
         "models": [{"name": name, "loaded": True} for name in SPACY_MODELS.values()],
         "vocabSize": pipeline.status.get("vocabulary", {}).get("terms", 0),
         "intents": [intent.name for intent in INTENTS],

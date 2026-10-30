@@ -153,14 +153,13 @@ describe('materialization on update', () => {
   it('follows the doctor when they move to another department', async () => {
     const department = await entityRepo.getById(entityDef('doctors'), 'Doctor_Salma');
     expect(department?.relations.department).toMatchObject({ id: 'GeneralMedicineDepartment_01' });
-
     // a cardiologist must sit in a cardiology department, so use an axiom legal move
     await asSession(admin)
       .patch('/api/doctors/Doctor_Mohamed')
-      .send({ relations: { department: ['CardiologyDepartment_02'] } })
+      .send({ relations: { department: ['CardiologyDepartment_01'] } })
       .expect(200);
-    expect(await ask(`ASK WHERE { :Patient_Karim :followedInDepartment :CardiologyDepartment_02 }`)).toBe(true);
-    expect(await ask(`ASK WHERE { :Patient_Karim :followedInDepartment :CardiologyDepartment_01 }`)).toBe(false);
+    expect(await ask(`ASK WHERE { :Patient_Karim :followedInDepartment :CardiologyDepartment_01 }`)).toBe(true);
+    expect(await ask(`ASK WHERE { :Patient_Karim :followedInDepartment :CardiologyDepartment_02 }`)).toBe(false);
   });
 
   it('refreshes the derived label when the name changes', async () => {

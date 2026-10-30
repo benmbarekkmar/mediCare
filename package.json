@@ -9,12 +9,16 @@
     "ontology": "npm --prefix backend run load-ontology",
     "seed": "npm --prefix backend run seed",
     "nlp": "npm --prefix backend run nlp",
+    "nlp:test": "npm --prefix backend run nlp:test",
+    "nlp:evaluate": "npm --prefix backend run nlp:evaluate",
+    "nlp:intents": "npm --prefix backend run nlp:intents",
     "api": "npm --prefix backend run dev",
     "web": "npm --prefix frontend run start",
     "build": "npm --prefix backend run build && npm --prefix frontend run build",
     "test:api": "npm --prefix backend run test",
     "test:nlp": "npm --prefix backend run nlp:test",
     "test:web": "npm --prefix frontend run test",
+    "test:e2e": "npm --prefix frontend run e2e",
     "lint": "npm --prefix backend run lint && npm --prefix frontend run lint"
   }
 }

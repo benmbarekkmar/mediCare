@@ -8,6 +8,7 @@ import { entityRepo, type ListQuery } from '../repos/entity.repo';
 import { buildFilters } from '../repos/filters';
 import { assertSafeId, isSafeId } from '../sparql/escape';
 import { optionalAuth } from '../auth/middleware';
+import { publicize } from '../http/public-projection';
 import { rawParams, MAX_PAGE_SIZE } from '../http/query';
 
 /**
@@ -62,7 +63,7 @@ publicRouter.get(
     const query = publicQuery(key, req);
     const { items, total } = await entityRepo.list(def, query);
     res.json({
-      items,
+      items: items.map((item) => publicize(def, item)),
       page: query.page,
       pageSize: query.pageSize,
       total,
@@ -84,6 +85,6 @@ publicRouter.get(
     if (!isSafeId(id)) throw notFound(`Invalid identifier "${id}"`);
     const item = await entityRepo.getById(def, assertSafeId(id));
     if (!item) throw notFound(`${def.label} ${id} does not exist`);
-    res.json(item);
+    res.json(publicize(def, item));
   }),
 );

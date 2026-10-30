@@ -21,8 +21,9 @@ nlpRouter.use(authenticate);
 
 const askSchema = z.object({
   question: z.string().trim().min(3, 'Ask a longer question').max(400),
-  locale: z.enum(['en', 'fr']).optional(),
+  locale: z.enum(['en', 'fr', 'ar', 'tn']).optional(),
   limit: z.coerce.number().int().min(1).max(MAX_ROWS).optional(),
+  history: z.array(z.string().trim().min(2).max(400)).max(6).optional(),
 });
 
 const parseBody = (body: unknown) => {
@@ -40,7 +41,7 @@ const parseBody = (body: unknown) => {
  */
 nlpRouter.post(
   '/ask',
-  requireRoles('ADMIN', 'DOCTOR', 'RECEPTIONIST', 'PATIENT'),
+  requireRoles('ADMIN', 'DOCTOR', 'PATIENT'),
   asyncHandler(async (req, res) => {
     const user = req.user as AuthUser;
     const input = parseBody(req.body);
@@ -48,10 +49,20 @@ nlpRouter.post(
     enforceRole(plan, user);
 
     const answer = plan.sparql
-      ? await execute(plan.sparql, user)
+      ? await execute(plan.sparql, user, plan)
       : { sparql: '', columns: [], rows: [] as Record<string, string>[], executionMs: 0 };
 
     logger.info({ intent: plan.intent, role: user.role, ms: answer.executionMs }, 'nlp answer');
+    const pipeline = answer.sparql
+      ? [
+          ...plan.pipeline,
+          {
+            step: 'sparql-execution',
+            tool: 'Apache Jena Fuseki',
+            detail: answer.rows.length + ' rows returned in ' + answer.executionMs + ' ms',
+          },
+        ]
+      : plan.pipeline;
     audit({
       action: 'NLP_ASK',
       entity: 'nlp',
@@ -61,7 +72,7 @@ nlpRouter.post(
       details: { question: plan.question, sparql: answer.sparql, confidence: plan.confidence },
     });
     res.json({
-      parse: plan,
+      parse: { ...plan, pipeline, reply: assistantReply(plan, answer.rows.length) },
       sparql: answer.sparql,
       columns: answer.columns,
       rows: answer.rows,
@@ -73,7 +84,7 @@ nlpRouter.post(
 /** Show the generated SPARQL without touching the store (question preview). */
 nlpRouter.post(
   '/preview',
-  requireRoles('ADMIN', 'DOCTOR', 'RECEPTIONIST', 'PATIENT'),
+  requireRoles('ADMIN', 'DOCTOR', 'PATIENT'),
   asyncHandler(async (req, res) => {
     const user = req.user as AuthUser;
     const plan = await buildPlan(parseBody(req.body), user);
@@ -85,7 +96,7 @@ nlpRouter.post(
 
 nlpRouter.get(
   '/health',
-  requireRoles('ADMIN', 'DOCTOR', 'RECEPTIONIST', 'PATIENT'),
+  requireRoles('ADMIN', 'DOCTOR', 'PATIENT'),
   asyncHandler(async (_req, res) => {
     res.json(await nlpClient.health());
   }),
@@ -94,7 +105,7 @@ nlpRouter.get(
 /** The intent catalogue is documentation, every role may read it. */
 nlpRouter.get(
   '/intents',
-  requireRoles('ADMIN', 'DOCTOR', 'RECEPTIONIST', 'PATIENT'),
+  requireRoles('ADMIN', 'DOCTOR', 'PATIENT'),
   asyncHandler(async (_req, res) => {
     res.json(await nlpClient.intents());
   }),
@@ -129,11 +140,69 @@ nlpRouter.post(
 );
 
 async function buildPlan(
-  input: { question: string; locale?: 'en' | 'fr'; limit?: number },
+  input: { question: string; locale?: 'en' | 'fr' | 'ar' | 'tn'; limit?: number; history?: string[] },
   user: AuthUser,
 ): Promise<NlpParse> {
   const own = user.role === 'PATIENT' ? patientSlot(user) : undefined;
-  return nlpClient.ask({ ...input, ownPatient: own });
+  return nlpClient.ask({ ...input, ownPatient: own, history: input.history ?? [] });
+}
+
+function assistantReply(plan: NlpParse, count: number): string {
+  const language = plan.language;
+  if (plan.safety === 'emergency') {
+    if (language === 'fr') return 'Si ces symptômes sont présents maintenant ou sont intenses, contactez immédiatement les services d’urgence locaux. Cet assistant ne peut pas évaluer une urgence.';
+    if (language === 'ar') return 'إذا كانت هذه الأعراض تحدث الآن أو كانت شديدة، فاتصل فورًا بخدمات الطوارئ المحلية. لا يستطيع هذا المساعد تقييم حالة طارئة.';
+    if (language === 'tn') return 'كان الأعراض هاذم موجودين توّا ولا قويّين، اتصل فورًا بالإسعاف المحلي. المساعد هذا ما ينجمش يقيّم حالة استعجالية.';
+    return 'If these symptoms are happening now or are severe, contact your local emergency services immediately. This assistant cannot assess an emergency.';
+  }
+  if (plan.safety === 'care_navigation') {
+    const fluLikeQuestion = plan.slots.disease === 'Influenza';
+    if (language === 'fr')
+      return (fluLikeQuestion
+        ? 'Pour des sympt\u00f4mes grippaux, un m\u00e9decin g\u00e9n\u00e9raliste est un premier interlocuteur adapt\u00e9. '
+        : 'Si vous ne savez pas quel professionnel consulter, un m\u00e9decin g\u00e9n\u00e9raliste est un bon premier interlocuteur. ') +
+        (fluLikeQuestion ? 'L\u2019ontologie ne relie pas la grippe \u00e0 une sp\u00e9cialit\u00e9 pr\u00e9cise ; les m\u00e9decins ci-dessous proviennent de l\u2019annuaire g\u00e9n\u00e9ral. ' : '') +
+        (count > 0 ? count + ' m\u00e9decin(s) g\u00e9n\u00e9raliste(s) figurent dans l\u2019annuaire. ' : 'Aucun m\u00e9decin g\u00e9n\u00e9raliste ne figure actuellement dans l\u2019annuaire. ') +
+        'Cela ne remplace pas une \u00e9valuation m\u00e9dicale. En cas de difficult\u00e9 importante \u00e0 respirer ou de douleur thoracique soudaine, contactez les urgences locales.';
+    if (language === 'ar')
+      return '\u0637\u0628\u064a\u0628 \u0627\u0644\u0623\u0633\u0631\u0629 \u0646\u0642\u0637\u0629 \u0628\u062f\u0627\u064a\u0629 \u0645\u0646\u0627\u0633\u0628\u0629 \u0644\u0645\u0639\u0631\u0641\u0629 \u0627\u0644\u0637\u0628\u064a\u0628 \u0627\u0644\u0645\u0646\u0627\u0633\u0628. \u0647\u0630\u0627 \u0644\u0627 \u064a\u063a\u0646\u064a \u0639\u0646 \u062a\u0642\u064a\u064a\u0645 \u0637\u0628\u064a. ' +
+        (fluLikeQuestion ? '\u0644\u0627 \u062a\u0631\u0628\u0637 \u0627\u0644\u0623\u0646\u0637\u0648\u0644\u0648\u062c\u064a\u0627 \u0627\u0644\u0625\u0646\u0641\u0644\u0648\u0646\u0632\u0627 \u0628\u062a\u062e\u0635\u0635 \u0645\u062d\u062f\u062f\u061b \u0647\u0630\u0647 \u062e\u064a\u0627\u0631\u0627\u062a \u0639\u0627\u0645\u0629 \u0645\u0646 \u0627\u0644\u062f\u0644\u064a\u0644. ' : '') +
+        (count > 0 ? '\u0627\u0644\u0623\u0637\u0628\u0627\u0621 \u0627\u0644\u0645\u062a\u0627\u062d\u0648\u0646 \u0641\u064a \u0627\u0644\u062f\u0644\u064a\u0644: ' + count + '.' : '\u0644\u0627 \u064a\u0648\u062c\u062f \u0637\u0628\u064a\u0628 \u0623\u0633\u0631\u0629 \u0645\u062f\u0631\u062c \u062d\u0627\u0644\u064a\u0627\u064b \u0641\u064a \u0627\u0644\u062f\u0644\u064a\u0644.') +
+        ' \u0641\u064a \u062d\u0627\u0644 \u0635\u0639\u0648\u0628\u0629 \u0634\u062f\u064a\u062f\u0629 \u0641\u064a \u0627\u0644\u062a\u0646\u0641\u0633 \u0623\u0648 \u0623\u0644\u0645 \u0645\u0641\u0627\u062c\u0626 \u0641\u064a \u0627\u0644\u0635\u062f\u0631\u060c \u0627\u062a\u0635\u0644 \u0628\u062e\u062f\u0645\u0627\u062a \u0627\u0644\u0637\u0648\u0627\u0631\u0626 \u0627\u0644\u0645\u062d\u0644\u064a\u0629.';
+    if (language === 'tn')
+      return '\u0637\u0628\u064a\u0628 \u0627\u0644\u0639\u0627\u0626\u0644\u0629 \u064a\u0646\u062c\u0645 \u064a\u0643\u0648\u0646 \u0623\u0648\u0644 \u0645\u062d\u0637\u0629 \u0645\u0644\u0627\u0626\u0645\u0629 \u0643\u064a \u062a\u0639\u0631\u0641 \u0634\u0643\u0648\u0646 \u0627\u0644\u0637\u0628\u064a\u0628 \u0627\u0644\u0645\u0646\u0627\u0633\u0628. \u0647\u0630\u0627 \u0645\u0627 \u064a\u0639\u0648\u0651\u0636\u0634 \u0643\u0634\u0641 \u0637\u0628\u064a. ' +
+        (fluLikeQuestion ? '\u0627\u0644\u0623\u0646\u0637\u0648\u0644\u0648\u062c\u064a\u0627 \u0645\u0627 \u062a\u0631\u0628\u0637\u0634 \u0627\u0644\u063a\u0631\u064a\u0628\u0629 \u0628\u0627\u062e\u062a\u0635\u0627\u0635 \u0645\u0639\u064a\u0651\u0646\u061b \u0647\u0630\u0645\u0627 \u0645\u0642\u062a\u0631\u062d\u0627\u062a \u0639\u0627\u0645\u0651\u0629 \u0645\u0646 \u0627\u0644\u062f\u0644\u064a\u0644. ' : '') +
+        (count > 0 ? '\u0627\u0644\u0623\u0637\u0628\u0627\u0621 \u0627\u0644\u0645\u062a\u0627\u062d\u0648\u0646 \u0641\u064a \u0627\u0644\u062f\u0644\u064a\u0644: ' + count + '.' : '\u0645\u0627 \u0641\u0645\u0651\u0627\u0634 \u0637\u0628\u064a\u0628 \u0639\u0627\u0626\u0644\u0629 \u0645\u062f\u0631\u062c \u062a\u0648\u0651\u0627 \u0641\u064a \u0627\u0644\u062f\u0644\u064a\u0644.') +
+        ' \u0643\u0627\u0646\u062a \u0639\u0646\u062f\u0643 \u0635\u0639\u0648\u0628\u0629 \u0643\u0628\u064a\u0631\u0629 \u0641\u064a \u0627\u0644\u062a\u0646\u0641\u0633 \u0648\u0644\u0627 \u0648\u062c\u064a\u0639\u0629 \u0642\u0648\u064a\u0629 \u0641\u064a \u0627\u0644\u0635\u062f\u0631\u060c \u0627\u062a\u0635\u0644 \u0628\u0627\u0644\u0625\u0633\u0639\u0627\u0641 \u0627\u0644\u0645\u062d\u0644\u064a.';
+    return (fluLikeQuestion
+      ? 'For flu-like symptoms, a general practitioner is a reasonable first clinician to contact. '
+      : 'If you are unsure which clinician to contact, a general practitioner is a reasonable first place to start. ') +
+      (fluLikeQuestion ? 'The ontology does not link influenza to a specific specialty; the doctors below are a general-care directory result. ' : '') +
+      (count > 0 ? count + ' general practitioner(s) are listed in the directory. ' : 'No general practitioners are currently listed in the directory. ') +
+      'This does not replace a medical assessment. If you have severe difficulty breathing or sudden chest pain, contact local emergency services.';
+  }
+  if (plan.intent === 'not_understood') {
+    if (language === 'fr') return 'Je n’ai pas pu relier cette question aux informations médicales disponibles dans l’application. Reformulez-la ou demandez de l’aide à votre équipe de soins.';
+    if (language === 'ar') return 'لم أتمكن من ربط هذا السؤال بالمعلومات الطبية المتاحة في التطبيق. أعد صياغته أو اطلب المساعدة من فريق الرعاية.';
+    if (language === 'tn') return 'ما نجمتش نربط السؤال هذا بالمعلومات الطبية الموجودة في التطبيق. عاود صيغو ولا اسأل فريق الرعاية متاعك.';
+    return 'I could not map this question to medical information available in the application. Try rephrasing it or ask your care team.';
+  }
+  if (plan.intent === 'medication_dosage') {
+    if (language === 'fr') return 'La base indique ' + count + ' résultat(s) de posologie. Cette information enregistrée ne constitue pas un conseil de dose personnalisé.';
+    if (language === 'ar') return 'تتضمن قاعدة البيانات ' + count + ' نتيجة للجرعة. هذه معلومة مسجلة وليست نصيحة شخصية لتحديد الجرعة.';
+    if (language === 'tn') return 'قاعدة البيانات فيها ' + count + ' نتيجة على الجرعة. المعلومة هاذي موثقة وماهيش نصيحة شخصية للجرعات.';
+    return 'The database contains ' + count + ' documented dosage result(s). This is not personalized dosing advice.';
+  }
+  if (count === 0) {
+    if (language === 'fr') return 'Je n’ai trouvé aucun résultat correspondant dans les données médicales disponibles.';
+    if (language === 'ar') return 'لم أجد نتائج مطابقة في البيانات الطبية المتاحة.';
+    if (language === 'tn') return 'ما لقيتش نتائج مطابقة في المعلومات الطبية المتوفّرة.';
+    return 'I found no matching results in the available medical data.';
+  }
+  if (language === 'fr') return 'J’ai trouvé ' + count + ' résultat(s) correspondant(s) dans les données médicales disponibles.';
+  if (language === 'ar') return 'وجدت ' + count + ' نتيجة مطابقة في البيانات الطبية المتاحة.';
+  if (language === 'tn') return 'لقيت ' + count + ' نتيجة مطابقة في المعلومات الطبية المتوفّرة.';
+  return 'I found ' + count + ' matching result(s) in the available medical data.';
 }
 
 /** A patient account must be linked to a Patient individual to ask about records. */
@@ -163,8 +232,14 @@ function finalQuery(generated: string): string {
   return `${prefixes.missingIn(guarded)}\n${guarded}`.trim();
 }
 
-async function execute(generated: string, user: AuthUser): Promise<Answer> {
-  const query = finalQuery(generated);
+async function execute(generated: string, user: AuthUser, plan: NlpParse): Promise<Answer> {
+  let query = finalQuery(generated);
+  let doctorPatientLocals: Set<string> | null = null;
+  if (user.role === 'DOCTOR') {
+    const scoped = await scopeDoctorQuery(query, user, plan);
+    query = scoped.query;
+    doctorPatientLocals = scoped.ownLocals;
+  }
 
   if (readForm(query) === 'ask') {
     const truth = await sparql.ask(query);
@@ -185,29 +260,47 @@ async function execute(generated: string, user: AuthUser): Promise<Answer> {
     for (const [key, term] of Object.entries(row)) out[key] = term?.value ?? '';
     return out;
   });
-  if (user.role === 'DOCTOR') rows = await scopeToOwnPatients(rows, user);
+  if (doctorPatientLocals) rows = ownPatientFilter(doctorPatientLocals)(rows);
   return { sparql: query, columns: result.vars, rows, executionMs: result.executionMs };
 }
 
-/**
- * A doctor may only see records of the patients they follow: the answer rows are
- * filtered against the `treatedBy` closure of their own doctor individual.
- */
-async function scopeToOwnPatients(
-  rows: Record<string, string>[],
-  user: AuthUser,
-): Promise<Record<string, string>[]> {
+const PATIENT_QUERY_TERMS = /(?:ont:|#)(?:Patient|AdultPatient|ChildPatient|ElderlyPatient|ChronicPatient|EmergencyPatient|MedicalTest|BloodTest|UrineTest|XRay|MRI|CTScan|MedicalAppointment|Consultation|FollowUpAppointment|EmergencyAppointment)(?:\b|_)/i;
+const PATIENT_QUERY_PROPERTIES = /\bont:(?:hasDisease|treatedBy|undergoesTest|hasAppointment|isDiseaseOf|isTestOf|appointmentOf|treats|followedInDepartment|followedInHospital)\b/i;
+
+function patientBinding(query: string): string | null {
+  const patterns = [
+    /(\?\w+)\s+(?:a|rdf:type)\s+ont:(?:Patient|AdultPatient|ChildPatient|ElderlyPatient|ChronicPatient|EmergencyPatient)\b/i,
+    /(\?\w+)\s+ont:(?:hasDisease|treatedBy|undergoesTest|hasAppointment|followedInDepartment|followedInHospital)\b/i,
+    /\?\w+\s+ont:(?:isDiseaseOf|isTestOf|appointmentOf|treats)\s+(\?\w+)/i,
+  ];
+  for (const pattern of patterns) {
+    const match = pattern.exec(query);
+    if (match?.[1]) return match[1];
+  }
+  return null;
+}
+
+/** Scope patient-bearing doctor queries in SPARQL, before any result can leave Fuseki. */
+async function scopeDoctorQuery(query: string, user: AuthUser, plan: NlpParse): Promise<{ query: string; ownLocals: Set<string> }> {
   if (!user.linkedId) throw forbidden('This account is not linked to a doctor record');
   const doctor = iriToken(user.linkedId);
-  const query = prefixes.withPrefixes(
-    `SELECT ?p WHERE { ?p ont:treatedBy ${doctor} } LIMIT ${MAX_ROWS}`,
-  );
-  const owned = await sparql.select(query);
-  const locals = new Set(
-    owned.rows
-      .map((row) => row.p?.value ?? '')
-      .filter(Boolean)
-      .map((iri) => String(iri).slice(String(iri).indexOf('#') + 1)),
-  );
-  return ownPatientFilter(locals)(rows);
+  const ownershipQuery = prefixes.withPrefixes('SELECT ?p WHERE { ?p ont:treatedBy ' + doctor + ' } LIMIT ' + MAX_ROWS);
+  const owned = await sparql.select(ownershipQuery);
+  const ownLocals = new Set(owned.rows.map((row) => row.p?.value ?? '').filter(Boolean).map((iri) => String(iri).slice(String(iri).indexOf('#') + 1)));
+  const named = plan.slots['patient'];
+  const namedLocal = typeof named === 'string' ? named.slice(named.lastIndexOf('#') + 1) : null;
+  if (namedLocal && !ownLocals.has(namedLocal)) throw forbidden('A doctor may only ask about patients they follow');
+  const namedRefs = [...query.matchAll(/(?:<[^>]*#|ont:)(Patient_[A-Za-z0-9_]+)/g)].map((match) => match[1] ?? "").filter(Boolean);
+  if (namedRefs.some((local) => !ownLocals.has(local))) throw forbidden('A doctor may only ask about patients they follow');
+  if (!PATIENT_QUERY_TERMS.test(query) && !PATIENT_QUERY_PROPERTIES.test(query)) return { query, ownLocals };
+  const binding = patientBinding(query);
+  if (!binding) {
+    if (namedRefs.length > 0) return { query, ownLocals };
+    throw forbidden("The generated query cannot be safely scoped to this doctor's patients");
+  }
+  const where = /\bWHERE\s*\{/i.exec(query);
+  if (!where) throw forbidden("The generated query cannot be safely scoped to this doctor's patients");
+  const openBrace = query.indexOf('{', where.index);
+  const values = ownLocals.size ? 'VALUES ' + binding + ' { ' + [...ownLocals].map(iriToken).join(' ') + ' }' : 'FILTER(false)';
+  return { query: query.slice(0, openBrace + 1) + '\n  ' + values + '\n' + query.slice(openBrace + 1), ownLocals };
 }

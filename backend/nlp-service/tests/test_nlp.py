@@ -14,7 +14,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from app import fuseki, sparql_builder  # noqa: E402
 from app.evaluation import CASES, check_case  # noqa: E402
 from app.intents import INTENTS  # noqa: E402
-from app.normalize import detect_language, normalize  # noqa: E402
+from app.lexicon import ONTOLOGY_TTL, _read_turtle_vocabulary  # noqa: E402
+from app.normalize import detect_language, normalize, to_model_language  # noqa: E402
 from app.pipeline import NlpPipeline  # noqa: E402
 
 PIPELINE: NlpPipeline | None = None
@@ -95,6 +96,54 @@ def test_normalisation_strips_accents_and_punctuation():
 
 
 @pytest.mark.parametrize(
+    "question,language,expected",
+    [
+        ("ما هي أعراض مرض السكري؟", "ar", "quels sont symptomes maladie diabetes"),
+        ("chneya a3radh diabete?", "tn", "quels symptomes diabete"),
+    ],
+)
+def test_arabic_and_derja_language_bridge(question, language, expected):
+    assert detect_language(question) == language
+    assert normalize(to_model_language(question, language)) == expected
+
+
+def test_follow_up_resolves_the_previous_disease(pipeline):
+    result = pipeline.ask(
+        "What about its treatments?",
+        history=["Which symptoms does diabetes have?"],
+    )
+    assert result["intent"] == "disease_treatments"
+    assert result["slots"]["disease"]
+
+
+def test_flu_doctor_question_uses_directory_without_reading_patient_record(pipeline):
+    result = pipeline.ask(
+        "I have a flue so which doctor should I go?",
+        own_patient="Patient_Ahmed",
+    )
+    assert result["intent"] == "doctors_by_specialty"
+    assert result["slots"]["specialty"] == "GeneralPractitioner"
+    assert result["slots"].get("disease") == "Influenza"
+    assert result["safety"] == "care_navigation"
+    assert result["sparql"]
+    assert "own-data-injection" not in [step["step"] for step in result["pipeline"]]
+
+
+def test_explicit_own_doctor_question_can_use_authenticated_patient(pipeline):
+    result = pipeline.ask("Who is my doctor?", own_patient="Patient_Ahmed")
+    assert result["intent"] == "patient_doctor"
+    assert result["slots"]["patient"] == "Patient_Ahmed"
+
+
+def test_emergency_symptoms_return_local_safety_guidance_without_sparql(pipeline):
+    result = pipeline.ask("I have severe chest pain right now")
+    assert result["intent"] == "not_understood"
+    assert result["sparql"] == ""
+    assert result["safety"] == "emergency"
+    assert "emergency services" in result["explanation"]["en"]
+
+
+@pytest.mark.parametrize(
     "question,slot,value",
     [
         ("List the patients older than 40", "age_operator", "gt"),
@@ -113,6 +162,12 @@ def test_value_slots(question, slot, value, pipeline):
 def test_every_intent_has_a_template():
     named = {intent.name for intent in INTENTS} - {"not_understood"}
     assert named <= set(sparql_builder.TEMPLATES)
+
+
+def test_rdflib_reads_classes_and_individuals_from_the_turtle_ontology():
+    rows = _read_turtle_vocabulary(ONTOLOGY_TTL)
+    assert any(row["term"].endswith("#GeneralPractitioner") and row["kind"] == "class" for row in rows)
+    assert any(row["term"].endswith("#Influenza") and row["kind"] == "individual" for row in rows)
 
 
 def test_generated_queries_are_read_only_select_or_ask(pipeline):

@@ -10,8 +10,13 @@
 import { spawnSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
+import { config as loadEnv } from 'dotenv';
 
 const SERVICE_DIR = path.resolve(__dirname, '..', 'nlp-service');
+const BACKEND_DIR = path.resolve(SERVICE_DIR, '..');
+
+// Keep the Python process on the same Fuseki dataset and service settings as the API.
+loadEnv({ path: path.join(BACKEND_DIR, '.env'), override: false });
 
 const COMMANDS: Record<string, string[]> = {
   serve: ['-m', 'uvicorn', 'app.main:app', '--host', '127.0.0.1', '--port', '8100'],

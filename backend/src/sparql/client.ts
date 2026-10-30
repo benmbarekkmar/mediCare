@@ -73,7 +73,7 @@ export class SparqlClient {
     const vars: string[] = body?.head?.vars ?? [];
     const rows: Record<string, ResultValue>[] = body?.results?.bindings ?? [];
     const executionMs = Date.now() - started;
-    logger.debug({ executionMs, rows: rows.length, query: this.inline(query) }, 'SPARQL SELECT');
+    logger.debug({ executionMs, rows: rows.length }, 'SPARQL SELECT');
     return { vars, rows, count: rows.length, executionMs };
   }
 
@@ -93,7 +93,7 @@ export class SparqlClient {
   async update(update: string, timeoutMs?: number): Promise<UpdateStats> {
     const started = Date.now();
     const operation = OPERATION_RE.exec(update)?.[0]?.trim().toUpperCase() ?? 'UPDATE';
-    logger.debug({ operation, update }, 'SPARQL UPDATE request');
+    logger.debug({ operation }, 'SPARQL UPDATE request');
     await this.postText(this.updateUrl, { update }, timeoutMs, '*/*', 'POST');
     const executionMs = Date.now() - started;
     logger.info({ executionMs, operation }, 'SPARQL UPDATE committed');

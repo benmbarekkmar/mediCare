@@ -30,7 +30,7 @@ const validationMessage = (error: z.ZodError): string =>
 /** Guarded read execution shared by the console and the documented /api/sparql endpoint. */
 async function runRead(raw: string, limit: number, req: Request): Promise<Record<string, unknown>> {
   const query = sparql.prepare(guardReadQuery(raw, limit));
-  audit({ action: 'SPARQL_QUERY', entity: 'sparql', resourceId: null, req, details: { query } });
+  audit({ action: 'SPARQL_QUERY', entity: 'sparql', resourceId: null, req, details: { form: readForm(query) } });
   const form = readForm(query);
   if (form === 'construct') {
     const graph = await sparql.construct(query);
@@ -57,7 +57,7 @@ async function runUpdate(raw: string, req: Request): Promise<Record<string, unkn
     resourceId: null,
     status: 200,
     req,
-    details: { operations, update },
+    details: { operations: operations.length },
   });
   return { ...stats, operations, triples: await sparql.countTriples() };
 }

@@ -29,6 +29,8 @@ describe('authentication', () => {
     expect(admin.accessToken.split('.')).toHaveLength(3);
     expect(admin.role).toBe('ADMIN');
     expect(admin.linkedId).toBeNull();
+    expect(admin.createdAt).toBeTruthy();
+    expect(admin.lastLoginAt).toBeTruthy();
     expect(doctor.linkedId).toBe('Doctor_Salma');
     expect(patient.linkedId).toBe('Patient_Ahmed');
   });
@@ -55,6 +57,8 @@ describe('authentication', () => {
     const res = await asSession(patient).get('/api/auth/me').expect(200);
     expect(res.body.user.email).toBe(patient.email);
     expect(res.body.user).not.toHaveProperty('passwordHash');
+    expect(res.body.user.createdAt).toBeTruthy();
+    expect(res.body.user.lastLoginAt).toBeTruthy();
     expect(res.body.profile.id).toBe('Patient_Ahmed');
   });
 
@@ -493,13 +497,13 @@ describe('patient self-registration', () => {
   });
 
   it('audits the registration without the password', () => {
-    const entry = listAudit(200, { action: 'REGISTER' }).find((e) => e.resourceId === patientId);
+    const entry = listAudit(200, { action: 'REGISTER' }).find((e) => e.entity === 'patients' && e.status === 201);
     expect(entry, 'no REGISTER audit entry').toBeDefined();
-    expect(entry?.email).toBe(email);
+    expect(entry?.email).toBeNull();
     expect(entry?.role).toBe('PATIENT');
     expect(entry?.status).toBe(201);
-    expect(JSON.parse(String(entry?.details))).toMatchObject({ email, fullName, gender: 'Female' });
-    expect(entry?.details).not.toMatch(/password/i);
+    expect(entry?.resourceId).toBeNull();
+    expect(entry?.details).toBeNull();
   });
 
   it('answers a forgotten password the same way for an unknown e-mail', async () => {
@@ -518,6 +522,7 @@ describe('patient self-registration', () => {
       expect(attempt.userId).toBeNull();
       expect(attempt.status).toBe(200);
     }
-    expect(attempts.some((a) => a.details?.includes('ghost.account@medicare.tn'))).toBe(true);
+    expect(attempts.every((a) => !a.details?.includes('ghost.account@medicare.tn'))).toBe(true);
+    expect(attempts.every((a) => a.details?.includes('[redacted]'))).toBe(true);
   });
 });

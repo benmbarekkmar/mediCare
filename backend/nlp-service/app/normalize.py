@@ -38,7 +38,7 @@ STOPWORDS = {
     },
 }
 
-PUNCT = re.compile(r"[?!,;:()\"'\[\]{}.]+")
+PUNCT = re.compile(r"[?!,;:()\"'\[\]{}.،؛؟]+")
 # a curly apostrophe is the one character the NFD pass turns into a control code, and the
 # rest of the general punctuation block is a word separator, never part of a name
 GENERAL_PUNCT = re.compile(r"[\u00a0\u00ad\u2000-\u206f]+")
@@ -63,14 +63,49 @@ def content_tokens(value: str, lang: str = "en") -> list[str]:
     return [t for t in normalize(value).split(" ") if t and t not in stop]
 
 
+ARABIC_SCRIPT = re.compile(r"[\u0600-\u06ff]")
+DERJA_CUES = {"chneya", "chnoua", "chnouma", "a3radh", "3andi", "maradh", "tbib", "mawa3id"}
+ARABIC_TO_FRENCH = {
+    "ما هي": "quels sont", "ما هو": "quel est", "شنية": "quels sont",
+    "شنوما": "quels sont", "شنو": "quel", "اعراض": "symptomes",
+    "الاعراض": "symptomes", "مرض": "maladie", "السكري": "diabetes",
+    "الربو": "asthma", "علاج": "traitement", "علاجات": "traitements",
+    "دواء": "medicament", "ادوية": "medicaments", "مواعيد": "rendez vous",
+    "موعد": "rendez vous", "طبيب": "medecin", "اطباء": "medecins",
+    "تحاليل": "tests", "فحوصات": "examens", "مستشفى": "hopital",
+}
+DERJA_TO_FRENCH = {
+    "chneya": "quels", "chnoua": "quel", "chnouma": "quels",
+    "a3radh": "symptomes", "maradh": "maladie", "sokkari": "diabetes",
+    "dawa": "medicament", "dwe": "medicaments", "3ilej": "traitement",
+    "tbib": "medecin", "mawa3id": "rendez vous",
+}
+
+
 def detect_language(question: str, forced: str | None = None) -> str:
-    """langdetect with an explicit override, always narrowed to the two supported languages."""
-    if forced in ("en", "fr"):
+    """Detect French, English, Arabic script, or common Tunisian Derja wording."""
+    if forced in ("en", "fr", "ar", "tn"):
         return forced
+    if ARABIC_SCRIPT.search(question):
+        return "ar"
+    words = set(normalize(question).split())
+    if words & DERJA_CUES:
+        return "tn"
     try:
         return "fr" if detect(question) == "fr" else "en"
     except LangDetectException:
         return "en"
+
+
+def to_model_language(question: str, lang: str) -> str:
+    """Map common Arabic/Derja medical wording to French lexicon terms locally."""
+    if lang not in ("ar", "tn"):
+        return question
+    text = normalize(question)
+    mapping = ARABIC_TO_FRENCH if lang == "ar" else DERJA_TO_FRENCH
+    for source, target in sorted(mapping.items(), key=lambda pair: len(pair[0]), reverse=True):
+        text = re.sub(r"(?<!\w)" + re.escape(source) + r"(?!\w)", target, text)
+    return text
 
 
 def tokenize(text: str) -> list[str]:

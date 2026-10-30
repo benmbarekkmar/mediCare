@@ -62,32 +62,49 @@ export function audit(input: AuditInput): void {
       .prepare(INSERT)
       .run({
         userId: user?.id ?? null,
-        email: user?.email ?? null,
+        email: user?.role === 'PATIENT' ? null : (user?.email ?? null),
         role: user?.role ?? null,
         action: input.action,
         entity: input.entity ?? null,
-        resourceId: input.resourceId ?? null,
+        resourceId: input.entity === 'patients' ? null : (input.resourceId ?? null),
         method: req?.method ?? null,
-        path: req?.originalUrl ? req.originalUrl.split('?')[0] : null,
+        path: req?.originalUrl
+          ? req.originalUrl.split('?')[0]?.replace(/(\/api\/patients)\/[^/?]+/gi, '$1/:id') ?? null
+          : null,
         status: input.status ?? null,
-        details: input.details === undefined ? null : JSON.stringify(sanitize(input.details)),
+        details: shouldOmitDetails(input) || input.details === undefined ? null : JSON.stringify(sanitize(input.details)),
         createdAt: nowIso(),
       });
-  } catch (err) {
-    logger.error({ err, action: input.action }, 'audit write failed');
+  } catch {
+    logger.error({ action: input.action }, 'audit write failed');
   }
 }
 
-const REDACTED = new Set(['password', 'currentPassword', 'newPassword', 'token', 'refreshToken', 'passwordHash']);
+const REDACTED = new Set([
+  'password', 'currentpassword', 'newpassword', 'token', 'refreshtoken', 'passwordhash',
+  'patient', 'patients', 'patientid', 'patientiri', 'email', 'name', 'fullname', 'label',
+  'linkedid', 'query', 'update', 'sparql', 'question',
+]);
+
+function shouldOmitDetails(input: AuditInput): boolean {
+  return (
+    input.entity === 'patients' ||
+    input.action === 'NLP_ASK' ||
+    input.action === 'SPARQL_QUERY' ||
+    input.action === 'SPARQL_UPDATE' ||
+    input.action === 'CONSISTENCY_REPAIR'
+  );
+}
 
 function sanitize(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(sanitize);
   if (value && typeof value === 'object') {
     const out: Record<string, unknown> = {};
     for (const [key, v] of Object.entries(value as Record<string, unknown>))
-      out[key] = REDACTED.has(key) ? '[redacted]' : sanitize(v);
+      out[key] = REDACTED.has(key.toLowerCase()) ? '[redacted]' : sanitize(v);
     return out;
   }
+  if (typeof value === 'string') return value.replace(/(?:https?:\/\/[^\s<>#]+#)?Patient_[A-Za-z0-9_]+/g, '[redacted]');
   return value;
 }
 

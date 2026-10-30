@@ -10,6 +10,8 @@ from __future__ import annotations
 import re
 from typing import Any, Callable
 
+from rdflib.plugins.sparql.parser import parseQuery
+
 from .config import settings
 from .normalize import normalize
 
@@ -695,8 +697,13 @@ LISTABLE = {
 
 
 def build(intent: str, slots: dict[str, Any]) -> str:
-    """Render the template of one intent, prefixes included."""
+    """Render a safe intent template and validate the complete query with RDFLib."""
     template = TEMPLATES.get(intent)
     if template is None:
         raise TemplateError(f"Unknown intent: {intent}")
-    return PREFIX_BLOCK + template(slots)
+    query = PREFIX_BLOCK + template(slots)
+    try:
+        parseQuery(query)
+    except Exception as error:
+        raise TemplateError("Generated SPARQL failed RDFLib syntax validation") from error
+    return query

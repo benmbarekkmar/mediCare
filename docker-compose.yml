@@ -11,9 +11,9 @@ services:
       FUSEKI_DATASET_2: medicare_test
       ADMIN_PASSWORD: ${FUSEKI_ADMIN_PASSWORD:-medicare}
     volumes:
-      # stain/jena-fuseki keeps its TDB2 databases under /fuseki/databases,
-      # so this is the directory that has to survive a "docker compose down".
-      - fuseki-data:/fuseki/databases
+      # Persist the image's complete writable data directory. Mounting only the
+      # databases subfolder prevents the image entrypoint from preparing it.
+      - fuseki-data:/fuseki
     restart: unless-stopped
 
 volumes:
