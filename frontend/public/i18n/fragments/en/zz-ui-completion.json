@@ -1,0 +1,369 @@
+{
+  "patient": {
+    "appointments": {
+      "status": {
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "scheduled": "Scheduled",
+        "completed": "Completed",
+        "cancelled": "Cancelled",
+        "canceled": "Cancelled",
+        "inprogress": "In progress",
+        "rejected": "Declined",
+        "noshow": "Did not attend",
+        "unknown": "Status unavailable"
+      },
+      "type": {
+        "consultation": "Consultation",
+        "followupappointment": "Follow-up appointment",
+        "emergencyappointment": "Emergency appointment",
+        "unknown": "Medical appointment"
+      },
+      "agendaNoVisits": "No appointments are scheduled for this day.",
+      "agendaTitle": "Appointment agenda",
+      "bookAnother": "Book another appointment",
+      "cancelBlocked": "Online cancellation is unavailable for this appointment. Please contact reception.",
+      "cancelBody": "Do you want to cancel the appointment on {{when}} with {{where}}?",
+      "cancelConfirm": "Cancel appointment",
+      "cancelDoneBody": "Your cancellation request has been received.",
+      "cancelDoneTitle": "Request sent",
+      "cancelFallback": "Do you want to cancel this appointment?",
+      "cancelTitle": "Cancel this appointment?",
+      "errorAuth": "Your session expired or access to the record was denied.",
+      "errorGeneric": "An error occurred while loading your appointments.",
+      "errorHint": "Check your connection and try again.",
+      "errorOffline": "The service is temporarily unavailable. Please try again shortly.",
+      "errorTitle": "Could not load your appointments",
+      "nextMonth": "Next month",
+      "noDepartment": "Department not specified",
+      "noTime": "Time not specified",
+      "noType": "Appointment type not specified",
+      "prevMonth": "Previous month",
+      "requestCta": "Request an appointment",
+      "viewLabel": "Appointment view"
+    },
+    "shared": {
+      "status": {
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "scheduled": "Scheduled",
+        "completed": "Completed",
+        "cancelled": "Cancelled",
+        "canceled": "Cancelled",
+        "inprogress": "In progress",
+        "rejected": "Declined",
+        "noshow": "Did not attend",
+        "unknown": "Status unavailable"
+      },
+      "appointmentType": {
+        "consultation": "Consultation",
+        "followupappointment": "Follow-up appointment",
+        "emergencyappointment": "Emergency appointment",
+        "unknown": "Medical appointment"
+      },
+      "specialty": {
+        "cardiologist": "Cardiologist",
+        "dermatologist": "Dermatologist",
+        "neurologist": "Neurologist",
+        "generalpractitioner": "General practitioner",
+        "emergencyphysician": "Emergency physician",
+        "pediatrician": "Pediatrician",
+        "surgeon": "Surgeon",
+        "psychologist": "Psychologist",
+        "oncologist": "Oncologist",
+        "gynecologist": "Gynaecologist",
+        "ophthalmologist": "Ophthalmologist",
+        "unknown": "Medical specialty"
+      },
+      "diseaseCategory": {
+        "communicabledisease": "Infectious disease",
+        "chronicdisease": "Chronic disease",
+        "noncommunicabledisease": "Non-communicable disease",
+        "hereditarydisease": "Hereditary disease",
+        "unknown": "Condition category"
+      },
+      "testType": {
+        "bloodtest": "Blood test",
+        "labtest": "Lab test",
+        "laboratorytest": "Laboratory test",
+        "medicalimaging": "Medical imaging",
+        "xray": "X-ray",
+        "urinetest": "Urine test",
+        "ecg": "Electrocardiogram",
+        "unknown": "Medical test"
+      },
+      "treatmentType": {
+        "medicationbasedtreatment": "Medication-based treatment",
+        "medicationtreatment": "Medication treatment",
+        "surgicaltreatment": "Surgical treatment",
+        "therapy": "Therapy",
+        "unknown": "Treatment type"
+      },
+      "gender": {
+        "female": "Female",
+        "male": "Male",
+        "other": "Other",
+        "unknown": "Not specified"
+      },
+      "noDate": "Date not specified",
+      "noResult": "Result not specified",
+      "notSet": "Not specified"
+    },
+    "request": {
+      "type": {
+        "consultation": "Consultation",
+        "followupappointment": "Follow-up appointment",
+        "emergencyappointment": "Emergency appointment",
+        "unknown": "Medical appointment"
+      },
+      "specialty": {
+        "cardiologist": "Cardiologist",
+        "dermatologist": "Dermatologist",
+        "neurologist": "Neurologist",
+        "generalpractitioner": "General practitioner",
+        "emergencyphysician": "Emergency physician",
+        "pediatrician": "Pediatrician",
+        "surgeon": "Surgeon",
+        "psychologist": "Psychologist",
+        "oncologist": "Oncologist",
+        "gynecologist": "Gynaecologist",
+        "ophthalmologist": "Ophthalmologist",
+        "unknown": "Medical specialty"
+      },
+      "bookAnother": "Make another request",
+      "chooseDepartment": "Choose the department where you would like to be seen.",
+      "chooseDoctor": "Choose a doctor if you have a preference.",
+      "chooseTime": "Select an available date and time.",
+      "closedDay": "Appointments cannot be requested on this day. Please choose another date.",
+      "dateLabel": "Preferred date",
+      "emergencyBadge": "Emergency",
+      "emergencyNote": "For a medical emergency, contact emergency services immediately or go to the nearest emergency department.",
+      "errDate": "Select a date to continue.",
+      "errDepartment": "Select a department to continue.",
+      "errTime": "Select a time slot to continue.",
+      "errorGeneric": "Your request could not be sent. Check the details and try again.",
+      "errorOffline": "The service is temporarily unavailable. Please try again shortly.",
+      "factDepartment": "Department",
+      "factDoctor": "Doctor",
+      "factType": "Appointment type",
+      "factWhen": "Date and time",
+      "noDepartmentShort": "No department selected",
+      "noDepartments": "No departments are currently available for appointment requests.",
+      "noPreference": "No preference",
+      "noPreferenceShort": "No doctor selected",
+      "noWhenShort": "Date and time to be confirmed",
+      "pendingNote": "Your request has been sent to the facility and is awaiting confirmation.",
+      "receptionNote": "The reception team will review your request. The facility will confirm the appointment.",
+      "referenceLabel": "Request reference",
+      "seeAppointments": "View my appointments",
+      "slotTaken": "This time slot is no longer available.",
+      "stepDepartment": "Department",
+      "stepDoctor": "Doctor",
+      "stepReview": "Review",
+      "stepTime": "Date and time",
+      "successTitle": "Appointment request sent"
+    },
+    "dashboard": {
+      "actionAssistant": "Translate a question",
+      "actionAssistantHint": "Convert natural language to SPARQL and inspect the ontology results.",
+      "actionFindDoctor": "Find a doctor",
+      "actionRecord": "View my record",
+      "actionRecordHint": "Review your health information and test results.",
+      "actionRequest": "Request an appointment",
+      "actionRequestHint": "Choose a department and an available time.",
+      "addToCalendar": "Add to my calendar",
+      "allResults": "View all results",
+      "allVisits": "All my appointments",
+      "cancelBlockedHint": "Appointment changes are handled by the reception team. Contact your facility for help.",
+      "cancelBlockedTitle": "Online cancellation unavailable",
+      "cancelDialogBody": "Would you like to cancel your appointment on {{when}} with {{where}}?",
+      "cancelDialogConfirm": "Confirm cancellation",
+      "cancelDialogFallback": "Would you like to cancel this appointment?",
+      "cancelDialogTitle": "Cancel appointment?",
+      "cancelDoneBody": "Your appointment has been cancelled.",
+      "cancelDoneTitle": "Appointment cancelled",
+      "cancelNotOpen": "Please contact reception at your facility to change or cancel this appointment.",
+      "cancelVisit": "Cancel",
+      "conditionsFootnote": "This information comes from your medical record.",
+      "factNoDepartment": "Department not specified",
+      "hintConfirmed": "Your appointment is confirmed. Review the details before your visit.",
+      "hintGeneric": "Review your appointment details before your visit.",
+      "hintPending": "Your appointment request is awaiting confirmation from the facility.",
+      "icsBadBody": "The calendar file could not be created. Try again or add the appointment manually.",
+      "icsBadTitle": "Could not add to calendar",
+      "icsDepartment": "Department",
+      "icsDoctor": "Doctor",
+      "icsDoneBody": "The appointment file has been downloaded. Open it to add the visit to your calendar.",
+      "icsDoneTitle": "Calendar file downloaded",
+      "icsIntro": "Medical appointment",
+      "icsSummaryPrefix": "Medical appointment",
+      "latestTests": "Recent tests",
+      "latestTestsEmpty": "No recent test results to display.",
+      "myConditions": "My conditions",
+      "myConditionsCount": "{{count}} condition(s) in your record",
+      "myConditionsEmpty": "No conditions are listed in your record.",
+      "myDoctors": "My care team",
+      "myDoctorsEmpty": "No doctors are currently linked to your care.",
+      "nextVisit": "Next appointment",
+      "noProfileHint": "Your patient space is not linked to a medical record yet.",
+      "noProfileSupport": "Please contact reception at your facility to have your account link checked.",
+      "noProfileTitle": "Patient record not linked",
+      "noVisitHint": "You have no upcoming appointments. You can request one or browse the medical directory.",
+      "noVisitTitle": "No upcoming appointments",
+      "openRecord": "Open my record",
+      "partialError": "Some information about your care could not be loaded.",
+      "quickActions": "Quick actions",
+      "tipsEmpty": "No health information is available right now.",
+      "tipsFootnote": "This information is educational and does not replace medical advice.",
+      "tipsReadMore": "Learn more",
+      "tipsSubtitle": "Reliable information to help you understand your health.",
+      "tipsSymptoms": "Associated symptoms",
+      "viewProfile": "View profile"
+    },
+    "record": {
+      "careTeam": "Your care team",
+      "conditionsEmpty": "No conditions are listed in your record.",
+      "downloadDoneBody": "Your medical record summary has been downloaded.",
+      "downloadDoneTitle": "Download complete",
+      "fieldAge": "Age",
+      "fieldAgeValue": "{{value}} years",
+      "fieldBlood": "Blood type",
+      "fieldGender": "Sex",
+      "fieldName": "Name",
+      "fieldPhone": "Phone",
+      "followedIn": "Followed by department",
+      "loadFailed": "Could not load your medical record.",
+      "noDepartment": "Department not specified",
+      "noMedications": "No medications listed.",
+      "noPatientAssistant": "Open MedTranslate",
+      "noPatientHint": "No patient record is linked to your account.",
+      "noPatientSupport": "Contact reception at your facility to check your access.",
+      "noPatientTitle": "Medical record unavailable",
+      "noTreatments": "No treatments listed.",
+      "openInLibrary": "Browse the health library",
+      "overviewEmpty": "No medical information is available yet.",
+      "printedOn": "Printed on",
+      "symptomsUnknown": "Symptoms not specified",
+      "tabConditions": "Conditions and treatments",
+      "tabOverview": "Overview",
+      "tabTests": "Tests",
+      "tabTimeline": "History",
+      "tabVisits": "Appointments",
+      "testsEmpty": "No tests are listed in your record.",
+      "visitsEmpty": "No appointments are listed in your record.",
+      "visitsHint": "Upcoming appointments are also available under “My appointments”.",
+      "duration": "Duration: {{value}}"
+    }
+  },
+  "explorer": {
+    "property": {
+      "kind": {
+        "object": "Object property",
+        "datatype": "Data property",
+        "annotation": "Annotation property"
+      },
+      "chainFlag": "Property chain",
+      "noCharacteristic": "No characteristics defined.",
+      "noDomain": "No domain defined.",
+      "noRange": "No range defined.",
+      "noUsedBy": "No classes reference this property.",
+      "usedBy": "Used by"
+    },
+    "layout": {
+      "cose": "Relationship network",
+      "circle": "Circular layout",
+      "grid": "Grid layout",
+      "breadthfirst": "Hierarchy"
+    },
+    "restriction": {
+      "some": "At least one value",
+      "min": "Minimum",
+      "max": "Maximum",
+      "key": "Key property"
+    },
+    "census": {
+      "objectProperties": "Object properties",
+      "datatypeProperties": "Data properties",
+      "namedIndividuals": "Named individuals"
+    },
+    "class": {
+      "noIndividuals": "No individuals in this class",
+      "noIndividualsHint": "This class does not currently contain any individuals.",
+      "noneDisjoint": "No disjoint classes.",
+      "noneEquivalent": "No equivalent classes.",
+      "noneRestriction": "No restrictions defined.",
+      "noneSelected": "No class selected",
+      "noneSub": "No subclasses.",
+      "individuals": "Individuals ({{total}})"
+    },
+    "details": {
+      "pickClass": "Select a class to view its details."
+    },
+    "filter": {
+      "allClasses": "All classes"
+    },
+    "graph": {
+      "clearFocus": "Clear selection",
+      "emptyFiltered": "No links match this class.",
+      "emptyHint": "Select an item to explore its relationships.",
+      "subtitleFocus": "Relationships around the selected item (depth: {{depth}}).",
+      "zoomIn": "Zoom in on graph",
+      "zoomOut": "Zoom out on graph"
+    },
+    "individual": {
+      "noIncoming": "No incoming relationships.",
+      "noOutgoing": "No outgoing relationships.",
+      "noneSelected": "No individual selected"
+    },
+    "tree": {
+      "collapseAll": "Collapse all",
+      "expandAll": "Expand all"
+    }
+  },
+  "console": {
+    "exportJson": "Export JSON",
+    "limitValue": "{{value}} rows",
+    "readOnlyRole": "Read only: updates are restricted to administrators.",
+    "runShortcut": "Run query",
+    "saveQuery": "Save query",
+    "results": {
+      "metaAsk": "Answer returned in {{ms}} ms",
+      "metaGraph": "{{triples}} triples in {{ms}} ms",
+      "meta": "{{rows}} rows in {{ms}} ms"
+    },
+    "groups": {
+      "reads": "Read queries",
+      "writes": "Update queries"
+    },
+    "statement": {
+      "select": "Select query",
+      "ask": "Yes/no question",
+      "construct": "Graph construction",
+      "describe": "Resource description",
+      "update": "Update",
+      "empty": "Ready for a query"
+    },
+    "tpl": {
+      "patients": "List patients",
+      "filter_contains": "Filter patients",
+      "counts": "Patients by condition",
+      "group_concat": "Symptoms by condition",
+      "ask": "Check a clinical relationship",
+      "construct": "Build a clinical graph",
+      "describe": "Describe a patient record",
+      "latest_tests": "Recent tests",
+      "symptom_to_disease": "Link symptoms to conditions",
+      "doctor_chain": "Doctors, specialties and facilities",
+      "path_rollup": "Individuals by class",
+      "path_chain": "Conditions and medications",
+      "optional_age": "Underage patients",
+      "write_insert": "Add an alternative label",
+      "write_delete": "Remove an outdated label",
+      "write_delete_insert": "Update a phone number"
+    },
+    "subtitle": "Run read queries against the live ontology store ({{triples}} triples)."
+  },
+  "entities": {
+    "ageGroup": "Age group"
+  }
+}

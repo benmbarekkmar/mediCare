@@ -1,0 +1,121 @@
+{
+  "staff": {
+    "day": {
+      "title": "Your day at a glance",
+      "loading": "Loading your day…",
+      "kpiLabel": "Key figures",
+      "errorHint": "The appointment list could not be read. Check that the store is reachable, then try again.",
+      "errorLoad": "The data could not be loaded from the server.",
+      "roleDoctor": "Doctor",
+      "roleReceptionist": "Reception desk",
+      "open": "Open",
+      "allList": "All records",
+      "groupCount": "{{count}} visit(s)",
+      "noPatient": "Patient not linked",
+      "noProfileHint": "This account is not linked to an individual of the ontology yet.",
+      "changeStatus": "Change status",
+      "toast": {
+        "statusTitle": "Status updated",
+        "statusBody": "{{patient}} is now {{status}}."
+      },
+      "status": {
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "completed": "Completed",
+        "cancelled": "Cancelled",
+        "scheduled": "Scheduled",
+        "unknown": "No status"
+      },
+      "kpi": {
+        "today": "Visits today",
+        "todayHint": "Appointments dated today",
+        "week": "Next seven days",
+        "weekHint": "From today to day seven",
+        "patients": "My patients",
+        "patientsHint": "Patients you treat",
+        "pendingTests": "Tests to read",
+        "pendingTestsHint": "No result recorded yet",
+        "pending": "To confirm",
+        "pendingHint": "Bookings waiting for an answer",
+        "allPatients": "All patients",
+        "allPatientsHint": "Registered at the hospital",
+        "doctors": "Doctors",
+        "doctorsHint": "Listed in the directory"
+      },
+      "doctor": {
+        "today": {
+          "title": "Today's appointments",
+          "subtitle": "{{count}} visit(s) on the diary today",
+          "subtitleEmpty": "Nothing on the diary today",
+          "empty": "No appointment today",
+          "emptyHint": "Book a visit for one of your patients and it shows up here."
+        },
+        "week": {
+          "title": "Upcoming week",
+          "subtitle": "{{count}} visit(s) over the next seven days, {{patients}} patients followed",
+          "empty": "No visit in the next seven days",
+          "emptyHint": "New bookings of your patients appear here automatically."
+        },
+        "tests": {
+          "title": "Tests awaiting a result",
+          "subtitle": "{{count}} test(s) of your patients without a result",
+          "empty": "Every test has its result",
+          "emptyHint": "A result is written on the test record itself.",
+          "pending": "Result missing"
+        },
+        "department": {
+          "title": "My department",
+          "open": "Find in departments",
+          "empty": "No department attached"
+        },
+        "hospital": {
+          "title": "My hospital",
+          "open": "Find in hospitals",
+          "empty": "No hospital attached"
+        },
+        "links": {
+          "newAppointment": "New appointment",
+          "newAppointmentHint": "Open the appointment form",
+          "myPatients": "My patients",
+          "myPatientsHint": "The list already scoped to you",
+          "newTest": "Add a test",
+          "newTestHint": "Record a test for a patient",
+          "openCalendar": "Open calendar",
+          "openCalendarHint": "The week view of every visit"
+        }
+      },
+      "reception": {
+        "ctas": {
+          "title": "Front desk actions",
+          "hint": "Both forms open straight away, no need to browse the lists first.",
+          "newAppointment": "New appointment",
+          "newPatient": "New patient"
+        },
+        "queue": {
+          "title": "Today's queue by status",
+          "subtitle": "{{count}} visit(s) dated today",
+          "calendar": "Open calendar",
+          "empty": "No visit today",
+          "emptyHint": "Take the first booking of the day and the queue fills up."
+        },
+        "pending": {
+          "title": "Waiting for confirmation",
+          "subtitle": "{{count}} booking(s) to confirm or cancel",
+          "confirm": "Confirm",
+          "cancel": "Cancel",
+          "empty": "Nothing left to confirm",
+          "emptyHint": "Every booking of the next two weeks already has an answer."
+        },
+        "doctors": {
+          "title": "Doctors"
+        },
+        "departments": {
+          "title": "Departments"
+        },
+        "directoryCount": "{{count}} entry(ies) shown",
+        "directoryEmpty": "The directory is empty",
+        "directoryHint": "Ask an administrator to register the staff and the departments."
+      }
+    }
+  }
+}

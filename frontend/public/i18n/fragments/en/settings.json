@@ -1,0 +1,86 @@
+{
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Appearance, security and the current session of this account. Platform status is reserved to administrators.",
+    "appearance": {
+      "title": "Appearance",
+      "subtitle": "Theme and language apply instantly and are remembered in this browser.",
+      "theme": "Theme",
+      "themeHint": "System follows the theme of your operating system.",
+      "language": "Language",
+      "languageHint": "The interface re-translates immediately, no reload needed.",
+      "english": "English",
+      "french": "French",
+      "applied": "Each choice is applied and saved as you pick it."
+    },
+    "security": {
+      "title": "Security",
+      "subtitle": "Change the password of this account.",
+      "current": "Current password",
+      "next": "New password",
+      "confirm": "Confirm the new password",
+      "policy": "At least 8 characters (200 maximum), with at least one letter and one digit.",
+      "mismatch": "The two passwords do not match.",
+      "submit": "Change the password",
+      "changed": "Password changed",
+      "wrongCurrent": "The current password is not correct.",
+      "revokeNote": "Changing the password revokes every active session of this account on the server: you are signed out of all your devices and must sign in again."
+    },
+    "session": {
+      "title": "Session",
+      "subtitle": "The account this browser is signed in with.",
+      "email": "Email",
+      "role": "Role",
+      "linked": "Linked individual",
+      "noLinked": "Not linked to an individual",
+      "lastLogin": "Last sign-in",
+      "signOut": "Sign out",
+      "roles": {
+        "ADMIN": "Administrator",
+        "DOCTOR": "Doctor",
+        "RECEPTIONIST": "Receptionist",
+        "PATIENT": "Patient"
+      }
+    },
+    "platform": {
+      "title": "Fuseki endpoint and health",
+      "subtitle": "Read-only view of the triple store, served by the health probe and the status endpoint.",
+      "endpoint": "API endpoint",
+      "version": "Version",
+      "environment": "Environment",
+      "dataset": "Dataset",
+      "sparql": "SPARQL store",
+      "nlp": "NLP question answering service",
+      "reachable": "Reachable",
+      "unreachable": "Unreachable",
+      "recheck": "Re-check",
+      "statusFailed": "The platform status could not be loaded.",
+      "statsFailed": "The ontology statistics could not be loaded.",
+      "storeHint": "The probe answers 503 when the store is down; the report is shown here as data, never as a toast.",
+      "census": "Ontology census",
+      "triples": "Triples",
+      "tbox": "T-Box triples",
+      "abox": "A-Box triples",
+      "classes": "Classes",
+      "individuals": "Named individuals",
+      "objectProperties": "Object properties",
+      "datatypeProperties": "Datatype properties",
+      "annotationProperties": "Annotation properties",
+      "byEntity": "Individuals per entity",
+      "explorer": "Open the ontology explorer",
+      "consistency": "Run the consistency check"
+    },
+    "entity": {
+      "patients": "Patients",
+      "doctors": "Doctors",
+      "diseases": "Diseases",
+      "symptoms": "Symptoms",
+      "treatments": "Treatments",
+      "medications": "Medications",
+      "tests": "Tests",
+      "appointments": "Appointments",
+      "hospitals": "Hospitals",
+      "departments": "Departments"
+    }
+  }
+}

@@ -1,0 +1,79 @@
+<div class="home">
+  <main class="home__main">
+    <header class="hero">
+    <div class="hero__copy">
+      <p class="hero__eyebrow">{{ 'home.eyebrow' | translate }}</p>
+      <h1 class="hero__title">{{ 'home.title' | translate }}</h1>
+      <p class="hero__lede">{{ 'home.lede' | translate }}</p>
+      <div class="hero__actions">
+        <ui-button [href]="'/login'" icon="log-in">{{ 'common.signIn' | translate }}</ui-button>
+        <ui-button variant="secondary" [href]="'/register'" icon="user">{{ 'nav.items.register' | translate }}</ui-button>
+        <ui-button variant="ghost" [href]="'/assistant'" icon="bot">{{ 'home.askAnywhere' | translate }}</ui-button>
+      </div>
+    </div>
+
+    @if (stats(); as data) {
+      <dl class="hero__stats">
+        <div>
+          <dt>{{ 'home.stat.classes' | translate }}</dt>
+          <dd>{{ count('classes') }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'home.stat.properties' | translate }}</dt>
+          <dd>{{ count('objectProperties') }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'home.stat.individuals' | translate }}</dt>
+          <dd>{{ count('namedIndividuals') }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'home.stat.triples' | translate }}</dt>
+          <dd>{{ count('triples') }}</dd>
+        </div>
+      </dl>
+    }
+  </header>
+
+  <section class="home__section">
+    <h2 class="home__heading">{{ 'home.tools' | translate }}</h2>
+    <div class="grid-auto">
+      @for (entry of entries; track entry.href) {
+        <a class="entry" [routerLink]="entry.href">
+          <span class="entry__icon"><ui-icon [name]="entry.icon" [size]="20" /></span>
+          <h3>{{ entry.titleKey | translate }}</h3>
+          <p>{{ entry.textKey | translate }}</p>
+          <span class="entry__cta"><ui-icon name="arrow-right" [size]="15" /> {{ 'common.view' | translate }}</span>
+        </a>
+      }
+    </div>
+  </section>
+
+  @if (stats()) {
+    <section class="home__section">
+      <h2 class="home__heading">{{ 'home.coverage' | translate }}</h2>
+      <div class="grid-kpi">
+        <ui-stat-card [value]="entity('patients')" [label]="'nav.items.patients' | translate" icon="users" />
+        <ui-stat-card [value]="entity('doctors')" [label]="'nav.items.doctors' | translate" icon="stethoscope" />
+        <ui-stat-card [value]="entity('diseases')" [label]="'nav.items.diseases' | translate" icon="heart" />
+        <ui-stat-card [value]="entity('hospitals')" [label]="'nav.items.hospitals' | translate" icon="hospital" />
+      </div>
+    </section>
+  }
+
+  <section class="home__section">
+    <h2 class="home__heading">{{ 'home.howTitle' | translate }}</h2>
+    <div class="grid-auto">
+      @for (step of [1, 2, 3]; track step) {
+        <ui-card [title]="'home.how' + step + 'Title' | translate" pad="md">
+          <p class="text-sm text-muted">{{ 'home.how' + step + 'Text' | translate }}</p>
+        </ui-card>
+      }
+    </div>
+  </section>
+
+  </main>
+  <footer class="home__footer">
+    <p class="text-sm text-muted">{{ 'home.privacy' | translate }}</p>
+    <a class="text-sm" routerLink="/login">{{ 'nav.items.login' | translate }}</a>
+  </footer>
+</div>

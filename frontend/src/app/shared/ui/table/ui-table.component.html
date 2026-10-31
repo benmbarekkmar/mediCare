@@ -1,0 +1,147 @@
+<div class="table-wrap" [class.table-wrap--dense]="dense()">
+  <div class="table-toolbar">
+    <div class="table-toolbar__info">
+      @if (selectable() && selected().size > 0) {
+        <ui-chip [label]="'uipage.selected' | translate: { count: selected().size }" removable (removed)="toggleAll()" />
+      } @else {
+        <span class="table-toolbar__count">{{ 'uipage.showing' | translate: { count: rows().length, total: total() } }}</span>
+      }
+    </div>
+    <div class="table-toolbar__actions">
+      <ng-content select="[tableToolbar]" />
+      @if (exportName()) {
+        <button type="button" class="tool-btn" (click)="exportCsv()" [attr.aria-label]="'uipage.export' | translate">
+          <ui-icon name="download" [size]="15" />
+          <span>{{ 'uipage.export' | translate }}</span>
+        </button>
+      }
+      @if (columnsId()) {
+        <div class="tool-pop">
+          <button type="button" class="tool-btn" (click)="openMenu()" [attr.aria-expanded]="menuOpen()" aria-haspopup="true">
+            <ui-icon name="columns-3" [size]="15" />
+            <span>{{ 'uipage.columns' | translate }}</span>
+          </button>
+          @if (menuOpen()) {
+            <div class="tool-menu" role="menu">
+              @for (column of columns(); track column.field) {
+                <label class="tool-menu__item">
+                  <input type="checkbox" [checked]="!hidden().has(column.field)" (change)="toggleColumn(column.field)" />
+                  <span>{{ column.header }}</span>
+                </label>
+              }
+              <button type="button" class="tool-menu__reset" (click)="resetColumns()">
+                {{ 'uipage.columnsReset' | translate }}
+              </button>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+  @if (error()) {
+    <ui-error-state [title]="'uipage.loadFailed' | translate" [message]="error() ?? ''" (retry)="retryClick()" />
+  } @else if (!loading() && rows().length === 0) {
+    <ui-empty-state [icon]="emptyIcon()" [title]="emptyTitle() ?? ('uipage.empty' | translate)" [hint]="emptyHint()" />
+  } @else {
+    <div class="table-scroll" [class.table-scroll--sticky]="stickyHeader()">
+      <table class="table">
+        <thead>
+          <tr>
+            @if (selectable()) {
+              <th class="col-check">
+                <input type="checkbox" [checked]="allChecked" (change)="toggleAll()" [attr.aria-label]="'uipage.selectAll' | translate" />
+              </th>
+            }
+            @for (column of visibleColumns; track column.field) {
+              <th
+                [style.width]="column.width ?? null"
+                [class]="alignClass(column)"
+                [attr.aria-sort]="sortedBy(column) ? (sortedBy(column)?.order === 'asc' ? 'ascending' : 'descending') : null"
+              >
+                @if (column.sortable) {
+                  <button type="button" class="th-sort" (click)="sortBy(column)">
+                    <span>{{ column.header }}</span>
+                    <ui-icon
+                      [name]="sortedBy(column) ? (sortedBy(column)?.order === 'asc' ? 'arrow-up' : 'arrow-down') : 'arrow-up-down'"
+                      [size]="13"
+                    />
+                  </button>
+                } @else {
+                  <span>{{ column.header }}</span>
+                }
+              </th>
+            }
+            @if (hasActions()) {
+              <th class="col-actions">{{ actionsLabel() ?? ('uipage.actions' | translate) }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @if (loading()) {
+            @for (row of skeletonRows(pageSize()); track row) {
+              <tr>
+                @if (selectable()) {
+                  <td class="col-check"><ui-skeleton width="16px" height="16px" [announce]="false" /></td>
+                }
+                @for (column of visibleColumns; track column.field; let ci = $index) {
+                  <td><ui-skeleton [width]="skeletonWidth(ci)" [announce]="false" /></td>
+                }
+                @if (hasActions()) {
+                  <td><ui-skeleton width="60px" [announce]="false" /></td>
+                }
+              </tr>
+            }
+          } @else {
+            @for (row of rows(); track trackRow($index, row)) {
+              <tr (click)="clickRow(row)">
+                @if (selectable()) {
+                  <td class="col-check" (click)="$event.stopPropagation()">
+                    <input
+                      type="checkbox"
+                      [checked]="selected().has(rowId(row))"
+                      (change)="toggleRow(rowId(row))"
+                      [attr.aria-label]="'uipage.selectRow' | translate"
+                    />
+                  </td>
+                }
+                @for (column of visibleColumns; track column.field) {
+                  <td [class]="alignClass(column) + ' ' + (column.cellClass ?? '')" [attr.data-label]="column.header">
+                    @if (templateFor(column.field); as tpl) {
+                      <ng-template [ngTemplateOutlet]="tpl.template" [ngTemplateOutletContext]="{ $implicit: row, row: row, column: column.field }" />
+                    } @else if (column.format === 'bool') {
+                      <ui-icon [name]="isTrue(row, column) ? 'check' : 'minus'" [size]="15" [class]="isTrue(row, column) ? 'ok' : 'off'" />
+                    } @else if (column.format === 'status') {
+                      <span class="status-dot" [class]="statusClass(value(row, column.field))">{{ display(row, column) }}</span>
+                    } @else {
+                      {{ display(row, column) }}
+                    }
+                  </td>
+                }
+                @if (hasActions()) {
+                  <td class="col-actions" (click)="$event.stopPropagation()">
+                    @if (actionTemplates?.first; as actions) {
+                      <ng-template [ngTemplateOutlet]="actions.template" [ngTemplateOutletContext]="{ $implicit: row, row: row }" />
+                    }
+                  </td>
+                }
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  <div class="table-footer">
+    <label class="page-size">
+      <span>{{ 'uipage.perPage' | translate }}</span>
+      <select [value]="pageSize()" (change)="changeSize($any($event.target).value)" [attr.aria-label]="'uipage.perPage' | translate">
+        @for (size of pageSizes(); track size) {
+          <option [value]="size">{{ size }}</option>
+        }
+      </select>
+    </label>
+    <ui-pagination [page]="page()" [pageSize]="pageSize()" [total]="total()" (pageChange)="goPage($event)" />
+  </div>
+</div>

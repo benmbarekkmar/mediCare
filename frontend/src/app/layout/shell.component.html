@@ -1,0 +1,23 @@
+<a class="skip-link" href="#main">{{ 'nav.skipToContent' | translate }}</a>
+
+<div class="shell">
+  <app-sidebar
+    class="shell__sidebar"
+    [collapsed]="collapsed()"
+  />
+
+  <div class="shell__main">
+    <app-topbar (toggleSidebar)="toggleSidebar()" />
+
+    <main class="shell__content" id="main" tabindex="-1">
+      @if (trail().length > 0) {
+        <div class="shell__crumbs">
+          <ui-breadcrumb [crumbs]="trail()" />
+        </div>
+      }
+      <router-outlet />
+    </main>
+  </div>
+</div>
+
+<ui-toast-host />

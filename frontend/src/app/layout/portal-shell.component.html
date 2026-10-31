@@ -1,0 +1,40 @@
+<a class="skip-link" href="#main">{{ 'nav.skipToContent' | translate }}</a>
+
+<div class="portal-layout">
+  <app-sidebar
+    class="portal-sidebar"
+    [class.portal-sidebar--collapsed]="sidebarCollapsed()"
+    [portal]="true"
+    [collapsed]="sidebarCollapsed()"
+  />
+
+  <div class="portal-workspace">
+    <header class="portal-bar">
+      <button
+        class="portal-bar__icon-btn"
+        type="button"
+        (click)="toggleSidebar()"
+        [attr.aria-label]="'nav.toggleSidebar' | translate"
+        [attr.aria-expanded]="!sidebarCollapsed()"
+      >
+        <ui-icon name="menu" [size]="20" />
+      </button>
+
+      <div class="portal-bar__actions">
+        <button class="portal-bar__icon-btn" type="button" (click)="toggleTheme()" [attr.aria-label]="'nav.toggleTheme' | translate">
+          <ui-icon [name]="themeIcon()" [size]="18" />
+        </button>
+        <button class="portal-bar__text-btn" type="button" (click)="switchLanguage()" [attr.aria-label]="'nav.switchLanguage' | translate">
+          {{ langLabel() }}
+        </button>
+        <span class="portal-bar__identity" [title]="user()?.fullName ?? null">{{ user()?.fullName }}</span>
+      </div>
+    </header>
+
+    <main class="portal-main" id="main" tabindex="-1">
+      <router-outlet />
+    </main>
+  </div>
+</div>
+
+<ui-toast-host />

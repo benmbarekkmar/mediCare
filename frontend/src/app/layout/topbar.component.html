@@ -1,0 +1,113 @@
+<header class="topbar">
+  <button class="topbar__icon-btn" type="button" (click)="toggleSidebar.emit()"
+          [attr.aria-label]="'nav.toggleSidebar' | translate">
+    <ui-icon name="menu" [size]="20" />
+  </button>
+
+  <div class="topbar__search">
+    <ui-icon name="search" [size]="16" class="topbar__search-icon" />
+    <input
+      #searchField
+      type="search"
+      class="topbar__search-input"
+      [value]="term()"
+      (input)="onInput($any($event.target).value)"
+      (focus)="menu.set('none')"
+      (blur)="blurSearch()"
+      [attr.aria-label]="'nav.globalSearch' | translate"
+      [placeholder]="'nav.searchPlaceholder' | translate"
+      autocomplete="off"
+      role="combobox"
+      aria-expanded="true"
+      aria-controls="top-search-results"
+    />
+    @if (searching()) {
+      <span class="topbar__spinner" aria-hidden="true"></span>
+    }
+    @if (term().trim().length > 1) {
+      <button class="topbar__icon-btn topbar__icon-btn--sm" type="button" (click)="onInput('')"
+              [attr.aria-label]="'ui.search.clear' | translate">
+        <ui-icon name="x" [size]="14" />
+      </button>
+    }
+
+      @if (groups().length > 0) {
+        <div id="top-search-results" class="topbar__panel topbar__panel--search" role="listbox">
+          @for (group of groups(); track trackGroup($index, group)) {
+            <section class="topbar__group">
+              <h3 class="topbar__group-title">{{ group.label }}</h3>
+              <ul class="topbar__group-list">
+                @for (hit of group.items; track hit.id) {
+                  <li>
+                    <button type="button" class="topbar__hit" (click)="go(resultHref(group, hit.id))">
+                      <span class="topbar__hit-label truncate">{{ hit.label }}</span>
+                      <span class="topbar__hit-snippet truncate">{{ hit.snippet }}</span>
+                    </button>
+                  </li>
+                }
+              </ul>
+            </section>
+          }
+        </div>
+      } @else if (term().trim().length > 1 && !searching()) {
+        <div class="topbar__panel topbar__panel--search">
+          <p class="topbar__empty">{{ 'nav.searchEmpty' | translate: { term: term() } }}</p>
+        </div>
+      }
+  </div>
+
+  <button class="topbar__icon-btn topbar__palette" type="button" (click)="showPalette()"
+          [attr.aria-label]="'nav.commandPalette' | translate" title="Ctrl+K">
+    <ui-icon name="keyboard" [size]="18" />
+  </button>
+
+  <div class="topbar__pop">
+    <button class="topbar__icon-btn" type="button" (click)="toggleMenu('alerts')"
+            [attr.aria-expanded]="menu() === 'alerts'" [attr.aria-label]="'nav.notifications' | translate">
+      <ui-icon name="bell" [size]="18" />
+      @if (notifications.count() > 0) {
+        <span class="topbar__badge">{{ notifications.count() }}</span>
+      }
+    </button>
+    @if (menu() === 'alerts') {
+      <div class="topbar__panel topbar__panel--right">
+        <h3 class="topbar__group-title">{{ 'nav.notifications' | translate }}</h3>
+        @if (notifications.loading()) {
+          <p class="topbar__empty">{{ 'common.loading' | translate }}</p>
+        } @else if (notifications.items().length === 0) {
+          <p class="topbar__empty">{{ 'nav.notificationsEmpty' | translate }}</p>
+        } @else {
+          <ul class="topbar__alert-list">
+            @for (appointment of notifications.items(); track appointment.id) {
+              <li>
+                <button type="button" class="topbar__alert" (click)="go('/records/appointments/' + appointment.id)">
+                  <span class="truncate">{{ appointment.label }}</span>
+                  <span class="topbar__alert-meta">
+                    <span [class]="statusOf(appointment.fields['status'])">
+                      {{ appointment.fields['status'] }}
+                    </span>
+                    <span class="text-muted">{{ when(appointment) }}</span>
+                  </span>
+                </button>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+    }
+  </div>
+
+  <button class="topbar__icon-btn" type="button" (click)="toggleTheme()"
+          [attr.aria-label]="'nav.toggleTheme' | translate">
+    <ui-icon [name]="themeIcon()" [size]="18" />
+  </button>
+
+  <button class="topbar__text-btn" type="button" (click)="switchLanguage()"
+          [attr.aria-label]="'nav.switchLanguage' | translate">
+    {{ langLabel() }}
+  </button>
+
+  <span class="topbar__identity truncate" [title]="user()?.fullName ?? null">{{ user()?.fullName }}</span>
+
+  <app-command-palette [(open)]="openPalette" />
+</header>

@@ -1,4 +1,6 @@
 import express, { Router } from 'express';
+import fs from 'node:fs';
+import path from 'node:path';
 import type { Express } from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
@@ -98,6 +100,18 @@ export function createApp(): Express {
   api.use('/meta', metaRouter);
 
   app.use('/api', api);
+
+  if (isProduction) {
+    const frontendRoot = path.resolve(__dirname, '../../frontend/dist/frontend/browser');
+    app.use(express.static(frontendRoot, { index: false }));
+    app.get('*', (req, res, next) => {
+      if (req.path === '/api' || req.path.startsWith('/api/')) return next();
+      const indexFile = path.join(frontendRoot, 'index.html');
+      if (!fs.existsSync(indexFile)) return next();
+      res.sendFile(indexFile);
+    });
+  }
+
   app.use(notFoundHandler);
   app.use(errorHandler);
   return app;

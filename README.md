@@ -129,3 +129,11 @@ The Playwright end-to-end suite passed both browser flows against the isolated `
 ## Browser end-to-end checks
 
 The Playwright flows require a separate disposable setup. In `backend/.env`, point `FUSEKI_DATASET` at `medicare_test` and `SQLITE_FILE` at a disposable SQLite file; set a private `SEED_DEMO_PASSWORD`. Start Fuseki, load the ontology and seed the accounts with those settings, then start the NLP service, API and web app. The Playwright config uses installed Google Chrome. In the test terminal, set `E2E_DEMO_PASSWORD` to the same private password and run `npm run test:e2e`; set `E2E_API_URL` and `E2E_BASE_URL` if the isolated API or web app uses different ports. Each test checks `/api/status` and stops before any write unless the API reports a dataset ending in `_test`.
+
+## Render free deployment
+
+The root `render.yaml` Blueprint creates three public Free web services in Frankfurt: the Express API (serving the Angular app), Apache Fuseki, and the Python NLP service. The NLP service uses the smaller spaCy models to fit the Free instance memory limit. Fuseki uses an in-memory-sized JVM heap; the API SQLite database runs in memory.
+
+This setup starts with an empty Fuseki graph and no accounts. A user can register a patient account, but all accounts, audit events, and graph edits disappear when the free services restart or redeploy. Render Free services also sleep after 15 minutes without incoming traffic, so the first request can take about a minute to respond. Render grants 750 free instance-hours per workspace per month across its services. Do not use this disposable deployment for real patient information.
+
+To deploy, push this repository to a Git provider, then in Render select **New > Blueprint** and connect the repository. Render reads `render.yaml`, generates the Fuseki and JWT secrets, and creates the three services. Open the API service URL when its deploy finishes; it serves the app and `/api` routes on the same address.

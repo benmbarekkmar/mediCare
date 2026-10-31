@@ -1,0 +1,86 @@
+{
+  "settings": {
+    "title": "Paramètres",
+    "subtitle": "Apparence, sécurité et session en cours de ce compte. L'état de la plateforme est réservé aux administrateurs.",
+    "appearance": {
+      "title": "Apparence",
+      "subtitle": "Le thème et la langue s'appliquent immédiatement et sont mémorisés dans ce navigateur.",
+      "theme": "Thème",
+      "themeHint": "« Système » suit le thème de votre système d'exploitation.",
+      "language": "Langue",
+      "languageHint": "L'interface se retraduit aussitôt, sans rechargement.",
+      "english": "Anglais",
+      "french": "Français",
+      "applied": "Chaque choix est appliqué et enregistré dès sa sélection."
+    },
+    "security": {
+      "title": "Sécurité",
+      "subtitle": "Modifier le mot de passe de ce compte.",
+      "current": "Mot de passe actuel",
+      "next": "Nouveau mot de passe",
+      "confirm": "Confirmer le nouveau mot de passe",
+      "policy": "Au moins 8 caractères (200 au maximum), avec au moins une lettre et un chiffre.",
+      "mismatch": "Les deux mots de passe ne correspondent pas.",
+      "submit": "Modifier le mot de passe",
+      "changed": "Mot de passe modifié",
+      "wrongCurrent": "Le mot de passe actuel est incorrect.",
+      "revokeNote": "Changer le mot de passe révoque toutes les sessions actives de ce compte côté serveur : vous êtes déconnecté de tous vos appareils et devez vous reconnecter."
+    },
+    "session": {
+      "title": "Session",
+      "subtitle": "Le compte avec lequel ce navigateur est connecté.",
+      "email": "Adresse e-mail",
+      "role": "Rôle",
+      "linked": "Individu associé",
+      "noLinked": "Aucun individu associé",
+      "lastLogin": "Dernière connexion",
+      "signOut": "Se déconnecter",
+      "roles": {
+        "ADMIN": "Administrateur",
+        "DOCTOR": "Médecin",
+        "RECEPTIONIST": "Agent d'accueil",
+        "PATIENT": "Patient"
+      }
+    },
+    "platform": {
+      "title": "Point d'entrée Fuseki et santé",
+      "subtitle": "Vue en lecture seule du magasin de triplets, fournie par la sonde de santé et le point d'entrée d'état.",
+      "endpoint": "Point d'entrée de l'API",
+      "version": "Version",
+      "environment": "Environnement",
+      "dataset": "Jeu de données",
+      "sparql": "Magasin SPARQL",
+      "nlp": "Service de réponses aux questions NLP",
+      "reachable": "Accessible",
+      "unreachable": "Inaccessible",
+      "recheck": "Re-vérifier",
+      "statusFailed": "L'état de la plateforme n'a pas pu être chargé.",
+      "statsFailed": "Les statistiques de l'ontologie n'ont pas pu être chargées.",
+      "storeHint": "La sonde répond 503 lorsque le magasin est indisponible ; le rapport est affiché ici comme une donnée, jamais comme une notification.",
+      "census": "Recensement de l'ontologie",
+      "triples": "Triplets",
+      "tbox": "Triplets T-Box",
+      "abox": "Triplets A-Box",
+      "classes": "Classes",
+      "individuals": "Individus nommés",
+      "objectProperties": "Propriétés d'objet",
+      "datatypeProperties": "Propriétés de données",
+      "annotationProperties": "Propriétés d'annotation",
+      "byEntity": "Individus par entité",
+      "explorer": "Ouvrir l'explorateur d'ontologie",
+      "consistency": "Lancer le contrôle de cohérence"
+    },
+    "entity": {
+      "patients": "Patients",
+      "doctors": "Médecins",
+      "diseases": "Maladies",
+      "symptoms": "Symptômes",
+      "treatments": "Traitements",
+      "medications": "Médicaments",
+      "tests": "Examens",
+      "appointments": "Rendez-vous",
+      "hospitals": "Hôpitaux",
+      "departments": "Services"
+    }
+  }
+}

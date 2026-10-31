@@ -1,0 +1,55 @@
+{
+  "calendar": {
+    "title": "Calendrier des rendez-vous",
+    "subtitle": "{{count}} rendez-vous dans la période affichée",
+    "listView": "Ouvrir la liste",
+    "new": "Nouveau rendez-vous",
+    "createTitle": "Nouveau rendez-vous",
+    "editTitle": "Modifier le rendez-vous",
+    "searchPlaceholder": "Rechercher par patient, libellé ou statut",
+    "emptyTitle": "Aucun rendez-vous sur cette période",
+    "emptyHint": "Modifiez les filtres ou choisissez une autre date dans le calendrier pour créer une visite.",
+    "errorTitle": "Le calendrier n'a pas pu être chargé",
+    "errorMessage": "Les rendez-vous n'ont pas pu être récupérés depuis le serveur.",
+    "errorHint": "Vérifiez que l'API fonctionne, puis réessayez.",
+    "created": "Rendez-vous créé",
+    "saved": "Rendez-vous enregistré",
+    "rescheduled": "Rendez-vous déplacé",
+    "view": {
+      "today": "Aujourd'hui",
+      "month": "Mois",
+      "week": "Semaine",
+      "day": "Jour"
+    },
+    "filters": {
+      "department": "Service",
+      "doctor": "Médecin",
+      "status": "Statut",
+      "allDepartment": "Tous les services",
+      "allDoctor": "Tous les médecins",
+      "allStatus": "Tous les statuts",
+      "clear": "Effacer les filtres"
+    },
+    "status": {
+      "confirmed": "Confirmé",
+      "pending": "En attente",
+      "scheduled": "Planifié",
+      "cancelled": "Annulé",
+      "neutral": "Autre",
+      "completed": "Terminé"
+    },
+    "type": {
+      "Consultation": "Consultation",
+      "FollowUpAppointment": "Consultation de suivi",
+      "EmergencyAppointment": "Urgence"
+    },
+    "legend": {
+      "title": "Légende des couleurs"
+    },
+    "clash": {
+      "title": "Double réservation possible",
+      "text": "Ce médecin ou ce service a déjà {{count}} rendez-vous à cette minute exacte.",
+      "hint": "Cliquez de nouveau sur Enregistrer pour réserver malgré tout ce rendez-vous."
+    }
+  }
+}

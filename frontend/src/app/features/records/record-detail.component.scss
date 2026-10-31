@@ -1,0 +1,136 @@
+.detail__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--sp-5);
+}
+
+.detail__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-2);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--fs-sm);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--primary-600);
+  }
+}
+
+.detail__title {
+  margin: 0;
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.detail__types {
+  display: flex;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+  margin-top: var(--sp-3);
+}
+
+.detail__actions {
+  display: flex;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+}
+
+.detail__grid {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  align-items: start;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.fields__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-2) 0;
+  border-bottom: 1px solid var(--border);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  dt {
+    flex: 0 0 auto;
+    color: var(--text-subtle);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+  }
+
+  dd {
+    margin: 0;
+    text-align: right;
+    overflow-wrap: anywhere;
+  }
+}
+
+.fields--tight .fields__row dd {
+  font-size: var(--fs-xs);
+}
+
+.fields__empty {
+  color: var(--text-subtle);
+  font-style: italic;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    padding: var(--sp-2);
+    border-radius: var(--radius-input);
+    color: var(--text);
+    font-size: var(--fs-sm);
+    text-decoration: none;
+
+    &:hover {
+      background: var(--bg-hover);
+      color: var(--primary-600);
+    }
+  }
+}
+
+@media (max-width: 1023px) {
+  .detail__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail__actions {
+    width: 100%;
+  }
+}
+
+@media print {
+  .detail__actions,
+  .detail__back {
+    display: none;
+  }
+}

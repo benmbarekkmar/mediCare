@@ -1,0 +1,22 @@
+{
+  "form": {
+    "section": {
+      "identity": "Identité",
+      "type": "Classement",
+      "links": "Dossiers liés",
+      "clinical": "Données cliniques"
+    },
+    "searchEntity": "Rechercher un/une {{entity}}…",
+    "noMatch": "Aucun résultat, saisissez une recherche",
+    "typeHint": "Définit la classe d’ontologie à laquelle l’individu est assertion.",
+    "axiomNote": "À l’enregistrement, le serveur vérifie les axiomes de l’ontologie.",
+    "required": "Obligatoire",
+    "createTitle": "Nouveau {{entity}}",
+    "editTitle": "Modifier {{entity}}",
+    "created": "{{entity}} créé",
+    "updated": "{{entity}} mis à jour",
+    "unsaved": "Vous avez des modifications non enregistrées.",
+    "discard": "Abandonner les modifications ?",
+    "errors": "Veuillez corriger les champs indiqués."
+  }
+}

@@ -1,0 +1,361 @@
+{
+  "home": {
+    "eyebrow": "Dossier médical piloté par une ontologie",
+    "title": "MedicCare",
+    "lede": "Un centre de données médicales où chaque patient, pathologie, examen et rendez-vous est décrit par une ontologie partagée : la réponse à une question devient une requête que l'on peut vous montrer.",
+    "tools": "Commencer où vous voulez",
+    "coverage": "Ce que contient le magasin",
+    "howTitle": "Comment une question devient une réponse",
+    "askAnywhere": "Comment fonctionne l'assistant",
+    "privacy": "Les pages publiques n'affichent que le savoir de référence et l'annuaire. Les dossiers patients exigent un compte et ne sont jamais listés ici.",
+    "stat": {
+      "classes": "Classes",
+      "properties": "Propriétés",
+      "individuals": "Individus",
+      "triples": "Triplets"
+    },
+    "entry": {
+      "library": "Bibliothèque santé",
+      "libraryText": "Parcourez les pathologies avec leurs symptômes, traitements et médicaments.",
+      "doctors": "Trouver un médecin",
+      "doctorsText": "Recherchez dans l'annuaire par spécialité, service ou hôpital.",
+      "hospitals": "Hôpitaux et services",
+      "hospitalsText": "Voir quels services chaque hôpital héberge.",
+      "ask": "Questions en langage naturel",
+      "askText": "Posez une question en français ou en anglais et lisez le SPARQL qui a produit la réponse."
+    },
+    "how1Title": "Demander en langage courant",
+    "how1Text": "Le service détecte la langue, classe l'intention et relie chaque mot à une classe, un individu ou une valeur de l'ontologie.",
+    "how2Title": "Construire la requête",
+    "how2Text": "Un modèle SPARQL paramétré est rempli avec les entités reconnues : valeurs échappées, limite imposée, restrictions de rôle appliquées côté serveur.",
+    "how3Title": "Lire le résultat",
+    "how3Text": "Vous obtenez les lignes, l'explication et la requête exacte qui les a produites : chaque réponse se vérifie au lieu de se croire."
+  },
+  "nav": {
+    "items": {
+      "home": "Accueil",
+      "records": "Dossiers"
+    }
+  },
+  "entities": {
+    "age": "Âge"
+  },
+  "library": {
+    "title": "Bibliothèque santé",
+    "lede": "Le savoir de référence de l'ontologie hospitalière : les pathologies avec les symptômes qu'elles présentent et les traitements qui y répondent."
+  },
+  "symptoms": {
+    "title": "Symptômes",
+    "lede": "Le vocabulaire des symptômes, relié aux pathologies où chacun apparaît."
+  },
+  "treatments": {
+    "title": "Traitements",
+    "lede": "Les thérapeuties de l'ontologie, avec leur durée et les médicaments qu'elles associent."
+  },
+  "medications": {
+    "title": "Médicaments",
+    "lede": "Le catalogue des médicaments : posologie, classe pharmacologique et traitements auxquels ils appartiennent."
+  },
+  "directory": {
+    "title": "Hôpitaux et services",
+    "lede": "L'organisation des soins : quel hôpital héberge quel service, et quels médecins y travaillent."
+  },
+  "departments": {
+    "title": "Services",
+    "lede": "Chaque service clinique, son hôpital et son équipe médicale."
+  },
+  "findDoctor": {
+    "title": "Trouver un médecin",
+    "lede": "Parcourez l'annuaire médical par spécialité, service et hôpital."
+  },
+  "assistant": {
+    "title": "MedTranslate",
+    "eyebrow": "Du langage naturel au SPARQL",
+    "publicLede": "Python et spaCy analysent la question et relient ses termes à l'ontologie. RDFLib valide le SPARQL généré, puis Apache Jena Fuseki l'exécute et renvoie les lignes stockées. Aucun LLM n'est utilisé.",
+    "signinTitle": "Connectez-vous pour poser une question",
+    "signinBody": "Comprendre la question ne suffit pas : la requête SPARQL générée s'exécute sur des dossiers vivants, donc l'endpoint exige un compte et applique le périmètre de données du rôle avant de renvoyer la moindre ligne.",
+    "samplesTitle": "Exemples de questions",
+    "stepAsk": "Demander",
+    "stepAskBody": "Une phrase, dans votre langue.",
+    "examplesAsk": "Quels sont les symptômes du diabète ?;Combien de rendez-vous sont en attente ?;Quels médecins travaillent en cardiologie ?",
+    "stepMatch": "Relier",
+    "stepMatchBody": "lemmes, dictionnaire de synonymes et correspondance approchée contre l'ontologie.",
+    "examplesMatch": "Liste les patients de plus de 40 ans;Posologie de la Metformine;Patients atteints de maladies chroniques",
+    "stepQuery": "Interroger",
+    "stepQueryBody": "un modèle rempli avec les IRI reconnus, exécuté sur le magasin.",
+    "examplesQuery": "Qui est le médecin d'Ahmed ?;Quel hôpital héberge le service de neurologie ?;Médicaments utilisés pour l'hypertension",
+    "samplesEn": "Which symptoms does diabetes have?;List the patients older than 40;Doctors working in cardiology;How many appointments are pending?;Medications used for hypertension",
+    "samplesFr": "Quels sont les symptômes de la grippe ?;Liste les patients de plus de 40 ans;Quels médecins travaillent en cardiologie ?;Combien de rendez-vous sont en attente ?;Médicaments utilisés pour l'hypertension"
+  },
+  "records": {
+    "list": {
+      "title": "Dossiers"
+    },
+    "detail": {
+      "title": "Dossier"
+    }
+  },
+  "calendar": {
+    "title": "Agenda des rendez-vous"
+  },
+  "console": {
+    "title": "Console SPARQL",
+    "subtitle": "Exécutez des requêtes de lecture sur l'ontologie en direct.",
+    "run": "Exécuter la requête",
+    "limit": "Nombre maximal de lignes",
+    "templates": "Modèles de requêtes",
+    "handoff": "Requête ouverte depuis l'assistant.",
+    "completions": {
+      "ontology": "Termes de l'ontologie"
+    },
+    "editor": {
+      "title": "Éditeur de requêtes",
+      "aria": "Éditeur de requêtes SPARQL",
+      "placeholder": "Écrivez une requête SPARQL",
+      "dirty": "La requête contient des modifications non enregistrées."
+    },
+    "guard": {
+      "hint": "Les mises à jour exigent le rôle administrateur et une seconde confirmation."
+    },
+    "ask": {
+      "hint": "Cette requête renvoie une réponse par oui ou non.",
+      "yes": "Oui, un fait correspondant existe.",
+      "no": "Aucun fait correspondant n'a été trouvé."
+    },
+    "results": {
+      "title": "Résultats",
+      "meta": "{{count}} lignes en {{ms}} ms",
+      "empty": "Aucune ligne",
+      "emptyHint": "Modifiez la requête ou ses filtres.",
+      "idle": "Prête à interroger",
+      "idleHint": "Choisissez un modèle ou saisissez du SPARQL ci-dessus.",
+      "errorTitle": "La requête a échoué",
+      "errorHint": "Vérifiez la requête puis réessayez.",
+      "graph": "Le graphe contient {{triples}} triplets.",
+      "ntriples": "Résultat du graphe",
+      "executed": "Requête SPARQL exécutée",
+      "capped": "La limite de {{limit}} lignes est atteinte."
+    },
+    "history": {
+      "title": "Requêtes récentes",
+      "count": "{{count}} dans ce navigateur",
+      "empty": "Les requêtes exécutées apparaîtront ici.",
+      "clear": "Effacer l'historique des requêtes"
+    },
+    "saved": {
+      "title": "Requêtes enregistrées",
+      "count": "{{count}} enregistrées",
+      "empty": "Enregistrez une requête pour la conserver ici.",
+      "exists": "Cette requête est déjà enregistrée.",
+      "stored": "Requête enregistrée."
+    },
+    "list": {
+      "remove": "Supprimer la requête"
+    },
+    "prefixes": {
+      "title": "Préfixes",
+      "compact": "Afficher les préfixes",
+      "hint": "Ces préfixes sont ajoutés à chaque requête."
+    },
+    "template": {
+      "title": "Remplacer la requête actuelle ?",
+      "message": "Les modifications de l'éditeur seront remplacées.",
+      "confirm": "Remplacer la requête"
+    },
+    "update": {
+      "title": "Confirmer la mise à jour SPARQL",
+      "message": "Cette mise à jour modifiera l'ontologie en direct.",
+      "detail": "Vérifiez soigneusement la mise à jour avant de l'exécuter.",
+      "confirm": "Exécuter la mise à jour",
+      "done": "Mise à jour terminée : {{operations}} opération(s).",
+      "failed": "La mise à jour a échoué."
+    }
+  },
+  "explorer": {
+    "title": "Explorateur d'ontologie",
+    "readonly": "Lecture seule",
+    "details": {
+      "title": "Détails"
+    },
+    "page": {
+      "title": "Explorateur d'ontologie",
+      "lede": "Parcourez les classes, propriétés et individus de l'ontologie en direct.",
+      "subtitle": "{{classes}} classes · {{objectProperties}} propriétés objet · {{datatypeProperties}} propriétés de données · {{individuals}} individus · {{triples}} triplets"
+    },
+    "census": {
+      "classes": "Classes",
+      "triples": "Triplets"
+    },
+    "tree": {
+      "title": "Hiérarchie des classes",
+      "hint": "Choisissez une classe pour consulter sa définition et ses individus."
+    },
+    "graph": {
+      "title": "Graphe des relations",
+      "aria": "Graphe des relations de l'ontologie",
+      "controls": "Commandes du graphe",
+      "loading": "Chargement du graphe",
+      "layout": "Disposition",
+      "depth": "Profondeur des voisins",
+      "limit": "Triplets par niveau",
+      "subtitle": "Explorez les termes liés de l'ontologie.",
+      "counts": "{{nodes}} nœuds et {{edges}} liens",
+      "empty": "Aucune relation à afficher",
+      "fit": "Ajuster le graphe"
+    },
+    "filter": {
+      "class": "Filtrer par classe",
+      "only": "Afficher uniquement cette classe"
+    },
+    "legend": {
+      "title": "Légende du graphe",
+      "class": "Classe",
+      "other": "Autre",
+      "count": "{{label}} : {{count}}"
+    },
+    "class": {
+      "entity": "Type de dossier",
+      "iri": "IRI de la classe",
+      "parent": "Classe parente",
+      "root": "Classe de premier niveau",
+      "subclasses": "Sous-classes",
+      "disjoint": "Classes disjointes",
+      "restrictions": "Restrictions",
+      "equivalent": "Classes équivalentes",
+      "individuals": "Individus",
+      "pick": "Choisissez une classe pour consulter ses individus.",
+      "pager": "Page {{page}} sur {{total}}",
+      "capped": "{{shown}} individus affichés sur {{total}}."
+    },
+    "property": {
+      "search": "Rechercher une propriété",
+      "count": "{{count}} propriétés",
+      "empty": "Aucune propriété ne correspond à la recherche.",
+      "subtitle": "Choisissez une propriété pour consulter son domaine et son étendue.",
+      "domain": "Domaine",
+      "range": "Étendue",
+      "inverse": "Propriété inverse",
+      "classes": "Classes",
+      "chains": "Chaînes de propriétés",
+      "characteristics": "Caractéristiques",
+      "kindLabel": "Type de propriété"
+    },
+    "individual": {
+      "types": "Types",
+      "incoming": "Relations entrantes",
+      "outgoing": "Relations sortantes",
+      "back": "Retour aux individus",
+      "record": "Ouvrir le dossier",
+      "pick": "Choisissez un individu pour consulter ses faits."
+    },
+    "error": {
+      "tree": "Impossible de charger la hiérarchie des classes.",
+      "graph": "Impossible de charger le graphe.",
+      "properties": "Impossible de charger les propriétés.",
+      "individuals": "Impossible de charger les individus."
+    },
+    "sparql": {
+      "label": "Requête du graphe",
+      "note": "SPARQL utilisé pour charger jusqu'à {{count}} triplets.",
+      "console": "Ouvrir dans la console"
+    },
+    "tab": {
+      "classes": "Classes",
+      "object": "Propriétés objet",
+      "data": "Propriétés de données",
+      "individuals": "Individus"
+    }
+  },
+  "settings": {
+    "title": "Paramètres"
+  },
+  "staff": {
+    "day": {
+      "title": "Ma journée"
+    }
+  },
+  "patient": {
+    "dashboard": {
+      "title": "Ma santé",
+      "hello": "Bonjour, {{name}}",
+      "friend": "Content de vous revoir",
+      "lede": "Une vue claire sur votre suivi et les prochaines étapes.",
+      "tips": "Conseils santé",
+      "greetingMorning": "Bonjour",
+      "greetingAfternoon": "Bon après-midi",
+      "greetingEvening": "Bonsoir"
+    },
+    "record": {
+      "title": "Mon dossier médical",
+      "eyebrow": "Vos informations de santé",
+      "lede": "Un résumé de vos maladies, soins et résultats d'examens.",
+      "symptoms": "Symptômes",
+      "treatments": "Soins et médicaments",
+      "duration": "Durée : {{duration}}",
+      "print": "Imprimer le dossier",
+      "download": "Télécharger le résumé"
+    },
+    "appointments": {
+      "title": "Mes rendez-vous",
+      "subtitle": "Consultez vos prochaines visites et celles déjà passées.",
+      "upcoming": "À venir",
+      "past": "Passés",
+      "agenda": "Agenda",
+      "list": "Liste",
+      "empty": "Aucun rendez-vous à afficher.",
+      "cancel": "Annuler le rendez-vous",
+      "dismiss": "Fermer les détails du rendez-vous"
+    },
+    "request": {
+      "title": "Demander un rendez-vous",
+      "subtitle": "Choisissez un service, un médecin et un créneau disponible.",
+      "review": "Vérifier votre demande",
+      "confirm": "Confirmer la demande"
+    },
+    "stepper": {
+      "aria": "Étapes de la demande de rendez-vous",
+      "back": "Retour",
+      "next": "Continuer",
+      "finish": "Confirmer la demande",
+      "progress": "Étape {{current}} sur {{total}}"
+    }
+  },
+  "errors": {
+    "403": {
+      "title": "Accès refusé"
+    },
+    "404": {
+      "title": "Page introuvable"
+    },
+    "500": {
+      "title": "Erreur serveur"
+    }
+  },
+  "uidata": {
+    "avatar": {
+      "unknown": "Sans nom"
+    },
+    "code": {
+      "copy": "Copier le code {{language}}",
+      "copyFailed": "Le presse-papiers n'est pas disponible dans ce navigateur"
+    },
+    "stat": {
+      "trend": "{{value}} % depuis la période précédente"
+    },
+    "tree": {
+      "label": "Hiérarchie des classes",
+      "count": "Individus : {{count}}",
+      "noMatch": "Aucune classe ne correspond à cette recherche"
+    }
+  },
+  "uioverlay": {
+    "dropdown": {
+      "menu": "Menu",
+      "trigger": "Ouvrir le menu"
+    },
+    "confirm": {
+      "reassignLabel": "Réaffecter les enregistrements dépendants à",
+      "reassignPlaceholder": "Choisir un enregistrement cible"
+    }
+  }
+}

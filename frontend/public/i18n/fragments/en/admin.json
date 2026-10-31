@@ -1,0 +1,220 @@
+{
+  "admin": {
+    "dashboard": {
+      "title": "Operations dashboard",
+      "generatedAt": "Data generated on {{time}}",
+      "refreshed": "Dashboard refreshed",
+      "loading": "Loading the dashboard…",
+      "kpi": {
+        "patients": "Patients",
+        "doctors": "Doctors",
+        "appointments": "Appointments",
+        "tests": "Medical tests",
+        "triples": "Total triples",
+        "today": "Appointments today"
+      },
+      "charts": {
+        "appointmentsPerMonth": "Appointments per month",
+        "patientsByAgeClass": "Patients by age class",
+        "topDiseases": "Top diseases",
+        "appointmentsByStatus": "Appointments by status",
+        "testsByType": "Tests by type",
+        "doctorsBySpecialty": "Doctors by specialty",
+        "departmentsByHospital": "Departments per hospital"
+      },
+      "lists": {
+        "upcoming": "Upcoming appointments",
+        "upcomingEmpty": "No appointment coming up.",
+        "recentTests": "Recent tests",
+        "recentTestsEmpty": "No test recorded yet.",
+        "viewCalendar": "Open the calendar",
+        "allTests": "All tests"
+      },
+      "columns": {
+        "appointment": "Appointment",
+        "when": "When",
+        "patient": "Patient",
+        "department": "Department",
+        "status": "Status",
+        "test": "Test",
+        "date": "Date",
+        "result": "Result"
+      },
+      "actions": {
+        "newPatient": "New patient",
+        "newAppointment": "New appointment",
+        "askAssistant": "Ask the assistant",
+        "openConsole": "Open the console"
+      },
+      "empty": {
+        "title": "The store holds no data yet",
+        "hint": "Load the ontology and create the first records; the dashboard fills itself."
+      },
+      "error": {
+        "message": "The dashboard figures could not be computed by the server."
+      }
+    },
+    "users": {
+      "title": "User accounts",
+      "subtitle": "{{count}} account(s) on this instance",
+      "searchPlaceholder": "Search by name, email or role",
+      "create": "New account",
+      "edit": "Edit account",
+      "created": "Account created",
+      "updated": "Account updated",
+      "deleted": "Account deleted",
+      "activated": "Account reactivated",
+      "deactivated": "Account deactivated",
+      "deleteTitle": "Delete the account",
+      "deleteMessage": "Deleting {{email}} removes the sign-in permanently. This cannot be undone.",
+      "fixFields": "Please correct the highlighted fields.",
+      "empty": {
+        "title": "No account to show",
+        "hint": "Adjust the search or create the first account."
+      },
+      "columns": {
+        "fullName": "Full name",
+        "email": "Email",
+        "role": "Role",
+        "linked": "Linked individual",
+        "active": "Active",
+        "lastLogin": "Last login",
+        "created": "Created"
+      },
+      "row": {
+        "edit": "Edit {{name}}",
+        "deactivate": "Deactivate {{name}}",
+        "activate": "Reactivate {{name}}",
+        "remove": "Delete {{name}}",
+        "enabled": "Enabled",
+        "disabled": "Disabled"
+      },
+      "form": {
+        "email": "Email",
+        "fullName": "Full name",
+        "role": "Role",
+        "locale": "Language",
+        "password": "Password",
+        "passwordHint": "At least 8 characters, with letters and digits. It is never shown again.",
+        "active": "Account enabled",
+        "activeHint": "A disabled account keeps its data but cannot sign in.",
+        "linked": "Linked individual",
+        "linkedPatient": "The Patient individual this account belongs to",
+        "linkedDoctor": "The Doctor individual this account belongs to",
+        "linkedPlaceholder": "Start typing a name"
+      },
+      "role": {
+        "ADMIN": "Administrator",
+        "DOCTOR": "Doctor",
+        "RECEPTIONIST": "Receptionist",
+        "PATIENT": "Patient"
+      },
+      "entity": {
+        "patients": "Patients",
+        "doctors": "Doctors",
+        "diseases": "Diseases",
+        "symptoms": "Symptoms",
+        "treatments": "Treatments",
+        "medications": "Medications",
+        "tests": "Medical tests",
+        "appointments": "Appointments",
+        "hospitals": "Hospitals",
+        "departments": "Departments"
+      },
+      "localeOption": {
+        "fr": "French",
+        "en": "English"
+      },
+      "tabs": {
+        "accounts": "Accounts",
+        "matrix": "Permission matrix"
+      },
+      "matrix": {
+        "caption": "Allowed actions per role and entity",
+        "entity": "Entity",
+        "allowed": "{{role}} may {{actions}} on {{entity}}",
+        "denied": "{{role}} may not act on {{entity}}",
+        "action": {
+          "read": "read",
+          "create": "create",
+          "update": "update",
+          "delete": "delete"
+        }
+      }
+    },
+    "audit": {
+      "title": "Audit log",
+      "subtitle": "Last {{count}} recorded actions",
+      "refreshed": "Audit log refreshed",
+      "searchPlaceholder": "Search a path or an email",
+      "filters": {
+        "search": "Search",
+        "action": "Action",
+        "entity": "Entity",
+        "period": "Period"
+      },
+      "columns": {
+        "when": "When",
+        "email": "Account",
+        "role": "Role",
+        "action": "Action",
+        "entity": "Entity",
+        "resource": "Resource",
+        "request": "Request",
+        "path": "Path"
+      },
+      "relative": "Relative time",
+      "absolute": "Exact time",
+      "details": "Request details",
+      "openDetails": "Show the details of entry {{id}}",
+      "noDetails": "This entry carries no payload.",
+      "who": "Who",
+      "limitHint": "The API returns at most 500 entries. Narrow the filters to see older actions.",
+      "empty": {
+        "title": "No action matches these filters",
+        "hint": "Widen the period or clear the filters."
+      },
+      "error": {
+        "message": "The audit trail could not be loaded."
+      }
+    },
+    "consistency": {
+      "title": "Consistency check",
+      "subtitle": "Checked on {{time}}",
+      "refreshed": "Checks re-run",
+      "summary": {
+        "ok": "No axiom violation: the stored graph is closed under the TBox.",
+        "violations": "{{violations}} violation(s) detected, {{fixable}} of them automatically fixable."
+      },
+      "repair": "Run repair",
+      "repairTitle": "Repair the store",
+      "repairMessage": "This writes to the triple store: every documented automatic fix is applied in one atomic update. Continue?",
+      "repaired": "Repair applied: {{operations}} operation(s).",
+      "nothingToRepair": "Nothing to repair.",
+      "loading": "Auditing the axioms…",
+      "check": {
+        "axiom": "Axiom",
+        "violationsCount": "{{count}} violation(s)",
+        "violations": "Offending individuals",
+        "query": "SPARQL query",
+        "showQuery": "Show the SPARQL query",
+        "hideQuery": "Hide the SPARQL query",
+        "fix": "Documented fix",
+        "manualFix": "No automatic fix: correct these records by hand.",
+        "passed": "Passed"
+      },
+      "stats": {
+        "title": "Ontology census",
+        "triples": "Triples",
+        "classes": "Classes",
+        "objectProperties": "Object properties",
+        "datatypeProperties": "Datatype properties",
+        "namedIndividuals": "Named individuals",
+        "individuals": "Domain individuals"
+      },
+      "error": {
+        "message": "The consistency audit could not be executed."
+      }
+    }
+  }
+}

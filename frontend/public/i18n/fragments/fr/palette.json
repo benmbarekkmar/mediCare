@@ -1,0 +1,12 @@
+{
+  "palette": {
+    "title": "Palette de commandes",
+    "placeholder": "Rechercher un dossier ou aller à une page…",
+    "searching": "Recherche en cours…",
+    "empty": "Saisissez au moins deux caractères pour rechercher dans l’ontologie.",
+    "navigate": "pour naviguer",
+    "open": "pour ouvrir",
+    "close": "pour fermer",
+    "page": "Page"
+  }
+}

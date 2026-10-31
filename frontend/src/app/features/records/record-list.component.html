@@ -1,0 +1,78 @@
+@if (metaFor(); as meta) {
+  <div class="page">
+    <ui-page-header [title]="title()" [subtitle]="meta.description" [icon]="'table'">
+      <div uiPageActions>
+        @if (canCreate()) {
+          <ui-button icon="plus" (click)="create()">{{ 'common.create' | translate }}</ui-button>
+        }
+      </div>
+    </ui-page-header>
+
+    <ui-card>
+      <ui-filter-bar [filters]="filters()" [values]="params" (change)="patch($event)" (clear)="clear()" />
+
+      <ui-table
+        [columns]="columns()"
+        [rows]="page()?.items ?? []"
+        [total]="page()?.total ?? 0"
+        [loading]="loading()"
+        [error]="loadError()"
+        [sort]="params.sort ? { field: params.sort, order: params.order } : null"
+        [page]="params.page"
+        [pageSize]="params.pageSize"
+        [trackId]="'id'"
+        [columnsId]="entityKey()"
+        [exportName]="entityKey()"
+        (sortChange)="onSort($event)"
+        (pageChange)="onPage($event)"
+        (pageSizeChange)="onPageSize($event)"
+        (rowClick)="open($event)"
+        (retry)="load()"
+      >
+        @if (canUpdate() || canDelete()) {
+          <ng-template uiRowActions let-row="row">
+            <div class="row-actions">
+              <a class="row-link" [routerLink]="[row.id]" (click)="$event.stopPropagation()">
+                <ui-icon name="eye" [size]="15" />
+              </a>
+              @if (canUpdate()) {
+                <button type="button" class="row-btn" [attr.aria-label]="'common.edit' | translate" (click)="edit(row)">
+                  <ui-icon name="pencil" [size]="15" />
+                </button>
+              }
+              @if (canDelete()) {
+                <button type="button" class="row-btn row-btn--danger" [attr.aria-label]="'common.delete' | translate" (click)="askDelete(row)">
+                  <ui-icon name="trash-2" [size]="15" />
+                </button>
+              }
+            </div>
+          </ng-template>
+        }
+      </ui-table>
+    </ui-card>
+  </div>
+
+  <ui-modal [(open)]="formOpen" size="lg" [busy]="saving()" [title]="(formValue() ? 'form.editTitle' : 'form.createTitle') | translate: { entity: title() }">
+    <entity-form [meta]="meta" [value]="formValue()" [busy]="saving()" [writable]="writableFor()" (submitted)="save($event)" (cancelled)="closeForm()" />
+  </ui-modal>
+
+  <ui-confirm-dialog
+    [(open)]="confirmOpen"
+    [title]="'common.deleteConfirmTitle' | translate"
+    [message]="'common.deleteConfirmText' | translate: { label: target()?.label ?? '' }"
+    [dependents]="dependents()"
+    [busy]="false"
+    [(reassignTo)]="reassignTo"
+    (confirmed)="confirmDelete()"
+  />
+} @else {
+  <div class="page">
+    @if (metaLoadError()) {
+      <ui-error-state [title]="'uipage.loadFailed' | translate" [message]="''" (retry)="loadMetadata(true)" />
+    } @else {
+      <ui-card>
+        <p class="text-muted">{{ 'common.loading' | translate }}</p>
+      </ui-card>
+    }
+  </div>
+}

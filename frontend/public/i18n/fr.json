@@ -1,0 +1,1985 @@
+{
+  "admin": {
+    "dashboard": {
+      "title": "Tableau de bord d'exploitation",
+      "generatedAt": "Données générées le {{time}}",
+      "refreshed": "Tableau de bord actualisé",
+      "loading": "Chargement du tableau de bord…",
+      "kpi": {
+        "patients": "Patients",
+        "doctors": "Médecins",
+        "appointments": "Rendez-vous",
+        "tests": "Examens médicaux",
+        "triples": "Triplets au total",
+        "today": "Rendez-vous aujourd'hui"
+      },
+      "charts": {
+        "appointmentsPerMonth": "Rendez-vous par mois",
+        "patientsByAgeClass": "Patients par classe d'âge",
+        "topDiseases": "Maladies les plus fréquentes",
+        "appointmentsByStatus": "Rendez-vous par statut",
+        "testsByType": "Examens par type",
+        "doctorsBySpecialty": "Médecins par spécialité",
+        "departmentsByHospital": "Services par hôpital"
+      },
+      "lists": {
+        "upcoming": "Prochains rendez-vous",
+        "upcomingEmpty": "Aucun rendez-vous à venir.",
+        "recentTests": "Examens récents",
+        "recentTestsEmpty": "Aucun examen enregistré.",
+        "viewCalendar": "Ouvrir le calendrier",
+        "allTests": "Tous les examens"
+      },
+      "columns": {
+        "appointment": "Rendez-vous",
+        "when": "Quand",
+        "patient": "Patient",
+        "department": "Service",
+        "status": "Statut",
+        "test": "Examen",
+        "date": "Date",
+        "result": "Résultat"
+      },
+      "actions": {
+        "newPatient": "Nouveau patient",
+        "newAppointment": "Nouveau rendez-vous",
+        "askAssistant": "Interroger l'assistant",
+        "openConsole": "Ouvrir la console"
+      },
+      "empty": {
+        "title": "Le magasin ne contient encore aucune donnée",
+        "hint": "Chargez l'ontologie et créez les premiers enregistrements ; le tableau de bord se remplira."
+      },
+      "error": {
+        "message": "Le serveur n'a pas pu calculer les chiffres du tableau de bord."
+      }
+    },
+    "users": {
+      "title": "Comptes utilisateurs",
+      "subtitle": "{{count}} compte(s) sur cette instance",
+      "searchPlaceholder": "Rechercher par nom, email ou rôle",
+      "create": "Nouveau compte",
+      "edit": "Modifier le compte",
+      "created": "Compte créé",
+      "updated": "Compte mis à jour",
+      "deleted": "Compte supprimé",
+      "activated": "Compte réactivé",
+      "deactivated": "Compte désactivé",
+      "deleteTitle": "Supprimer le compte",
+      "deleteMessage": "Supprimer {{email}} retire définitivement l'accès. Cette action est irréversible.",
+      "fixFields": "Veuillez corriger les champs surlignés.",
+      "empty": {
+        "title": "Aucun compte à afficher",
+        "hint": "Ajustez la recherche ou créez le premier compte."
+      },
+      "columns": {
+        "fullName": "Nom complet",
+        "email": "Email",
+        "role": "Rôle",
+        "linked": "Individu lié",
+        "active": "Actif",
+        "lastLogin": "Dernière connexion",
+        "created": "Créé le"
+      },
+      "row": {
+        "edit": "Modifier {{name}}",
+        "deactivate": "Désactiver {{name}}",
+        "activate": "Réactiver {{name}}",
+        "remove": "Supprimer {{name}}",
+        "enabled": "Activé",
+        "disabled": "Désactivé"
+      },
+      "form": {
+        "email": "Email",
+        "fullName": "Nom complet",
+        "role": "Rôle",
+        "locale": "Langue",
+        "password": "Mot de passe",
+        "passwordHint": "Au moins 8 caractères, avec des lettres et des chiffres. Il ne sera plus jamais affiché.",
+        "active": "Compte activé",
+        "activeHint": "Un compte désactivé conserve ses données mais ne peut plus se connecter.",
+        "linked": "Individu lié",
+        "linkedPatient": "L'individu Patient auquel ce compte est rattaché",
+        "linkedDoctor": "L'individu Doctor auquel ce compte est rattaché",
+        "linkedPlaceholder": "Saisissez un nom"
+      },
+      "role": {
+        "ADMIN": "Administrateur",
+        "DOCTOR": "Médecin",
+        "RECEPTIONIST": "Agent d'accueil",
+        "PATIENT": "Patient"
+      },
+      "entity": {
+        "patients": "Patients",
+        "doctors": "Médecins",
+        "diseases": "Maladies",
+        "symptoms": "Symptômes",
+        "treatments": "Traitements",
+        "medications": "Médicaments",
+        "tests": "Examens médicaux",
+        "appointments": "Rendez-vous",
+        "hospitals": "Hôpitaux",
+        "departments": "Services"
+      },
+      "localeOption": {
+        "fr": "Français",
+        "en": "Anglais"
+      },
+      "tabs": {
+        "accounts": "Comptes",
+        "matrix": "Matrice des permissions"
+      },
+      "matrix": {
+        "caption": "Actions autorisées par rôle et par entité",
+        "entity": "Entité",
+        "allowed": "{{role}} peut {{actions}} sur {{entity}}",
+        "denied": "{{role}} ne peut pas agir sur {{entity}}",
+        "action": {
+          "read": "lire",
+          "create": "créer",
+          "update": "modifier",
+          "delete": "supprimer"
+        }
+      }
+    },
+    "audit": {
+      "title": "Journal d'audit",
+      "subtitle": "500 dernières actions enregistrées",
+      "refreshed": "Journal d'audit actualisé",
+      "searchPlaceholder": "Rechercher un chemin ou un email",
+      "filters": {
+        "search": "Recherche",
+        "action": "Action",
+        "entity": "Entité",
+        "period": "Période"
+      },
+      "columns": {
+        "when": "Quand",
+        "email": "Compte",
+        "role": "Rôle",
+        "action": "Action",
+        "entity": "Entité",
+        "resource": "Ressource",
+        "request": "Requête",
+        "path": "Chemin"
+      },
+      "relative": "Temps relatif",
+      "absolute": "Heure exacte",
+      "details": "Détails de la requête",
+      "openDetails": "Afficher les détails de l'entrée {{id}}",
+      "noDetails": "Cette entrée ne contient aucune charge utile.",
+      "who": "Qui",
+      "limitHint": "L'API renvoie au maximum 500 entrées. Affinez les filtres pour voir les actions plus anciennes.",
+      "empty": {
+        "title": "Aucune action ne correspond à ces filtres",
+        "hint": "Élargissez la période ou effacez les filtres."
+      },
+      "error": {
+        "message": "La piste d'audit n'a pas pu être chargée."
+      }
+    },
+    "consistency": {
+      "title": "Contrôle de cohérence",
+      "subtitle": "Vérifié le {{time}}",
+      "refreshed": "Contrôles relancés",
+      "summary": {
+        "ok": "Aucune violation d'axiome : le graphe stocké est fermé vis-à-vis du TBox.",
+        "violations": "{{violations}} violation(s) détectée(s), dont {{fixable}} réparables automatiquement."
+      },
+      "repair": "Lancer la réparation",
+      "repairTitle": "Réparer le magasin",
+      "repairMessage": "Cette action écrit dans le triple store : chaque correctif automatique documenté est appliqué en une mise à jour atomique. Continuer ?",
+      "repaired": "Réparation appliquée : {{operations}} opération(s).",
+      "nothingToRepair": "Rien à réparer.",
+      "loading": "Audit des axiomes en cours…",
+      "check": {
+        "axiom": "Axiome",
+        "violationsCount": "{{count}} violation(s)",
+        "violations": "Individus fautifs",
+        "query": "Requête SPARQL",
+        "showQuery": "Afficher la requête SPARQL",
+        "hideQuery": "Masquer la requête SPARQL",
+        "fix": "Correctif documenté",
+        "manualFix": "Pas de correctif automatique : corrigez ces enregistrements à la main.",
+        "passed": "Conforme"
+      },
+      "stats": {
+        "title": "Recensement de l'ontologie",
+        "triples": "Triplets",
+        "classes": "Classes",
+        "objectProperties": "Propriétés d'objet",
+        "datatypeProperties": "Propriétés de données",
+        "namedIndividuals": "Individus nommés",
+        "individuals": "Individus du domaine"
+      },
+      "error": {
+        "message": "L'audit de cohérence n'a pas pu être exécuté."
+      }
+    }
+  },
+  "auth": {
+    "hero": {
+      "brand": "MedicCare",
+      "lead": "Un seul vocabulaire clinique pour tout l'hôpital. Patients, maladies, symptômes, traitements et rendez-vous sont décrits comme des individus d'une ontologie Web Ontology Language, puis interrogés en direct.",
+      "pointRecords": "Chaque enregistrement est un individu décrit, jamais une ligne isolée.",
+      "pointKnowledge": "Explorez par catégorie de maladie, symptôme, spécialité ou service.",
+      "pointAccess": "Quatre rôles, une matrice de permissions, chaque écriture est journalisée.",
+      "footnote": "Vos données restent dans votre propre magasin de triples."
+    },
+    "login": {
+      "title": "Se connecter",
+      "subtitle": "Utilisez les identifiants délivrés par votre administrateur.",
+      "email": "E-mail",
+      "emailPlaceholder": "nom@hopital.tn",
+      "password": "Mot de passe",
+      "submit": "Se connecter",
+      "alertHint": "Vérifiez l'adresse et le mot de passe, puis réessayez.",
+      "noAccount": "Pas encore de compte ?",
+      "registerLink": "S’inscrire",
+      "forgotLink": "Mot de passe oublié ?",
+      "demo": {
+        "heading": "Comptes de démonstration",
+        "hint": "Le remplissage rapide insère uniquement l'e-mail de démonstration créé par le seed ; le mot de passe est celui documenté dans le README.",
+        "admin": "Administrateur",
+        "doctor": "Médecin",
+        "receptionist": "Accueil",
+        "patient": "Patient"
+      }
+    },
+    "register": {
+      "title": "Créer un compte",
+      "subtitle": "L'inscription crée votre dossier patient et vos identifiants en une seule étape.",
+      "fullName": "Nom complet",
+      "email": "E-mail",
+      "password": "Mot de passe",
+      "passwordHint": "Au moins 8 caractères, avec une lettre et un chiffre.",
+      "confirm": "Confirmer le mot de passe",
+      "mismatch": "Les deux mots de passe ne correspondent pas.",
+      "birthDate": "Date de naissance",
+      "gender": "Sexe",
+      "genderMale": "Masculin",
+      "genderFemale": "Féminin",
+      "phone": "Téléphone",
+      "address": "Adresse",
+      "violationsTitle": "Le serveur a refusé ces champs :",
+      "conflictHint": "Utilisez une autre adresse ou connectez-vous au compte existant.",
+      "submit": "Créer mon compte",
+      "haveAccount": "Déjà inscrit ?",
+      "loginLink": "Se connecter",
+      "successTitle": "Compte créé",
+      "successText": "Votre compte et votre dossier patient ont été créés. Connectez-vous pour ouvrir le portail patient.",
+      "role": "Rôle du compte",
+      "rolePatient": "Patient",
+      "roleDoctorManaged": "Médecin (attribué par la clinique)",
+      "roleReceptionistManaged": "Réceptionniste (attribué par la clinique)",
+      "roleAdminManaged": "Administrateur (attribué par la clinique)",
+      "patientRoleNotice": "Votre compte sera créé avec le rôle Patient. L’administrateur attribue les rôles du personnel."
+    },
+    "forgot": {
+      "title": "Mot de passe oublié ?",
+      "subtitle": "Enregistrez la demande pour que votre administrateur délivre un nouveau mot de passe.",
+      "email": "E-mail",
+      "submit": "Envoyer la demande",
+      "sentTitle": "Demande enregistrée",
+      "sentText": "L'envoi d'e-mails est hors périmètre dans ce projet : la demande est seulement enregistrée par l'API, et la réponse est identique que l'adresse appartienne ou non à un compte.",
+      "endpoint": "POST /api/auth/forgot-password",
+      "endpointLabel": "Point d'endpoint documenté",
+      "loginLink": "Retour à la connexion",
+      "again": "Envoyer une autre demande"
+    },
+    "errorPages": {
+      "goHome": "Aller à l'accueil",
+      "previous": "Revenir à la page précédente"
+    }
+  },
+  "calendar": {
+    "title": "Agenda des rendez-vous",
+    "subtitle": "{{count}} rendez-vous dans la période affichée",
+    "listView": "Ouvrir la liste",
+    "new": "Nouveau rendez-vous",
+    "createTitle": "Nouveau rendez-vous",
+    "editTitle": "Modifier le rendez-vous",
+    "searchPlaceholder": "Rechercher par patient, libellé ou statut",
+    "emptyTitle": "Aucun rendez-vous sur cette période",
+    "emptyHint": "Modifiez les filtres ou choisissez une autre date dans le calendrier pour créer une visite.",
+    "errorTitle": "Le calendrier n'a pas pu être chargé",
+    "errorMessage": "Les rendez-vous n'ont pas pu être récupérés depuis le serveur.",
+    "errorHint": "Vérifiez que l'API fonctionne, puis réessayez.",
+    "created": "Rendez-vous créé",
+    "saved": "Rendez-vous enregistré",
+    "rescheduled": "Rendez-vous déplacé",
+    "view": {
+      "today": "Aujourd'hui",
+      "month": "Mois",
+      "week": "Semaine",
+      "day": "Jour"
+    },
+    "filters": {
+      "department": "Service",
+      "doctor": "Médecin",
+      "status": "Statut",
+      "allDepartment": "Tous les services",
+      "allDoctor": "Tous les médecins",
+      "allStatus": "Tous les statuts",
+      "clear": "Effacer les filtres"
+    },
+    "status": {
+      "confirmed": "Confirmé",
+      "pending": "En attente",
+      "scheduled": "Planifié",
+      "cancelled": "Annulé",
+      "neutral": "Autre",
+      "completed": "Terminé"
+    },
+    "type": {
+      "Consultation": "Consultation",
+      "FollowUpAppointment": "Consultation de suivi",
+      "EmergencyAppointment": "Urgence"
+    },
+    "legend": {
+      "title": "Légende des couleurs"
+    },
+    "clash": {
+      "title": "Double réservation possible",
+      "text": "Ce médecin ou ce service a déjà {{count}} rendez-vous à cette minute exacte.",
+      "hint": "Cliquez de nouveau sur Enregistrer pour réserver malgré tout ce rendez-vous."
+    }
+  },
+  "chat": {
+    "subtitle": "Posez votre question en français, anglais, arabe ou Derja. Le pipeline NLP local relie les questions médicales prises en charge aux données de l’application.",
+    "portalSubtitle": "Interrogez l'assistant sur votre propre dossier ou sur une maladie. Écrivez votre question, ou dictez-la.",
+    "thread": {
+      "label": "Conversation avec l'assistant"
+    },
+    "turn": {
+      "you": "Vous",
+      "assistant": "Assistant"
+    },
+    "empty": {
+      "title": "Aucune question pour l'instant",
+      "hint": "Posez une question sur les informations médicales disponibles dans l’application. Les relances tiennent compte des dernières questions."
+    },
+    "pending": "L'assistant traite votre question",
+    "composer": {
+      "label": "Votre question",
+      "placeholder": "Posez une question sur les informations médicales disponibles",
+      "hint": "Entrée envoie la question, Maj+Entrée ajoute une ligne."
+    },
+    "send": "Envoyer",
+    "language": {
+      "label": "Langue détectée",
+      "en": "Anglais",
+      "fr": "Français"
+    },
+    "intent": {
+      "label": "Intention"
+    },
+    "confidence": "Confiance {{value}}",
+    "entities": {
+      "label": "Termes reconnus",
+      "open": "Ouvrir la fiche {{label}}"
+    },
+    "sparql": {
+      "label": "SPARQL généré"
+    },
+    "results": {
+      "label": "Résultats",
+      "summary": "{{count}} lignes en {{ms}} ms",
+      "empty": "L'entrepôt n'a renvoyé aucune ligne pour cette question."
+    },
+    "explanation": {
+      "label": "Ce que l'assistant a compris"
+    },
+    "technical": "Détails techniques",
+    "technicalHint": "Requête générée, étapes du pipeline et scores du classifieur.",
+    "pipeline": {
+      "label": "Étapes du pipeline"
+    },
+    "scores": {
+      "label": "Scores des intentions"
+    },
+    "fallback": {
+      "title": "Cette question ne correspond à aucune intention connue",
+      "hint": "Essayez plutôt l'une de ces questions : un clic sur une puce l'envoie."
+    },
+    "error": {
+      "hint": "La question n’a pas pu être traitée. Réessayez, ou posez une question sur les données médicales disponibles."
+    },
+    "history": {
+      "title": "Historique de la conversation",
+      "empty": "Vos questions restent sur cet appareil, jusqu'à ce que vous les effaciez.",
+      "count": "{{count}} questions sur cet appareil",
+      "clear": "Effacer l'historique",
+      "cleared": "La conversation a été effacée.",
+      "open": "Rouvrir cette réponse",
+      "confirm": {
+        "title": "Effacer la conversation ?",
+        "message": "Toutes les questions et toutes les réponses conservées sur cet appareil seront supprimées."
+      }
+    },
+    "examples": {
+      "title": "Questions exemples",
+      "hint": "Les intentions accessibles à votre rôle, issues du catalogue du service. Cliquez pour envoyer.",
+      "unavailable": "Le catalogue d'intentions n'a pas pu être chargé."
+    },
+    "category": {
+      "patient": "Patients",
+      "doctor": "Médecins",
+      "disease": "Maladies",
+      "symptom": "Symptômes",
+      "treatment": "Traitements",
+      "medication": "Médicaments",
+      "test": "Examens",
+      "appointment": "Rendez-vous",
+      "hospital": "Hôpitaux",
+      "department": "Services",
+      "ranking": "Classements",
+      "browse": "Comptes et listes",
+      "general": "Recherche et description"
+    },
+    "voice": {
+      "start": "Dicter",
+      "stop": "Arrêter la dictée",
+      "failed": "La reconnaissance vocale a échoué"
+    }
+  },
+  "translator": {
+    "heroEyebrow": "Traducteur sémantique médical intelligent",
+    "searchTitle": "MedTranslate",
+    "searchSubtitle": "Explorez les connaissances médicales en langage naturel grâce à la recherche sémantique.",
+    "searchPlaceholder": "Posez une question sur la base de connaissances médicales…",
+    "clear": "Effacer la recherche",
+    "tryAsking": "Essayez ces questions",
+    "sampleQuestions": [
+      "Quels hôpitaux sont disponibles ?",
+      "Quels sont les symptômes du diabète ?",
+      "Quels médecins sont spécialisés en cardiologie ?",
+      "Quels traitements sont associés à la grippe ?",
+      "Quels examens médicaux sont disponibles ?"
+    ],
+    "recentTitle": "Recherches récentes",
+    "recentSession": "Cette session uniquement",
+    "technicalTitle": "Explorer le pipeline NLP",
+    "pendingStepQuery": "Construction de la requête SPARQL",
+    "status": {
+      "label": "État des services",
+      "nlp": {
+        "label": "Moteur NLP",
+        "online": "En ligne",
+        "offline": "Hors ligne",
+        "checking": "Vérification"
+      },
+      "ontology": {
+        "label": "Ontologie",
+        "online": "Connectée",
+        "offline": "Déconnectée",
+        "checking": "Vérification"
+      },
+      "sparql": {
+        "label": "Point d’accès SPARQL",
+        "online": "Prêt",
+        "offline": "Indisponible",
+        "checking": "Vérification"
+      }
+    },
+    "analysisTitle": "Analyse NLP",
+    "analysisLanguage": "Langue détectée",
+    "analysisIntent": "Intention détectée",
+    "analysisConfidence": "Confiance de classification",
+    "executionTitle": "Exécution Fuseki",
+    "executionStatus": "Statut",
+    "executionComplete": "Terminée",
+    "executionSkipped": "Non exécutée",
+    "executionTime": "Temps d'exécution",
+    "noQuery": "Aucune requête SPARQL n'a été générée pour cette question.",
+    "subtitle": "Traduisez une question en SPARQL : Python et spaCy l'analysent, RDFLib valide la requête et Apache Jena Fuseki l'exécute sur l'ontologie Protégé.",
+    "outputLabel": "Résultat de la traduction NLP vers SPARQL",
+    "emptyTitle": "Votre recherche de connaissances médicales commence ici.",
+    "emptyHint": "Posez une question en langage naturel pour explorer les connaissances médicales de l'ontologie.",
+    "questionEcho": "Question analysée",
+    "questionLabel": "Question en langage naturel",
+    "questionPlaceholder": "Exemple : Quels sont les symptômes du diabète ?",
+    "questionHint": "Interrogez les maladies, symptômes, traitements, médecins, hôpitaux, examens ou rendez-vous. Les résultats respectent les droits de votre rôle.",
+    "run": "Rechercher",
+    "pending": "Analyse de la question et exécution de la requête SPARQL",
+    "resultTitle": "Résultat de la traduction",
+    "language": {
+      "en": "Anglais",
+      "fr": "Français",
+      "ar": "Arabe",
+      "tn": "Arabe tunisien (Derja)"
+    },
+    "confidence": "Confiance de l'intention : {{value}}",
+    "summary": {
+      "label": "Résumé de la recherche",
+      "question": "Question d'origine",
+      "intent": "Intention détectée",
+      "language": "Langue",
+      "count": "Résultats",
+      "executionTime": "Temps d'exécution",
+      "milliseconds": "{{ms}} ms"
+    },
+    "entities": {
+      "label": "Entités reconnues",
+      "open": "Ouvrir la fiche {{label}}"
+    },
+    "unsupportedTitle": "Aucune intention prise en charge n'a été reconnue",
+    "unsupportedHint": "Reformulez la question autour des informations de l'ontologie médicale. Aucune requête SPARQL n'est exécutée si l'intention ne peut pas être identifiée.",
+    "interpretation": "Analyse NLP",
+    "results": {
+      "label": "Résultats Fuseki",
+      "summary": "{{count}} résultats · {{ms}} ms",
+      "one": "{{count}} résultat",
+      "other": "{{count}} résultats",
+      "empty": "Aucune information correspondante dans l'ontologie médicale.",
+      "emptyHint": "Reformulez votre question ou interrogez un autre concept médical.",
+      "unnamed": "Résultat"
+    },
+    "technicalHint": "La requête générée et les étapes du pipeline NLP sont affichées ci-dessous.",
+    "sparql": "Requête SPARQL générée",
+    "pipeline": {
+      "title": "Pipeline NLP vers SPARQL",
+      "state": {
+        "complete": "Terminée",
+        "failed": "Échec",
+        "skipped": "Non atteinte"
+      },
+      "stages": {
+        "input": "Question en langage naturel",
+        "spacy": "Analyse NLP avec spaCy",
+        "recognition": "Reconnaissance de l'intention et des entités",
+        "sparql": "Génération SPARQL",
+        "rdflib": "Validation avec RDFLib",
+        "fuseki": "Exécution Apache Jena Fuseki",
+        "results": "Résultats sémantiques"
+      },
+      "noTrace": "Aucune trace de traitement n'a été renvoyée pour cette étape.",
+      "noValidation": "La trace du service ne confirme pas la validation RDFLib.",
+      "validationFailed": "La validation SPARQL n'est pas confirmée ; consultez la trace technique.",
+      "noExecution": "Fuseki n'a pas été appelé pour cette question.",
+      "noResults": "Aucun résultat ne provient d'une exécution Fuseki.",
+      "resultCount": "{{count}} résultat(s) sémantique(s) renvoyé(s) par Fuseki."
+    },
+    "aside": {
+      "label": "Aide à la recherche"
+    },
+    "recentEmpty": "Vos recherches de cette session apparaîtront ici.",
+    "tips": {
+      "title": "Conseils de recherche",
+      "specific": "Utilisez un terme médical précis si possible.",
+      "languages": "Posez vos questions en français, anglais, arabe ou derja tunisienne.",
+      "access": "Les résultats dépendent de votre rôle et des données de l'ontologie."
+    },
+    "domains": {
+      "title": "Explorer les thèmes médicaux",
+      "hint": "Choisissez un thème pour remplir le champ avec un exemple de question.",
+      "items": [
+        {
+          "title": "Hôpitaux",
+          "description": "Établissements et lieux de soins"
+        },
+        {
+          "title": "Maladies",
+          "description": "Pathologies et symptômes"
+        },
+        {
+          "title": "Médecins",
+          "description": "Spécialités et praticiens"
+        },
+        {
+          "title": "Traitements",
+          "description": "Thérapies et médicaments"
+        },
+        {
+          "title": "Examens",
+          "description": "Tests et diagnostics"
+        }
+      ]
+    },
+    "scores": "Scores du classifieur d'intention",
+    "errorHint": "Vérifiez votre connexion et relancez la recherche.",
+    "error": {
+      "serviceUnavailable": "Le service de recherche médicale est temporairement indisponible. Réessayez dans quelques instants.",
+      "generic": "La recherche n'a pas pu aboutir. Veuillez réessayer."
+    },
+    "voice": {
+      "start": "Dicter",
+      "stop": "Arrêter la dictée"
+    }
+  },
+  "common": {
+    "appName": "MedicCare",
+    "tagline": "Votre santé, mieux accompagnée.",
+    "loading": "Chargement…",
+    "saving": "Enregistrement…",
+    "saved": "Enregistré",
+    "created": "Créé",
+    "deleted": "Supprimé",
+    "updated": "Mis à jour",
+    "operationFailed": "L'opération a échoué",
+    "retry": "Réessayer",
+    "close": "Fermer",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "create": "Créer",
+    "view": "Voir",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "finish": "Terminer",
+    "search": "Rechercher",
+    "clear": "Effacer",
+    "clearAll": "Effacer tous les filtres",
+    "filters": "Filtres",
+    "export": "Exporter CSV",
+    "print": "Imprimer",
+    "copy": "Copier",
+    "copied": "Copié dans le presse-papiers",
+    "refresh": "Actualiser",
+    "actions": "Actions",
+    "all": "Tous",
+    "none": "Aucun",
+    "yes": "Oui",
+    "no": "Non",
+    "optional": "facultatif",
+    "required": "obligatoire",
+    "rowsPerPage": "Lignes par page",
+    "showing": "Affichage {{from}}-{{to}} sur {{total}}",
+    "noResults": "Aucun résultat pour cette recherche",
+    "noResultsHint": "Assouplissez les filtres ou changez de mots-clés.",
+    "notSet": "Non renseigné",
+    "details": "Détails",
+    "overview": "Aperçu",
+    "relations": "Relations",
+    "createdBy": "Créé par",
+    "updatedAt": "Dernière modification",
+    "language": "Langue",
+    "theme": "Thème",
+    "themeSystem": "Système",
+    "themeLight": "Clair",
+    "themeDark": "Sombre",
+    "profile": "Profil",
+    "settings": "Paramètres",
+    "signOut": "Se déconnecter",
+    "signIn": "Se connecter",
+    "account": "Compte",
+    "of": "sur",
+    "and": "et",
+    "more": "de plus",
+    "seeAll": "Tout voir",
+    "total": "Total",
+    "status": "Statut",
+    "type": "Type",
+    "date": "Date",
+    "time": "Heure",
+    "name": "Nom",
+    "label": "Libellé",
+    "description": "Description",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "address": "Adresse",
+    "notes": "Remarques",
+    "columnVisibility": "Colonnes",
+    "selectedRows": "{{count}} sélectionné(s)",
+    "bulkDelete": "Supprimer la sélection",
+    "confirmBulkDelete": "Supprimer définitivement {{count}} enregistrements ?",
+    "deleteConfirmTitle": "Confirmer la suppression",
+    "deleteConfirmText": "La suppression de {{label}} est définitive.",
+    "dependentsTitle": "Ces enregistrements y sont reliés",
+    "dependentsNone": "Rien ne dépend de cet enregistrement.",
+    "reassignTo": "Réaffecter les enregistrements liés à",
+    "quickActions": "Actions rapides",
+    "upcoming": "À venir",
+    "recent": "Récents",
+    "today": "Aujourd'hui",
+    "tomorrow": "Demain",
+    "yesterday": "Hier",
+    "inDays": "dans {{count}} jours",
+    "daysAgo": "il y a {{count}} jours",
+    "justNow": "à l'instant",
+    "inMinutes": "dans {{count}} min",
+    "minutesAgo": "il y a {{count}} min",
+    "select": "Choisir…"
+  },
+  "errors": {
+    "403": {
+      "title": "Accès refusé"
+    },
+    "404": {
+      "title": "Page introuvable"
+    },
+    "500": {
+      "title": "Erreur serveur"
+    },
+    "OFFLINE": "Serveur injoignable. Vérifiez que l'API est démarrée.",
+    "UNKNOWN": "Erreur serveur inattendue",
+    "BAD_REQUEST": "La requête n'a pas pu être comprise",
+    "VALIDATION_ERROR": "Certains champs sont à corriger",
+    "UNAUTHORIZED": "Session expirée, veuillez vous reconnecter",
+    "FORBIDDEN": "Vous n'avez pas le droit d'effectuer cette action",
+    "NOT_FOUND": "Cet enregistrement n'existe pas",
+    "CONFLICT": "Cet enregistrement existe déjà",
+    "AXIOM_VIOLATION": "L'ontologie refuse cette modification",
+    "DEPENDENTS_EXIST": "Les enregistrements liés doivent être déplacés ou supprimés d'abord",
+    "RATE_LIMITED": "Trop de tentatives, patientez un instant",
+    "SPARQL_ERROR": "Le magasin de triples a rejeté la requête",
+    "NLP_UNAVAILABLE": "Le service de questions-réponses n'est pas démarré",
+    "INTERNAL_ERROR": "Le serveur n'a pas pu traiter la requête",
+    "STORE_UNAVAILABLE": "Le magasin de triples est injoignable",
+    "QUERY_REFUSED": "Cette requête a été refusée par le garde en lecture seule",
+    "loginFailed": "E-mail ou mot de passe incorrect",
+    "generic": "Une erreur est survenue",
+    "notFoundTitle": "Page introuvable",
+    "notFoundText": "La page demandée n'existe pas ou a été déplacée.",
+    "forbiddenTitle": "Accès refusé",
+    "forbiddenText": "Votre rôle ne donne pas accès à cette page.",
+    "serverTitle": "Erreur serveur",
+    "serverText": "Le back-office a signalé une erreur interne. Réessayez dans un instant.",
+    "field": {
+      "required": "Ce champ est obligatoire",
+      "email": "Saisissez une adresse e-mail valide",
+      "minlength": "Trop court ({{requiredLength}} caractères minimum)",
+      "maxlength": "Trop long ({{requiredLength}} caractères maximum)",
+      "min": "Doit être supérieur ou égal à {{min}}",
+      "max": "Doit être inférieur ou égal à {{max}}",
+      "pattern": "Le format n'est pas valide",
+      "date": "Saisissez une date valide",
+      "password": "Au moins 8 caractères, avec des lettres et des chiffres"
+    }
+  },
+  "form": {
+    "section": {
+      "identity": "Identité",
+      "type": "Classement",
+      "links": "Dossiers liés",
+      "clinical": "Données cliniques"
+    },
+    "searchEntity": "Rechercher un/une {{entity}}…",
+    "noMatch": "Aucun résultat, saisissez une recherche",
+    "typeHint": "Définit la classe d’ontologie à laquelle l’individu est assertion.",
+    "axiomNote": "À l’enregistrement, le serveur vérifie les axiomes de l’ontologie.",
+    "required": "Obligatoire",
+    "createTitle": "Nouveau {{entity}}",
+    "editTitle": "Modifier {{entity}}",
+    "created": "{{entity}} créé",
+    "updated": "{{entity}} mis à jour",
+    "unsaved": "Vous avez des modifications non enregistrées.",
+    "discard": "Abandonner les modifications ?",
+    "errors": "Veuillez corriger les champs indiqués."
+  },
+  "nav": {
+    "skipToContent": "Aller au contenu principal",
+    "mainNavigation": "Navigation principale",
+    "collapseSidebar": "Réduire le menu latéral",
+    "expandSidebar": "Déployer le menu latéral",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "toggleTheme": "Basculer entre thème clair et sombre",
+    "switchLanguage": "Changer de langue",
+    "userMenu": "Menu du compte",
+    "globalSearch": "Rechercher patients, médecins, maladies…",
+    "searchPlaceholder": "Saisissez au moins deux caractères",
+    "searchEmpty": "Rien trouvé pour « {{term}} »",
+    "commandPalette": "Ouvrir la palette de commandes",
+    "notifications": "Rendez-vous à venir",
+    "notificationsEmpty": "Aucun rendez-vous prévu",
+    "groups": {
+      "overview": "Vue d'ensemble",
+      "clinical": "Dossiers cliniques",
+      "knowledge": "Base de connaissances",
+      "organisation": "Organisation",
+      "scheduling": "Agenda",
+      "tools": "Outils intelligents",
+      "administration": "Administration",
+      "mySpace": "Mon espace",
+      "directory": "Annuaire",
+      "healthLibrary": "Bibliothèque santé"
+    },
+    "items": {
+      "dashboard": "Tableau de bord",
+      "patients": "Patients",
+      "myPatients": "Mes patients",
+      "doctors": "Médecins",
+      "diseases": "Maladies",
+      "symptoms": "Symptômes",
+      "treatments": "Traitements",
+      "medications": "Médicaments",
+      "tests": "Examens médicaux",
+      "appointments": "Rendez-vous",
+      "myAppointments": "Mes rendez-vous",
+      "hospitals": "Hôpitaux",
+      "departments": "Départements",
+      "users": "Comptes utilisateurs",
+      "audit": "Journal d'audit",
+      "assistant": "MedTranslate",
+      "healthAssistant": "MedTranslate",
+      "console": "Console SPARQL",
+      "explorer": "Explorateur d'ontologie",
+      "consistency": "Contrôle de cohérence",
+      "findDoctor": "Trouver un médecin",
+      "record": "Mon dossier médical",
+      "library": "Bibliothèque santé",
+      "profile": "Profil",
+      "settings": "Paramètres",
+      "directory": "Annuaire",
+      "login": "Connexion",
+      "register": "Créer un compte",
+      "forgotPassword": "Mot de passe oublié",
+      "requestAppointment": "Demander un rendez-vous",
+      "logout": "Se déconnecter",
+      "home": "Accueil",
+      "records": "Dossiers"
+    },
+    "toggleSidebar": "Réduire ou agrandir la navigation"
+  },
+  "home": {
+    "eyebrow": "Dossier médical piloté par une ontologie",
+    "title": "MedicCare",
+    "lede": "Un centre de données médicales où chaque patient, pathologie, examen et rendez-vous est décrit par une ontologie partagée : la réponse à une question devient une requête que l'on peut vous montrer.",
+    "tools": "Commencer où vous voulez",
+    "coverage": "Ce que contient le magasin",
+    "howTitle": "Comment une question devient une réponse",
+    "askAnywhere": "Comment fonctionne l'assistant",
+    "privacy": "Les pages publiques n'affichent que le savoir de référence et l'annuaire. Les dossiers patients exigent un compte et ne sont jamais listés ici.",
+    "stat": {
+      "classes": "Classes",
+      "properties": "Propriétés",
+      "individuals": "Individus",
+      "triples": "Triplets"
+    },
+    "entry": {
+      "library": "Bibliothèque santé",
+      "libraryText": "Parcourez les pathologies avec leurs symptômes, traitements et médicaments.",
+      "doctors": "Trouver un médecin",
+      "doctorsText": "Recherchez dans l'annuaire par spécialité, service ou hôpital.",
+      "hospitals": "Hôpitaux et services",
+      "hospitalsText": "Voir quels services chaque hôpital héberge.",
+      "ask": "Questions en langage naturel",
+      "askText": "Posez une question en français ou en anglais et lisez le SPARQL qui a produit la réponse."
+    },
+    "how1Title": "Demander en langage courant",
+    "how1Text": "Le service détecte la langue, classe l'intention et relie chaque mot à une classe, un individu ou une valeur de l'ontologie.",
+    "how2Title": "Construire la requête",
+    "how2Text": "Un modèle SPARQL paramétré est rempli avec les entités reconnues : valeurs échappées, limite imposée, restrictions de rôle appliquées côté serveur.",
+    "how3Title": "Lire le résultat",
+    "how3Text": "Vous obtenez les lignes, l'explication et la requête exacte qui les a produites : chaque réponse se vérifie au lieu de se croire."
+  },
+  "entities": {
+    "age": "Âge",
+    "ageGroup": "Tranche d’âge"
+  },
+  "library": {
+    "title": "Bibliothèque santé",
+    "lede": "Le savoir de référence de l'ontologie hospitalière : les pathologies avec les symptômes qu'elles présentent et les traitements qui y répondent."
+  },
+  "symptoms": {
+    "title": "Symptômes",
+    "lede": "Le vocabulaire des symptômes, relié aux pathologies où chacun apparaît."
+  },
+  "treatments": {
+    "title": "Traitements",
+    "lede": "Les thérapeuties de l'ontologie, avec leur durée et les médicaments qu'elles associent."
+  },
+  "medications": {
+    "title": "Médicaments",
+    "lede": "Le catalogue des médicaments : posologie, classe pharmacologique et traitements auxquels ils appartiennent."
+  },
+  "directory": {
+    "title": "Hôpitaux et services",
+    "lede": "L'organisation des soins : quel hôpital héberge quel service, et quels médecins y travaillent."
+  },
+  "departments": {
+    "title": "Services",
+    "lede": "Chaque service clinique, son hôpital et son équipe médicale."
+  },
+  "findDoctor": {
+    "title": "Trouver un médecin",
+    "lede": "Parcourez l'annuaire médical par spécialité, service et hôpital."
+  },
+  "assistant": {
+    "title": "MedTranslate",
+    "eyebrow": "Du langage naturel au SPARQL",
+    "publicLede": "Python et spaCy analysent la question et relient ses termes à l'ontologie. RDFLib valide le SPARQL généré, puis Apache Jena Fuseki l'exécute et renvoie les lignes stockées. Aucun LLM n'est utilisé.",
+    "signinTitle": "Connectez-vous pour poser une question",
+    "signinBody": "Comprendre la question ne suffit pas : la requête SPARQL générée s'exécute sur des dossiers vivants, donc l'endpoint exige un compte et applique le périmètre de données du rôle avant de renvoyer la moindre ligne.",
+    "samplesTitle": "Exemples de questions",
+    "stepAsk": "Demander",
+    "stepAskBody": "Une phrase, dans votre langue.",
+    "examplesAsk": "Quels sont les symptômes du diabète ?;Combien de rendez-vous sont en attente ?;Quels médecins travaillent en cardiologie ?",
+    "stepMatch": "Relier",
+    "stepMatchBody": "lemmes, dictionnaire de synonymes et correspondance approchée contre l'ontologie.",
+    "examplesMatch": "Liste les patients de plus de 40 ans;Posologie de la Metformine;Patients atteints de maladies chroniques",
+    "stepQuery": "Interroger",
+    "stepQueryBody": "un modèle rempli avec les IRI reconnus, exécuté sur le magasin.",
+    "examplesQuery": "Qui est le médecin d'Ahmed ?;Quel hôpital héberge le service de neurologie ?;Médicaments utilisés pour l'hypertension",
+    "samplesEn": "Which symptoms does diabetes have?;List the patients older than 40;Doctors working in cardiology;How many appointments are pending?;Medications used for hypertension",
+    "samplesFr": "Quels sont les symptômes de la grippe ?;Liste les patients de plus de 40 ans;Quels médecins travaillent en cardiologie ?;Combien de rendez-vous sont en attente ?;Médicaments utilisés pour l'hypertension"
+  },
+  "records": {
+    "list": {
+      "title": "Dossiers"
+    },
+    "detail": {
+      "title": "Dossier"
+    }
+  },
+  "console": {
+    "title": "Console SPARQL",
+    "subtitle": "Exécutez des requêtes de lecture sur l’ontologie en direct ({{triples}} triplets).",
+    "run": "Exécuter la requête",
+    "limit": "Nombre maximal de lignes",
+    "templates": "Modèles de requêtes",
+    "handoff": "Requête ouverte depuis l'assistant.",
+    "completions": {
+      "ontology": "Termes de l'ontologie"
+    },
+    "editor": {
+      "title": "Éditeur de requêtes",
+      "aria": "Éditeur de requêtes SPARQL",
+      "placeholder": "Écrivez une requête SPARQL",
+      "dirty": "La requête contient des modifications non enregistrées."
+    },
+    "guard": {
+      "hint": "Les mises à jour exigent le rôle administrateur et une seconde confirmation."
+    },
+    "ask": {
+      "hint": "Cette requête renvoie une réponse par oui ou non.",
+      "yes": "Oui, un fait correspondant existe.",
+      "no": "Aucun fait correspondant n'a été trouvé."
+    },
+    "results": {
+      "title": "Résultats",
+      "meta": "{{rows}} lignes en {{ms}} ms",
+      "empty": "Aucune ligne",
+      "emptyHint": "Modifiez la requête ou ses filtres.",
+      "idle": "Prête à interroger",
+      "idleHint": "Choisissez un modèle ou saisissez du SPARQL ci-dessus.",
+      "errorTitle": "La requête a échoué",
+      "errorHint": "Vérifiez la requête puis réessayez.",
+      "graph": "Le graphe contient {{triples}} triplets.",
+      "ntriples": "Résultat du graphe",
+      "executed": "Requête SPARQL exécutée",
+      "capped": "La limite de {{limit}} lignes est atteinte.",
+      "metaAsk": "Réponse obtenue en {{ms}} ms",
+      "metaGraph": "{{triples}} triplets en {{ms}} ms"
+    },
+    "history": {
+      "title": "Requêtes récentes",
+      "count": "{{count}} dans ce navigateur",
+      "empty": "Les requêtes exécutées apparaîtront ici.",
+      "clear": "Effacer l'historique des requêtes"
+    },
+    "saved": {
+      "title": "Requêtes enregistrées",
+      "count": "{{count}} enregistrées",
+      "empty": "Enregistrez une requête pour la conserver ici.",
+      "exists": "Cette requête est déjà enregistrée.",
+      "stored": "Requête enregistrée."
+    },
+    "list": {
+      "remove": "Supprimer la requête"
+    },
+    "prefixes": {
+      "title": "Préfixes",
+      "compact": "Afficher les préfixes",
+      "hint": "Ces préfixes sont ajoutés à chaque requête."
+    },
+    "template": {
+      "title": "Remplacer la requête actuelle ?",
+      "message": "Les modifications de l'éditeur seront remplacées.",
+      "confirm": "Remplacer la requête"
+    },
+    "update": {
+      "title": "Confirmer la mise à jour SPARQL",
+      "message": "Cette mise à jour modifiera l'ontologie en direct.",
+      "detail": "Vérifiez soigneusement la mise à jour avant de l'exécuter.",
+      "confirm": "Exécuter la mise à jour",
+      "done": "Mise à jour terminée : {{operations}} opération(s).",
+      "failed": "La mise à jour a échoué."
+    },
+    "exportJson": "Exporter en JSON",
+    "limitValue": "{{value}} lignes",
+    "readOnlyRole": "Lecture seule : les modifications sont réservées aux administrateurs.",
+    "runShortcut": "Exécuter la requête",
+    "saveQuery": "Enregistrer la requête",
+    "groups": {
+      "reads": "Requêtes de lecture",
+      "writes": "Requêtes de modification"
+    },
+    "statement": {
+      "select": "Requête de sélection",
+      "ask": "Question oui/non",
+      "construct": "Construction de graphe",
+      "describe": "Description de ressource",
+      "update": "Mise à jour",
+      "empty": "En attente d’une requête"
+    },
+    "tpl": {
+      "patients": "Liste des patients",
+      "filter_contains": "Recherche filtrée de patients",
+      "counts": "Patients par pathologie",
+      "group_concat": "Symptômes par pathologie",
+      "ask": "Vérifier une association clinique",
+      "construct": "Construire un graphe clinique",
+      "describe": "Décrire un dossier patient",
+      "latest_tests": "Examens récents",
+      "symptom_to_disease": "Relier symptômes et pathologies",
+      "doctor_chain": "Médecins, spécialités et établissements",
+      "path_rollup": "Individus par classe",
+      "path_chain": "Pathologies et médicaments",
+      "optional_age": "Patients mineurs",
+      "write_insert": "Ajouter un libellé alternatif",
+      "write_delete": "Supprimer un libellé obsolète",
+      "write_delete_insert": "Modifier un numéro de téléphone"
+    }
+  },
+  "explorer": {
+    "title": "Explorateur d'ontologie",
+    "readonly": "Lecture seule",
+    "details": {
+      "title": "Détails",
+      "pickClass": "Sélectionnez une classe pour afficher ses détails."
+    },
+    "page": {
+      "title": "Explorateur d'ontologie",
+      "lede": "Parcourez les classes, propriétés et individus de l'ontologie en direct.",
+      "subtitle": "{{classes}} classes · {{objectProperties}} propriétés objet · {{datatypeProperties}} propriétés de données · {{individuals}} individus · {{triples}} triplets"
+    },
+    "census": {
+      "classes": "Classes",
+      "triples": "Triplets",
+      "objectProperties": "Propriétés objet",
+      "datatypeProperties": "Propriétés de données",
+      "namedIndividuals": "Individus nommés"
+    },
+    "tree": {
+      "title": "Hiérarchie des classes",
+      "hint": "Choisissez une classe pour consulter sa définition et ses individus.",
+      "collapseAll": "Tout réduire",
+      "expandAll": "Tout développer"
+    },
+    "graph": {
+      "title": "Graphe des relations",
+      "aria": "Graphe des relations de l'ontologie",
+      "controls": "Commandes du graphe",
+      "loading": "Chargement du graphe",
+      "layout": "Disposition",
+      "depth": "Profondeur des voisins",
+      "limit": "Triplets par niveau",
+      "subtitle": "Explorez les termes liés de l'ontologie.",
+      "counts": "{{nodes}} nœuds et {{edges}} liens",
+      "empty": "Aucune relation à afficher",
+      "fit": "Ajuster le graphe",
+      "clearFocus": "Effacer la sélection",
+      "emptyFiltered": "Aucun lien ne correspond à cette classe.",
+      "emptyHint": "Sélectionnez un élément pour explorer ses relations.",
+      "subtitleFocus": "Relations autour de l’élément sélectionné (profondeur : {{depth}}).",
+      "zoomIn": "Agrandir le graphe",
+      "zoomOut": "Réduire le graphe"
+    },
+    "filter": {
+      "class": "Filtrer par classe",
+      "only": "Afficher uniquement cette classe",
+      "allClasses": "Toutes les classes"
+    },
+    "legend": {
+      "title": "Légende du graphe",
+      "class": "Classe",
+      "other": "Autre",
+      "count": "{{label}} : {{count}}"
+    },
+    "class": {
+      "entity": "Type de dossier",
+      "iri": "IRI de la classe",
+      "parent": "Classe parente",
+      "root": "Classe de premier niveau",
+      "subclasses": "Sous-classes",
+      "disjoint": "Classes disjointes",
+      "restrictions": "Restrictions",
+      "equivalent": "Classes équivalentes",
+      "individuals": "Individus ({{total}})",
+      "pick": "Choisissez une classe pour consulter ses individus.",
+      "pager": "Page {{page}} sur {{total}}",
+      "capped": "{{shown}} individus affichés sur {{total}}.",
+      "noIndividuals": "Aucun individu dans cette classe",
+      "noIndividualsHint": "Cette classe ne contient actuellement aucun individu.",
+      "noneDisjoint": "Aucune classe disjointe.",
+      "noneEquivalent": "Aucune classe équivalente.",
+      "noneRestriction": "Aucune restriction définie.",
+      "noneSelected": "Aucune classe sélectionnée",
+      "noneSub": "Aucune sous-classe."
+    },
+    "property": {
+      "search": "Rechercher une propriété",
+      "count": "{{count}} propriétés",
+      "empty": "Aucune propriété ne correspond à la recherche.",
+      "subtitle": "Choisissez une propriété pour consulter son domaine et son étendue.",
+      "domain": "Domaine",
+      "range": "Étendue",
+      "inverse": "Propriété inverse",
+      "classes": "Classes",
+      "chains": "Chaînes de propriétés",
+      "characteristics": "Caractéristiques",
+      "kindLabel": "Type de propriété",
+      "kind": {
+        "object": "Propriété objet",
+        "datatype": "Propriété de données",
+        "annotation": "Propriété d’annotation"
+      },
+      "chainFlag": "Chaîne de propriétés",
+      "noCharacteristic": "Aucune caractéristique définie.",
+      "noDomain": "Aucun domaine défini.",
+      "noRange": "Aucune étendue définie.",
+      "noUsedBy": "Aucune classe ne référence cette propriété.",
+      "usedBy": "Utilisée par"
+    },
+    "individual": {
+      "types": "Types",
+      "incoming": "Relations entrantes",
+      "outgoing": "Relations sortantes",
+      "back": "Retour aux individus",
+      "record": "Ouvrir le dossier",
+      "pick": "Choisissez un individu pour consulter ses faits.",
+      "noIncoming": "Aucune relation entrante.",
+      "noOutgoing": "Aucune relation sortante.",
+      "noneSelected": "Aucun individu sélectionné"
+    },
+    "error": {
+      "tree": "Impossible de charger la hiérarchie des classes.",
+      "graph": "Impossible de charger le graphe.",
+      "properties": "Impossible de charger les propriétés.",
+      "individuals": "Impossible de charger les individus."
+    },
+    "sparql": {
+      "label": "Requête du graphe",
+      "note": "SPARQL utilisé pour charger jusqu'à {{count}} triplets.",
+      "console": "Ouvrir dans la console"
+    },
+    "tab": {
+      "classes": "Classes",
+      "object": "Propriétés objet",
+      "data": "Propriétés de données",
+      "individuals": "Individus"
+    },
+    "layout": {
+      "cose": "Réseau de relations",
+      "circle": "Disposition circulaire",
+      "grid": "Disposition en grille",
+      "breadthfirst": "Hiérarchie"
+    },
+    "restriction": {
+      "some": "Au moins une valeur",
+      "min": "Minimum",
+      "max": "Maximum",
+      "key": "Propriété clé"
+    }
+  },
+  "settings": {
+    "title": "Paramètres",
+    "subtitle": "Apparence, sécurité et session en cours de ce compte. L'état de la plateforme est réservé aux administrateurs.",
+    "appearance": {
+      "title": "Apparence",
+      "subtitle": "Le thème et la langue s'appliquent immédiatement et sont mémorisés dans ce navigateur.",
+      "theme": "Thème",
+      "themeHint": "« Système » suit le thème de votre système d'exploitation.",
+      "language": "Langue",
+      "languageHint": "L'interface se retraduit aussitôt, sans rechargement.",
+      "english": "Anglais",
+      "french": "Français",
+      "applied": "Chaque choix est appliqué et enregistré dès sa sélection."
+    },
+    "security": {
+      "title": "Sécurité",
+      "subtitle": "Modifier le mot de passe de ce compte.",
+      "current": "Mot de passe actuel",
+      "next": "Nouveau mot de passe",
+      "confirm": "Confirmer le nouveau mot de passe",
+      "policy": "Au moins 8 caractères (200 au maximum), avec au moins une lettre et un chiffre.",
+      "mismatch": "Les deux mots de passe ne correspondent pas.",
+      "submit": "Modifier le mot de passe",
+      "changed": "Mot de passe modifié",
+      "wrongCurrent": "Le mot de passe actuel est incorrect.",
+      "revokeNote": "Changer le mot de passe révoque toutes les sessions actives de ce compte côté serveur : vous êtes déconnecté de tous vos appareils et devez vous reconnecter."
+    },
+    "session": {
+      "title": "Session",
+      "subtitle": "Le compte avec lequel ce navigateur est connecté.",
+      "email": "Adresse e-mail",
+      "role": "Rôle",
+      "linked": "Individu associé",
+      "noLinked": "Aucun individu associé",
+      "lastLogin": "Dernière connexion",
+      "signOut": "Se déconnecter",
+      "roles": {
+        "ADMIN": "Administrateur",
+        "DOCTOR": "Médecin",
+        "RECEPTIONIST": "Agent d'accueil",
+        "PATIENT": "Patient"
+      }
+    },
+    "platform": {
+      "title": "Point d'entrée Fuseki et santé",
+      "subtitle": "Vue en lecture seule du magasin de triplets, fournie par la sonde de santé et le point d'entrée d'état.",
+      "endpoint": "Point d'entrée de l'API",
+      "version": "Version",
+      "environment": "Environnement",
+      "dataset": "Jeu de données",
+      "sparql": "Magasin SPARQL",
+      "nlp": "Service de réponses aux questions NLP",
+      "reachable": "Accessible",
+      "unreachable": "Inaccessible",
+      "recheck": "Re-vérifier",
+      "statusFailed": "L'état de la plateforme n'a pas pu être chargé.",
+      "statsFailed": "Les statistiques de l'ontologie n'ont pas pu être chargées.",
+      "storeHint": "La sonde répond 503 lorsque le magasin est indisponible ; le rapport est affiché ici comme une donnée, jamais comme une notification.",
+      "census": "Recensement de l'ontologie",
+      "triples": "Triplets",
+      "tbox": "Triplets T-Box",
+      "abox": "Triplets A-Box",
+      "classes": "Classes",
+      "individuals": "Individus nommés",
+      "objectProperties": "Propriétés d'objet",
+      "datatypeProperties": "Propriétés de données",
+      "annotationProperties": "Propriétés d'annotation",
+      "byEntity": "Individus par entité",
+      "explorer": "Ouvrir l'explorateur d'ontologie",
+      "consistency": "Lancer le contrôle de cohérence"
+    },
+    "entity": {
+      "patients": "Patients",
+      "doctors": "Médecins",
+      "diseases": "Maladies",
+      "symptoms": "Symptômes",
+      "treatments": "Traitements",
+      "medications": "Médicaments",
+      "tests": "Examens",
+      "appointments": "Rendez-vous",
+      "hospitals": "Hôpitaux",
+      "departments": "Services"
+    }
+  },
+  "staff": {
+    "day": {
+      "title": "Votre journée en un coup d'œil",
+      "loading": "Chargement de votre journée…",
+      "kpiLabel": "Chiffres clés",
+      "errorHint": "La liste des rendez-vous n'a pas pu être lue. Vérifiez que le serveur est accessible, puis réessayez.",
+      "errorLoad": "Les données n'ont pas pu être chargées depuis le serveur.",
+      "roleDoctor": "Médecin",
+      "roleReceptionist": "Accueil",
+      "open": "Ouvrir",
+      "allList": "Tous les dossiers",
+      "groupCount": "{{count}} visite(s)",
+      "noPatient": "Patient non rattaché",
+      "noProfileHint": "Ce compte n'est pas encore rattaché à un individu de l'ontologie.",
+      "changeStatus": "Changer le statut",
+      "toast": {
+        "statusTitle": "Statut mis à jour",
+        "statusBody": "{{patient}} est maintenant {{status}}."
+      },
+      "status": {
+        "pending": "En attente",
+        "confirmed": "Confirmé",
+        "completed": "Terminé",
+        "cancelled": "Annulé",
+        "scheduled": "Planifié",
+        "unknown": "Sans statut"
+      },
+      "kpi": {
+        "today": "Visites du jour",
+        "todayHint": "Rendez-vous fixés à aujourd'hui",
+        "week": "Sept prochains jours",
+        "weekHint": "D'aujourd'hui à J+7",
+        "patients": "Mes patients",
+        "patientsHint": "Les patients que vous suivez",
+        "pendingTests": "Analyses à lire",
+        "pendingTestsHint": "Aucun résultat enregistré",
+        "pending": "À confirmer",
+        "pendingHint": "Demandes en attente de réponse",
+        "allPatients": "Tous les patients",
+        "allPatientsHint": "Enregistrés à l'hôpital",
+        "doctors": "Médecins",
+        "doctorsHint": "Référencés dans l'annuaire"
+      },
+      "doctor": {
+        "today": {
+          "title": "Rendez-vous du jour",
+          "subtitle": "{{count}} visite(s) à l'agenda aujourd'hui",
+          "subtitleEmpty": "Rien à l'agenda aujourd'hui",
+          "empty": "Aucun rendez-vous aujourd'hui",
+          "emptyHint": "Prenez un rendez-vous pour l'un de vos patients : il s'affiche ici."
+        },
+        "week": {
+          "title": "Semaine à venir",
+          "subtitle": "{{count}} visite(s) sur sept jours, {{patients}} patients suivis",
+          "empty": "Aucune visite dans les sept prochains jours",
+          "emptyHint": "Les nouvelles demandes de vos patients apparaissent ici automatiquement."
+        },
+        "tests": {
+          "title": "Analyses en attente de résultat",
+          "subtitle": "{{count}} examen(s) de vos patients sans résultat",
+          "empty": "Tous les examens ont leur résultat",
+          "emptyHint": "Le résultat se saisit sur la fiche de l'examen lui-même.",
+          "pending": "Résultat manquant"
+        },
+        "department": {
+          "title": "Mon service",
+          "open": "Retrouver dans les services",
+          "empty": "Aucun service rattaché"
+        },
+        "hospital": {
+          "title": "Mon hôpital",
+          "open": "Retrouver dans les hôpitaux",
+          "empty": "Aucun hôpital rattaché"
+        },
+        "links": {
+          "newAppointment": "Nouveau rendez-vous",
+          "newAppointmentHint": "Ouvrir le formulaire de rendez-vous",
+          "myPatients": "Mes patients",
+          "myPatientsHint": "La liste déjà limitée à votre patientèle",
+          "newTest": "Ajouter un examen",
+          "newTestHint": "Enregistrer un examen pour un patient",
+          "openCalendar": "Ouvrir l'agenda",
+          "openCalendarHint": "La vue hebdomadaire de toutes les visites"
+        }
+      },
+      "reception": {
+        "ctas": {
+          "title": "Actions de l'accueil",
+          "hint": "Les deux formulaires s'ouvrent directement, sans passer d'abord par les listes.",
+          "newAppointment": "Nouveau rendez-vous",
+          "newPatient": "Nouveau patient"
+        },
+        "queue": {
+          "title": "File du jour par statut",
+          "subtitle": "{{count}} visite(s) prévue(s) aujourd'hui",
+          "calendar": "Ouvrir l'agenda",
+          "empty": "Aucune visite aujourd'hui",
+          "emptyHint": "Enregistrez la première prise de rendez-vous du jour et la file se remplit."
+        },
+        "pending": {
+          "title": "En attente de confirmation",
+          "subtitle": "{{count}} demande(s) à confirmer ou à annuler",
+          "confirm": "Confirmer",
+          "cancel": "Annuler",
+          "empty": "Plus rien à confirmer",
+          "emptyHint": "Toutes les demandes des deux prochaines semaines ont déjà une réponse."
+        },
+        "doctors": {
+          "title": "Médecins"
+        },
+        "departments": {
+          "title": "Services"
+        },
+        "directoryCount": "{{count}} entrée(s) affichée(s)",
+        "directoryEmpty": "L'annuaire est vide",
+        "directoryHint": "Demandez à un administrateur d'enregistrer les praticiens et les services."
+      }
+    }
+  },
+  "patient": {
+    "dashboard": {
+      "title": "Ma santé",
+      "hello": "Bonjour, {{name}}",
+      "friend": "Content de vous revoir",
+      "lede": "Une vue claire sur votre suivi et les prochaines étapes.",
+      "tips": "Conseils santé",
+      "greetingMorning": "Bonjour",
+      "greetingAfternoon": "Bon après-midi",
+      "greetingEvening": "Bonsoir",
+      "actionAssistant": "Traduire une question",
+      "actionAssistantHint": "Convertissez le langage naturel en SPARQL et consultez les résultats de l'ontologie.",
+      "actionFindDoctor": "Trouver un médecin",
+      "actionRecord": "Consulter mon dossier",
+      "actionRecordHint": "Retrouvez vos informations et résultats de santé.",
+      "actionRequest": "Demander un rendez-vous",
+      "actionRequestHint": "Choisissez un service et un créneau disponible.",
+      "addToCalendar": "Ajouter à mon agenda",
+      "allResults": "Voir tous les résultats",
+      "allVisits": "Tous mes rendez-vous",
+      "cancelBlockedHint": "La modification de ce rendez-vous est réservée à l’équipe d’accueil. Contactez votre établissement pour obtenir de l’aide.",
+      "cancelBlockedTitle": "Annulation en ligne indisponible",
+      "cancelDialogBody": "Souhaitez-vous annuler le rendez-vous du {{when}} au service {{where}} ?",
+      "cancelDialogConfirm": "Confirmer l’annulation",
+      "cancelDialogFallback": "Souhaitez-vous vraiment annuler ce rendez-vous ?",
+      "cancelDialogTitle": "Annuler le rendez-vous ?",
+      "cancelDoneBody": "Votre rendez-vous a été annulé.",
+      "cancelDoneTitle": "Rendez-vous annulé",
+      "cancelNotOpen": "Pour modifier ou annuler ce rendez-vous, veuillez contacter l’accueil de votre établissement.",
+      "cancelVisit": "Annuler",
+      "conditionsFootnote": "Ces informations sont issues de votre dossier médical.",
+      "factNoDepartment": "Service non renseigné",
+      "hintConfirmed": "Votre rendez-vous est confirmé. Consultez les détails avant votre visite.",
+      "hintGeneric": "Consultez les informations de votre rendez-vous avant votre visite.",
+      "hintPending": "Votre demande est en attente de confirmation par l’établissement.",
+      "icsBadBody": "Le fichier d’agenda n’a pas pu être créé. Réessayez ou ajoutez le rendez-vous manuellement.",
+      "icsBadTitle": "Ajout à l’agenda impossible",
+      "icsDepartment": "Service",
+      "icsDoctor": "Médecin",
+      "icsDoneBody": "Le fichier du rendez-vous a été téléchargé. Ouvrez-le pour l’ajouter à votre agenda.",
+      "icsDoneTitle": "Fichier d’agenda téléchargé",
+      "icsIntro": "Rendez-vous médical",
+      "icsSummaryPrefix": "Rendez-vous médical",
+      "latestTests": "Examens récents",
+      "latestTestsEmpty": "Aucun résultat d’examen récent à afficher.",
+      "myConditions": "Mes pathologies",
+      "myConditionsCount": "{{count}} pathologie(s) dans votre dossier",
+      "myConditionsEmpty": "Aucune pathologie n’est renseignée dans votre dossier.",
+      "myDoctors": "Mon équipe médicale",
+      "myDoctorsEmpty": "Aucun médecin associé à votre suivi pour le moment.",
+      "nextVisit": "Prochain rendez-vous",
+      "noProfileHint": "Votre espace patient n’est pas encore relié à un dossier médical.",
+      "noProfileSupport": "Veuillez contacter l’accueil de votre établissement afin de faire vérifier l’association de votre compte.",
+      "noProfileTitle": "Dossier patient non associé",
+      "noVisitHint": "Vous n’avez pas de rendez-vous à venir. Vous pouvez en demander un ou consulter l’annuaire médical.",
+      "noVisitTitle": "Aucun rendez-vous à venir",
+      "openRecord": "Ouvrir mon dossier",
+      "partialError": "Certaines informations de votre suivi n’ont pas pu être chargées.",
+      "quickActions": "Accès rapides",
+      "tipsEmpty": "Aucun conseil de santé n’est disponible pour le moment.",
+      "tipsFootnote": "Ces contenus sont informatifs et ne remplacent pas un avis médical.",
+      "tipsReadMore": "En savoir plus",
+      "tipsSubtitle": "Des informations fiables pour mieux comprendre votre santé.",
+      "tipsSymptoms": "Symptômes associés",
+      "viewProfile": "Voir le profil"
+    },
+    "record": {
+      "title": "Mon dossier médical",
+      "eyebrow": "Vos informations de santé",
+      "lede": "Un résumé de vos maladies, soins et résultats d'examens.",
+      "symptoms": "Symptômes",
+      "treatments": "Soins et médicaments",
+      "duration": "Durée : {{value}}",
+      "print": "Imprimer le dossier",
+      "download": "Télécharger le résumé",
+      "careTeam": "Votre équipe médicale",
+      "conditionsEmpty": "Aucune pathologie n’est renseignée dans votre dossier.",
+      "downloadDoneBody": "Le résumé de votre dossier a été téléchargé.",
+      "downloadDoneTitle": "Téléchargement terminé",
+      "fieldAge": "Âge",
+      "fieldAgeValue": "{{value}} ans",
+      "fieldBlood": "Groupe sanguin",
+      "fieldGender": "Sexe",
+      "fieldName": "Nom",
+      "fieldPhone": "Téléphone",
+      "followedIn": "Suivi au sein du service",
+      "loadFailed": "Impossible de charger votre dossier médical.",
+      "noDepartment": "Service non renseigné",
+      "noMedications": "Aucun médicament renseigné.",
+      "noPatientAssistant": "Ouvrir MedTranslate",
+      "noPatientHint": "Aucun dossier patient n’est associé à votre compte.",
+      "noPatientSupport": "Contactez l’accueil de votre établissement pour faire vérifier votre accès.",
+      "noPatientTitle": "Dossier médical indisponible",
+      "noTreatments": "Aucun traitement renseigné.",
+      "openInLibrary": "Consulter la bibliothèque santé",
+      "overviewEmpty": "Aucune information médicale n’est disponible pour le moment.",
+      "printedOn": "Document imprimé le",
+      "symptomsUnknown": "Symptômes non renseignés",
+      "tabConditions": "Pathologies et traitements",
+      "tabOverview": "Vue d’ensemble",
+      "tabTests": "Examens",
+      "tabTimeline": "Historique",
+      "tabVisits": "Rendez-vous",
+      "testsEmpty": "Aucun examen n’est renseigné dans votre dossier.",
+      "visitsEmpty": "Aucun rendez-vous n’est renseigné dans votre dossier.",
+      "visitsHint": "Les rendez-vous à venir sont également disponibles dans la rubrique « Mes rendez-vous »."
+    },
+    "appointments": {
+      "title": "Mes rendez-vous",
+      "subtitle": "Consultez vos prochaines visites et celles déjà passées.",
+      "upcoming": "À venir",
+      "past": "Passés",
+      "agenda": "Agenda",
+      "list": "Liste",
+      "empty": "Aucun rendez-vous à afficher.",
+      "cancel": "Annuler le rendez-vous",
+      "dismiss": "Fermer les détails du rendez-vous",
+      "status": {
+        "pending": "En attente",
+        "confirmed": "Confirmé",
+        "scheduled": "Programmé",
+        "completed": "Terminé",
+        "cancelled": "Annulé",
+        "canceled": "Annulé",
+        "inprogress": "En cours",
+        "rejected": "Refusé",
+        "noshow": "Absent",
+        "unknown": "Statut à préciser"
+      },
+      "type": {
+        "consultation": "Consultation",
+        "followupappointment": "Consultation de suivi",
+        "emergencyappointment": "Rendez-vous d’urgence",
+        "unknown": "Rendez-vous médical"
+      },
+      "agendaNoVisits": "Aucun rendez-vous prévu ce jour-là.",
+      "agendaTitle": "Agenda des rendez-vous",
+      "bookAnother": "Reprendre rendez-vous",
+      "cancelBlocked": "L’annulation en ligne n’est pas disponible pour ce rendez-vous. Veuillez contacter l’accueil.",
+      "cancelBody": "Confirmez-vous l’annulation du rendez-vous du {{when}} au service {{where}} ?",
+      "cancelConfirm": "Annuler le rendez-vous",
+      "cancelDoneBody": "Votre demande d’annulation a été prise en compte.",
+      "cancelDoneTitle": "Demande envoyée",
+      "cancelFallback": "Confirmez-vous l’annulation de ce rendez-vous ?",
+      "cancelTitle": "Annuler ce rendez-vous ?",
+      "errorAuth": "Votre session a expiré ou l’accès au dossier a été refusé.",
+      "errorGeneric": "Une erreur est survenue lors du chargement des rendez-vous.",
+      "errorHint": "Vérifiez votre connexion, puis réessayez.",
+      "errorOffline": "Le service est temporairement indisponible. Réessayez dans quelques instants.",
+      "errorTitle": "Impossible de charger vos rendez-vous",
+      "nextMonth": "Mois suivant",
+      "noDepartment": "Service non renseigné",
+      "noTime": "Horaire non renseigné",
+      "noType": "Type de rendez-vous non renseigné",
+      "prevMonth": "Mois précédent",
+      "requestCta": "Demander un rendez-vous",
+      "viewLabel": "Affichage des rendez-vous"
+    },
+    "request": {
+      "title": "Demander un rendez-vous",
+      "subtitle": "Choisissez un service, un médecin et un créneau disponible.",
+      "review": "Vérifier votre demande",
+      "confirm": "Confirmer la demande",
+      "type": {
+        "consultation": "Consultation",
+        "followupappointment": "Consultation de suivi",
+        "emergencyappointment": "Rendez-vous d’urgence",
+        "unknown": "Rendez-vous médical"
+      },
+      "specialty": {
+        "cardiologist": "Cardiologue",
+        "dermatologist": "Dermatologue",
+        "neurologist": "Neurologue",
+        "generalpractitioner": "Médecin généraliste",
+        "emergencyphysician": "Médecin urgentiste",
+        "pediatrician": "Pédiatre",
+        "surgeon": "Chirurgien",
+        "psychologist": "Psychologue",
+        "oncologist": "Oncologue",
+        "gynecologist": "Gynécologue",
+        "ophthalmologist": "Ophtalmologue",
+        "unknown": "Spécialité médicale"
+      },
+      "bookAnother": "Faire une nouvelle demande",
+      "chooseDepartment": "Sélectionnez le service dans lequel vous souhaitez être reçu.",
+      "chooseDoctor": "Choisissez un médecin si vous avez une préférence.",
+      "chooseTime": "Sélectionnez une date et un créneau disponibles.",
+      "closedDay": "Aucun rendez-vous ne peut être demandé ce jour-là. Choisissez une autre date.",
+      "dateLabel": "Date souhaitée",
+      "emergencyBadge": "Urgences",
+      "emergencyNote": "En cas d’urgence médicale, contactez immédiatement les services d’urgence ou rendez-vous au service des urgences le plus proche.",
+      "errDate": "Sélectionnez une date pour continuer.",
+      "errDepartment": "Sélectionnez un service pour continuer.",
+      "errTime": "Sélectionnez un créneau horaire pour continuer.",
+      "errorGeneric": "Votre demande n’a pas pu être envoyée. Vérifiez les informations et réessayez.",
+      "errorOffline": "Le service est temporairement indisponible. Réessayez dans quelques instants.",
+      "factDepartment": "Service",
+      "factDoctor": "Médecin",
+      "factType": "Type de rendez-vous",
+      "factWhen": "Date et heure",
+      "noDepartmentShort": "Service non sélectionné",
+      "noDepartments": "Aucun service ne peut actuellement recevoir de demandes de rendez-vous.",
+      "noPreference": "Je n’ai pas de préférence",
+      "noPreferenceShort": "Aucun médecin sélectionné",
+      "noWhenShort": "Date et heure à définir",
+      "pendingNote": "Votre demande a été transmise à l’établissement. Elle reste en attente de confirmation.",
+      "receptionNote": "Votre demande sera examinée par l’équipe d’accueil. Le rendez-vous sera confirmé par l’établissement.",
+      "referenceLabel": "Référence de la demande",
+      "seeAppointments": "Consulter mes rendez-vous",
+      "slotTaken": "Ce créneau n’est plus disponible.",
+      "stepDepartment": "Service",
+      "stepDoctor": "Médecin",
+      "stepReview": "Vérification",
+      "stepTime": "Date et heure",
+      "successTitle": "Demande de rendez-vous envoyée"
+    },
+    "stepper": {
+      "aria": "Étapes de la demande de rendez-vous",
+      "back": "Retour",
+      "next": "Continuer",
+      "finish": "Confirmer la demande",
+      "progress": "Étape {{current}} sur {{total}}"
+    },
+    "shared": {
+      "status": {
+        "pending": "En attente",
+        "confirmed": "Confirmé",
+        "scheduled": "Programmé",
+        "completed": "Terminé",
+        "cancelled": "Annulé",
+        "canceled": "Annulé",
+        "inprogress": "En cours",
+        "rejected": "Refusé",
+        "noshow": "Absent",
+        "unknown": "Statut à préciser"
+      },
+      "appointmentType": {
+        "consultation": "Consultation",
+        "followupappointment": "Consultation de suivi",
+        "emergencyappointment": "Rendez-vous d’urgence",
+        "unknown": "Rendez-vous médical"
+      },
+      "specialty": {
+        "cardiologist": "Cardiologue",
+        "dermatologist": "Dermatologue",
+        "neurologist": "Neurologue",
+        "generalpractitioner": "Médecin généraliste",
+        "emergencyphysician": "Médecin urgentiste",
+        "pediatrician": "Pédiatre",
+        "surgeon": "Chirurgien",
+        "psychologist": "Psychologue",
+        "oncologist": "Oncologue",
+        "gynecologist": "Gynécologue",
+        "ophthalmologist": "Ophtalmologue",
+        "unknown": "Spécialité médicale"
+      },
+      "diseaseCategory": {
+        "communicabledisease": "Maladie infectieuse",
+        "chronicdisease": "Maladie chronique",
+        "noncommunicabledisease": "Maladie non transmissible",
+        "hereditarydisease": "Maladie héréditaire",
+        "unknown": "Catégorie de pathologie"
+      },
+      "testType": {
+        "bloodtest": "Analyse sanguine",
+        "labtest": "Analyse biologique",
+        "laboratorytest": "Analyse de laboratoire",
+        "medicalimaging": "Imagerie médicale",
+        "xray": "Radiographie",
+        "urinetest": "Analyse d’urine",
+        "ecg": "Électrocardiogramme",
+        "unknown": "Examen médical"
+      },
+      "treatmentType": {
+        "medicationbasedtreatment": "Traitement médicamenteux",
+        "medicationtreatment": "Traitement médicamenteux",
+        "surgicaltreatment": "Traitement chirurgical",
+        "therapy": "Thérapie",
+        "unknown": "Type de traitement"
+      },
+      "gender": {
+        "female": "Femme",
+        "male": "Homme",
+        "other": "Autre",
+        "unknown": "Non précisé"
+      },
+      "noDate": "Date non renseignée",
+      "noResult": "Résultat non renseigné",
+      "notSet": "Non renseigné"
+    }
+  },
+  "uidata": {
+    "avatar": {
+      "unknown": "Sans nom"
+    },
+    "code": {
+      "copy": "Copier le code {{language}}",
+      "copyFailed": "Le presse-papiers n'est pas disponible dans ce navigateur"
+    },
+    "stat": {
+      "trend": "{{value}} % depuis la période précédente"
+    },
+    "tree": {
+      "label": "Hiérarchie des classes",
+      "count": "Individus : {{count}}",
+      "noMatch": "Aucune classe ne correspond à cette recherche"
+    }
+  },
+  "uioverlay": {
+    "dropdown": {
+      "menu": "Menu",
+      "trigger": "Ouvrir le menu"
+    },
+    "confirm": {
+      "reassignLabel": "Réaffecter les enregistrements dépendants à",
+      "reassignPlaceholder": "Choisir un enregistrement cible"
+    }
+  },
+  "palette": {
+    "title": "Palette de commandes",
+    "placeholder": "Rechercher un dossier ou aller à une page…",
+    "searching": "Recherche en cours…",
+    "empty": "Saisissez au moins deux caractères pour rechercher dans l’ontologie.",
+    "navigate": "pour naviguer",
+    "open": "pour ouvrir",
+    "close": "pour fermer",
+    "page": "Page"
+  },
+  "profile": {
+    "title": "Profil",
+    "subtitle": "Les informations essentielles de votre compte.",
+    "loadFailed": "Votre compte n'a pas pu être chargé.",
+    "tabs": {
+      "account": "Compte",
+      "security": "Sécurité",
+      "preferences": "Préférences",
+      "sessions": "Sessions",
+      "platform": "Plateforme"
+    },
+    "roles": {
+      "ADMIN": "Administrateur",
+      "DOCTOR": "Médecin",
+      "RECEPTIONIST": "Accueil",
+      "PATIENT": "Patient"
+    },
+    "field": {
+      "fullName": "Nom complet",
+      "email": "E-mail",
+      "role": "Rôle",
+      "locale": "Langue de l'interface",
+      "status": "Statut",
+      "active": "Actif",
+      "inactive": "Désactivé",
+      "created": "Créé le",
+      "lastLogin": "Dernière connexion",
+      "id": "Identifiant du compte",
+      "value": "Valeur"
+    },
+    "account": {
+      "title": "Compte",
+      "subtitle": "Les informations principales de votre compte.",
+      "emailHint": "Utilisé pour se connecter.",
+      "adminNote": "En tant qu'administrateur, vous modifiez votre propre compte via le même endpoint que les autres comptes : les champs ci-dessous sont donc éditables.",
+      "openUsers": "Ouvrir l'écran des comptes utilisateurs",
+      "save": "Enregistrer les modifications",
+      "saved": "Compte mis à jour",
+      "clinicalTitle": "Profil clinique associé",
+      "clinicalSubtitle": "L'individu de l'ontologie auquel ce compte est relié.",
+      "noClinical": "Ce compte n'est relié à aucun individu clinique.",
+      "predicate": "Prédicat"
+    },
+    "security": {
+      "title": "Sécurité",
+      "subtitle": "Changer le mot de passe de ce compte.",
+      "current": "Mot de passe actuel",
+      "next": "Nouveau mot de passe",
+      "confirm": "Confirmer le nouveau mot de passe",
+      "policy": "Au moins 8 caractères, avec une lettre et un chiffre.",
+      "mismatch": "Les deux mots de passe ne correspondent pas.",
+      "revokeNote": "Le changement de mot de passe révoque toutes les sessions actives côté serveur : vous êtes déconnecté de tous vos appareils et devez vous reconnecter.",
+      "submit": "Changer le mot de passe",
+      "changed": "Mot de passe modifié",
+      "wrongCurrent": "Le mot de passe actuel est incorrect."
+    },
+    "preferences": {
+      "title": "Préférences",
+      "subtitle": "Thème et langue, mémorisés dans ce navigateur.",
+      "theme": "Thème",
+      "themeHint": "Système suit votre système d'exploitation.",
+      "language": "Langue",
+      "languageHint": "L'interface se traduit immédiatement, sans rechargement.",
+      "english": "Anglais",
+      "french": "Français",
+      "saved": "Préférences enregistrées"
+    },
+    "sessions": {
+      "title": "Sessions",
+      "subtitle": "Jetons de rafraîchissement actuellement actifs pour votre compte.",
+      "created": "Créée",
+      "expires": "Expire",
+      "relative": "Relatif",
+      "id": "Identifiant du jeton",
+      "empty": "Aucune autre session active.",
+      "hint": "Se déconnecter d'un appareil ou changer le mot de passe retire sa session de cette liste.",
+      "refresh": "Rafraîchir la liste"
+    },
+    "platform": {
+      "title": "Plateforme",
+      "subtitle": "État du magasin de triples et du service NLP, lus par la sonde de santé et le recensement de l'ontologie.",
+      "store": "Magasin de triples Fuseki",
+      "storeHint": "La sonde répond 503 quand le magasin est hors service ; le rapport est affiché ici comme une donnée.",
+      "nlp": "Service de questions-réponses NLP",
+      "reachable": "Joignable",
+      "unreachable": "Injoignable",
+      "triples": "Triples",
+      "dataset": "Jeu de données",
+      "classes": "Classes",
+      "individuals": "Individus nommés",
+      "axioms": "Axiomes",
+      "tbox": "Triples du T-Box",
+      "abox": "Triples du A-Box",
+      "objectProperties": "Propriétés d'objet",
+      "datatypeProperties": "Propriétés de données",
+      "refresh": "Recharger l'état de la plateforme",
+      "unavailable": "Non remonté"
+    }
+  },
+  "detail": {
+    "data": "Données enregistrées",
+    "identity": "Identifiant en magasin",
+    "noFields": "Cet individu ne porte pas encore de propriété de type de données.",
+    "notFound": "Ce dossier est indisponible",
+    "notFoundHint": "Il a peut-être été supprimé, ou le compte utilisé n’a pas le droit de le lire."
+  },
+  "uiforms": {
+    "switch": {
+      "on": "Activé",
+      "off": "Désactivé"
+    },
+    "combobox": {
+      "chipsLabel": "Valeurs sélectionnées",
+      "listLabel": "Suggestions",
+      "selected": "Sélectionné"
+    }
+  },
+  "ui": {
+    "button": {
+      "busy": "Traitement…"
+    },
+    "input": {
+      "showPassword": "Afficher le mot de passe",
+      "hidePassword": "Masquer le mot de passe",
+      "characters": "{{count}} / {{max}} caractères"
+    },
+    "select": {
+      "placeholder": "Choisir une option"
+    },
+    "combobox": {
+      "placeholder": "Saisir pour rechercher",
+      "searching": "Recherche en cours…",
+      "noOptions": "Aucun résultat, vérifiez l'orthographe",
+      "minChars": "Saisissez au moins {{count}} caractères",
+      "clear": "Vider la sélection",
+      "remove": "Retirer {{label}}",
+      "more": "+{{count}} de plus"
+    },
+    "date": {
+      "invalid": "Saisissez une date valide",
+      "after": "Doit être postérieure au {{date}}",
+      "before": "Doit être antérieure au {{date}}"
+    },
+    "table": {
+      "empty": "Aucun enregistrement à afficher",
+      "emptyFiltered": "Aucun enregistrement ne correspond à ces filtres",
+      "loading": "Chargement des enregistrements…",
+      "columns": "Colonnes",
+      "allColumns": "Toutes les colonnes",
+      "exportCsv": "Exporter CSV",
+      "actions": "Actions",
+      "rowMenu": "Actions pour {{label}}",
+      "selected": "{{count}} sélectionné(s)",
+      "selectAll": "Sélectionner la page",
+      "sortAsc": "Tri croissant",
+      "sortDesc": "Tri décroissant",
+      "sort": "Trier par {{column}}",
+      "page": "Page {{page}} sur {{total}}"
+    },
+    "pagination": {
+      "first": "Première page",
+      "previous": "Page précédente",
+      "next": "Page suivante",
+      "last": "Dernière page",
+      "page": "Aller à la page {{page}}",
+      "label": "Pagination"
+    },
+    "tabs": {
+      "label": "Sections"
+    },
+    "modal": {
+      "close": "Fermer la boîte de dialogue"
+    },
+    "drawer": {
+      "close": "Fermer le panneau"
+    },
+    "confirm": {
+      "delete": "Supprimer",
+      "cancel": "Annuler",
+      "dependentsWarning": "La suppression affecte les {{count}} enregistrements liés listés ci-dessous.",
+      "reassignRequired": "Choisissez où vont les enregistrements liés avant de confirmer.",
+      "typeToConfirm": "Saisissez le nom pour confirmer."
+    },
+    "toast": {
+      "dismiss": "Fermer la notification"
+    },
+    "alert": {
+      "dismiss": "Masquer le message"
+    },
+    "empty": {
+      "title": "Rien pour le moment",
+      "hint": "Créez le premier enregistrement pour commencer."
+    },
+    "error": {
+      "title": "Impossible de charger ce contenu",
+      "retry": "Réessayer"
+    },
+    "stepper": {
+      "step": "Étape {{index}} sur {{total}}",
+      "back": "Retour",
+      "next": "Continuer"
+    },
+    "code": {
+      "copy": "Copier",
+      "copied": "Copié",
+      "openConsole": "Ouvrir dans la console",
+      "label": "Code"
+    },
+    "tree": {
+      "expand": "Déployer {{label}}",
+      "collapse": "Replier {{label}}",
+      "search": "Filtrer l'arborescence"
+    },
+    "filters": {
+      "label": "Filtres",
+      "active": "Filtres actifs",
+      "clearOne": "Retirer le filtre {{label}}",
+      "clearAll": "Tout effacer",
+      "from": "à partir de",
+      "to": "jusqu'à",
+      "any": "Tous"
+    },
+    "search": {
+      "clear": "Effacer la recherche",
+      "label": "Recherche"
+    },
+    "chart": {
+      "noData": "Aucune donnée sur cette période",
+      "table": "Tableau de données"
+    },
+    "avatar": {
+      "initials": "Avatar de {{name}}"
+    },
+    "timeline": {
+      "label": "Historique chronologique"
+    },
+    "pageHeader": {
+      "back": "Revenir en arrière"
+    }
+  },
+  "uipage": {
+    "breadcrumb": {
+      "label": "Fil d’Ariane"
+    },
+    "chart": {
+      "category": "Catégorie",
+      "value": "Valeur",
+      "series": "Série",
+      "aria": {
+        "bar": "Graphique en barres",
+        "line": "Graphique en lignes",
+        "doughnut": "Graphique en anneau",
+        "pie": "Graphique en secteurs",
+        "area": "Graphique en aire"
+      }
+    },
+    "filters": {
+      "chip": "{{label}} : {{value}}",
+      "bound": "{{from}} à {{to}}"
+    },
+    "retry": "Réessayer",
+    "selected": "{{count}} sélectionné(s)",
+    "showing": "{{count}} élément(s) sur {{total}}",
+    "export": "Exporter en CSV",
+    "columns": "Colonnes",
+    "columnsReset": "Tout afficher",
+    "loadFailed": "Impossible de charger ces éléments",
+    "empty": "Aucun élément à afficher",
+    "selectAll": "Sélectionner toutes les lignes de la page",
+    "selectRow": "Sélectionner cette ligne",
+    "actions": "Actions",
+    "perPage": "Lignes par page",
+    "yes": "Oui",
+    "no": "Non"
+  }
+}

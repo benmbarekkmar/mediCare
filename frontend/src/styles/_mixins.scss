@@ -1,0 +1,74 @@
+/* Breakpoint mixins: components use these instead of raw media queries so the
+   mobile/tablet/desktop thresholds stay identical everywhere. */
+$bp-sm: 640px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;
+
+@mixin down($width) {
+  @media (max-width: $width) {
+    @content;
+  }
+}
+
+@mixin up($width) {
+  @media (min-width: $width + 0.02px) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @include down($bp-md) {
+    @content;
+  }
+}
+
+@mixin tablet-down {
+  @include down($bp-lg) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @include up($bp-lg) {
+    @content;
+  }
+}
+
+@mixin card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-sm);
+}
+
+@mixin field-base {
+  width: 100%;
+  min-width: 0;
+  font: inherit;
+  color: var(--text);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-input);
+  padding: 10px 12px;
+  transition:
+    border-color var(--duration-fast) var(--ease),
+    box-shadow var(--duration-fast) var(--ease);
+
+  &:hover:not(:disabled) {
+    border-color: var(--primary-300);
+  }
+  &:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: var(--focus-ring);
+  }
+  &:disabled {
+    background: var(--bg-sunken);
+    color: var(--text-subtle);
+    cursor: not-allowed;
+  }
+  &::placeholder {
+    color: var(--text-subtle);
+  }
+}

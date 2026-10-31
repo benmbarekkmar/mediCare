@@ -1,0 +1,101 @@
+{
+  "profile": {
+    "title": "Profile",
+    "subtitle": "Your account information at a glance.",
+    "loadFailed": "Your account could not be loaded.",
+    "tabs": {
+      "account": "Account",
+      "security": "Security",
+      "preferences": "Preferences",
+      "sessions": "Sessions",
+      "platform": "Platform"
+    },
+    "roles": {
+      "ADMIN": "Administrator",
+      "DOCTOR": "Doctor",
+      "RECEPTIONIST": "Receptionist",
+      "PATIENT": "Patient"
+    },
+    "field": {
+      "fullName": "Full name",
+      "email": "Email",
+      "role": "Role",
+      "locale": "Interface language",
+      "status": "Status",
+      "active": "Active",
+      "inactive": "Deactivated",
+      "created": "Created on",
+      "lastLogin": "Last sign-in",
+      "id": "Account id",
+      "value": "Value"
+    },
+    "account": {
+      "title": "Account",
+      "subtitle": "Your basic account details.",
+      "emailHint": "Used to sign in.",
+      "adminNote": "As an administrator you edit your own account through the same endpoint as any other account, so the fields below are writable.",
+      "openUsers": "Open the user accounts screen",
+      "save": "Save the changes",
+      "saved": "Account updated",
+      "clinicalTitle": "Linked clinical profile",
+      "clinicalSubtitle": "The ontology individual this account is linked to.",
+      "noClinical": "This account is not linked to a clinical individual.",
+      "predicate": "Predicate"
+    },
+    "security": {
+      "title": "Security",
+      "subtitle": "Change the password of this account.",
+      "current": "Current password",
+      "next": "New password",
+      "confirm": "Confirm the new password",
+      "policy": "At least 8 characters, including a letter and a digit.",
+      "mismatch": "The two passwords do not match.",
+      "revokeNote": "Changing the password revokes every active session on the server, so you sign out of all your devices and must sign in again.",
+      "submit": "Change the password",
+      "changed": "Password changed",
+      "wrongCurrent": "The current password is not correct."
+    },
+    "preferences": {
+      "title": "Preferences",
+      "subtitle": "Theme and language, remembered in this browser.",
+      "theme": "Theme",
+      "themeHint": "System follows your operating system.",
+      "language": "Language",
+      "languageHint": "The interface translates immediately, no reload needed.",
+      "english": "English",
+      "french": "French",
+      "saved": "Preferences saved"
+    },
+    "sessions": {
+      "title": "Sessions",
+      "subtitle": "Refresh tokens currently active for your account.",
+      "created": "Created",
+      "expires": "Expires",
+      "relative": "Relative",
+      "id": "Token id",
+      "empty": "No other active session.",
+      "hint": "Signing out of a device or changing the password removes its session from this list.",
+      "refresh": "Refresh the list"
+    },
+    "platform": {
+      "title": "Platform",
+      "subtitle": "Triple store and NLP service status, read from the health probe and the ontology census.",
+      "store": "Fuseki triple store",
+      "storeHint": "The probe answers 503 when the store is down; the report is shown here as data.",
+      "nlp": "NLP question answering service",
+      "reachable": "Reachable",
+      "unreachable": "Unreachable",
+      "triples": "Triples",
+      "dataset": "Dataset",
+      "classes": "Classes",
+      "individuals": "Named individuals",
+      "axioms": "Axioms",
+      "tbox": "T-Box triples",
+      "abox": "A-Box triples",
+      "objectProperties": "Object properties",
+      "datatypeProperties": "Datatype properties",
+      "refresh": "Reload the platform state",
+      "unavailable": "Not reported"
+    }
+  }
+}

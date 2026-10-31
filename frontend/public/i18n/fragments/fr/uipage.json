@@ -1,0 +1,35 @@
+{
+  "uipage": {
+    "breadcrumb": { "label": "Fil d’Ariane" },
+    "chart": {
+      "category": "Catégorie",
+      "value": "Valeur",
+      "series": "Série",
+      "aria": {
+        "bar": "Graphique en barres",
+        "line": "Graphique en lignes",
+        "doughnut": "Graphique en anneau",
+        "pie": "Graphique en secteurs",
+        "area": "Graphique en aire"
+      }
+    },
+    "filters": {
+      "chip": "{{label}} : {{value}}",
+      "bound": "{{from}} à {{to}}"
+    },
+    "retry": "Réessayer",
+    "selected": "{{count}} sélectionné(s)",
+    "showing": "{{count}} élément(s) sur {{total}}",
+    "export": "Exporter en CSV",
+    "columns": "Colonnes",
+    "columnsReset": "Tout afficher",
+    "loadFailed": "Impossible de charger ces éléments",
+    "empty": "Aucun élément à afficher",
+    "selectAll": "Sélectionner toutes les lignes de la page",
+    "selectRow": "Sélectionner cette ligne",
+    "actions": "Actions",
+    "perPage": "Lignes par page",
+    "yes": "Oui",
+    "no": "Non"
+  }
+}

@@ -14,12 +14,12 @@ const EnvSchema = z.object({
   PORT: z.coerce.number().int().positive().default(4000),
   CORS_ORIGINS: z.string().default('http://localhost:4300'),
 
-  FUSEKI_BASE_URL: z.string().url().default('http://localhost:3030'),
+  FUSEKI_BASE_URL: z.string().url().default(process.env.FUSEKI_HOSTPORT ? 'http://' + process.env.FUSEKI_HOSTPORT : 'http://localhost:3030'),
   FUSEKI_DATASET: z.string().default('medicare'),
   FUSEKI_QUERY_PATH: z.string().default('/query'),
   FUSEKI_UPDATE_PATH: z.string().default('/update'),
   FUSEKI_USER: z.string().default('admin'),
-  FUSEKI_PASSWORD: z.string().default('medicare'),
+  FUSEKI_PASSWORD: z.string().default(process.env.FUSEKI_ADMIN_PASSWORD ?? 'medicare'),
   FUSEKI_QUERY_TIMEOUT_MS: z.coerce.number().int().positive().default(15000),
   FUSEKI_SPARQL_LIMIT_CAP: z.coerce.number().int().positive().default(5000),
 
@@ -30,7 +30,7 @@ const EnvSchema = z.object({
 
   SQLITE_FILE: z.string().default('./data/app.db'),
 
-  NLP_SERVICE_URL: z.string().url().default('http://localhost:8100'),
+  NLP_SERVICE_URL: z.string().url().default(process.env.NLP_SERVICE_HOSTPORT ? 'http://' + process.env.NLP_SERVICE_HOSTPORT : 'http://localhost:8100'),
   NLP_TIMEOUT_MS: z.coerce.number().int().positive().default(20000),
 
   RATE_LIMIT_WINDOW_MS: z.coerce.number().int().positive().default(60000),

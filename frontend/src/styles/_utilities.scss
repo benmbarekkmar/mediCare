@@ -1,0 +1,137 @@
+@use 'tokens' as *;
+
+/* Layout helpers used by pages so no component invents its own spacing scale. */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+.stack-sm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+}
+.row-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+.grid {
+  display: grid;
+  gap: var(--sp-4);
+}
+.grid-auto {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+}
+.grid-kpi {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+}
+.page {
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding: var(--sp-5) var(--sp-5) var(--sp-8);
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.nowrap {
+  white-space: nowrap;
+}
+.text-muted {
+  color: var(--text-muted);
+}
+.text-sm {
+  font-size: var(--fs-sm);
+}
+.text-lg {
+  font-size: var(--fs-lg);
+}
+.text-center {
+  text-align: center;
+}
+.font-mono {
+  font-family: var(--font-mono);
+}
+.weight-600 {
+  font-weight: 600;
+}
+.full-width {
+  width: 100%;
+  min-width: 0;
+}
+
+.surface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-sm);
+}
+.divider {
+  height: 1px;
+  background: var(--border);
+  border: 0;
+  margin: var(--sp-4) 0;
+}
+
+/* status vocabulary: the same colors everywhere they are used */
+.status-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+
+  &::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--status-color, var(--text-subtle));
+  }
+}
+.status-confirmed,
+.status-completed,
+.status-active {
+  --status-color: var(--success-500);
+}
+.status-pending {
+  --status-color: var(--warning-500);
+}
+.status-cancelled,
+.status-critical {
+  --status-color: var(--danger-500);
+}
+.status-scheduled,
+.status-info {
+  --status-color: var(--info-500);
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: var(--sp-4) var(--sp-3) var(--sp-6);
+  }
+}

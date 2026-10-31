@@ -1,0 +1,177 @@
+// Design tokens: the single source of truth for colors, spacing, radius,
+// elevation and motion. Themes are switched by [data-theme] on <html>.
+
+:root {
+  /* brand */
+  --primary-50: #f0f3ff;
+  --primary-100: #e3eaff;
+  --primary-200: #c9d6ff;
+  --primary-300: #a8bcff;
+  --primary-400: #809cf2;
+  --primary-500: #5e7de3;
+  --primary-600: #4565d2;
+  --primary-700: #3854bb;
+  --primary-800: #30469a;
+  --primary-900: #293b7d;
+
+  --teal-100: #ccfbf1;
+  --teal-300: #5eead4;
+  --teal-500: #14b8a6;
+  --teal-700: #0f766e;
+
+  --violet-100: #ede9fe;
+  --violet-300: #c4b5fd;
+  --violet-500: #8b5cf6;
+  --violet-700: #6d28d9;
+
+  /* semantic status */
+  --success-50: #ecfdf5;
+  --success-100: #d1fae5;
+  --success-500: #10b981;
+  --success-700: #047857;
+  --warning-50: #fffbeb;
+  --warning-100: #fef3c7;
+  --warning-500: #f59e0b;
+  --warning-700: #b45309;
+  --danger-50: #fef2f2;
+  --danger-100: #fee2e2;
+  --danger-500: #ef4444;
+  --danger-700: #b91c1c;
+  --info-50: #f0f9ff;
+  --info-100: #e0f2fe;
+  --info-500: #0ea5e9;
+  --info-700: #0369a1;
+
+  /* spacing scale (4px base) */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+
+  /* radii */
+  --radius-card: 16px;
+  --radius-input: 10px;
+  --radius-pill: 999px;
+
+  /* typography */
+  --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.8125rem;
+  --fs-base: 0.9375rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.375rem;
+  --fs-2xl: 1.75rem;
+  --fs-3xl: 2.25rem;
+
+  /* layout */
+  --sidebar-width: 264px;
+  --sidebar-collapsed: 76px;
+  --topbar-height: 64px;
+  --content-max: 1440px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+
+  /* motion */
+  --duration: 200ms;
+  --duration-fast: 120ms;
+  --duration-slow: 320ms;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* z-index */
+  --z-sticky: 20;
+  --z-drawer: 40;
+  --z-modal: 50;
+  --z-toast: 60;
+  --z-popover: 70;
+}
+
+:root,
+[data-theme='light'] {
+  --bg: #f0f1fb;
+  --bg-elevated: #ffffff;
+  --bg-sunken: #f3f4fb;
+  --bg-hover: #f4f6fc;
+  --surface: #ffffff;
+  --surface-alt: #f8fafc;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --text-subtle: #94a3b8;
+  --text-inverse: #ffffff;
+  --primary: var(--primary-600);
+  --primary-hover: var(--primary-700);
+  --primary-soft: var(--primary-50);
+  --secondary: var(--teal-700);
+  --secondary-soft: var(--teal-100);
+  --accent: var(--violet-600, #7c3aed);
+  --accent-soft: var(--violet-100);
+  --shadow-sm: 0 2px 8px rgb(34 48 92 / 5%), 0 1px 2px rgb(34 48 92 / 5%);
+  --shadow-md: 0 8px 24px rgb(49 60 116 / 9%), 0 2px 6px rgb(49 60 116 / 5%);
+  --shadow-lg: 0 24px 60px rgb(49 60 116 / 14%);
+  --gradient-kpi: linear-gradient(135deg, var(--primary-700) 0%, var(--primary-600) 58%, var(--primary-500) 100%);
+  --gradient-banner: linear-gradient(118deg, #3d5fc6 0%, #496bd5 58%, #5b73d5 100%);
+  --gradient-hero: linear-gradient(120deg, #eef4ff 0%, #f6f9ff 45%, #ecfdf7 100%);
+  --scrim: rgb(15 23 42 / 45%);
+  --focus-ring: 0 0 0 3px rgb(37 99 235 / 35%);
+  --chart-grid: #e2e8f0;
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --bg: #0b1120;
+  --bg-elevated: #111827;
+  --bg-sunken: #0a0f1c;
+  --bg-hover: #1b2536;
+  --surface: #131c2e;
+  --surface-alt: #0f1728;
+  --border: #253248;
+  --border-strong: #35455f;
+  --text: #e6edf7;
+  --text-muted: #9fb0c9;
+  --text-subtle: #6b7d99;
+  --text-inverse: #0b1120;
+  --primary: #60a5fa;
+  --primary-hover: #93c5fd;
+  --primary-soft: rgb(37 99 235 / 18%);
+  --secondary: var(--teal-300);
+  --secondary-soft: rgb(20 184 166 / 18%);
+  --accent: var(--violet-300);
+  --accent-soft: rgb(139 92 246 / 20%);
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 40%);
+  --shadow-md: 0 6px 16px rgb(0 0 0 / 45%);
+  --shadow-lg: 0 18px 44px rgb(0 0 0 / 55%);
+  --gradient-kpi: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 50%, #0f766e 100%);
+  --gradient-hero: linear-gradient(120deg, #101a2e 0%, #121d33 50%, #0d2334 100%);
+  --scrim: rgb(2 6 16 / 65%);
+  --focus-ring: 0 0 0 3px rgb(96 165 250 / 45%);
+  --gradient-banner: linear-gradient(118deg, #203a85 0%, #294ca8 58%, #344f9e 100%);
+  --chart-grid: #253248;
+
+  /* status colors need more luminance on dark surfaces */
+  --success-50: rgb(16 185 129 / 16%);
+  --success-100: rgb(16 185 129 / 26%);
+  --success-500: #34d399;
+  --success-700: #6ee7b7;
+  --warning-50: rgb(245 158 11 / 16%);
+  --warning-100: rgb(245 158 11 / 26%);
+  --warning-500: #fbbf24;
+  --warning-700: #fcd34d;
+  --danger-50: rgb(239 68 68 / 16%);
+  --danger-100: rgb(239 68 68 / 26%);
+  --danger-500: #f87171;
+  --danger-700: #fca5a5;
+  --info-50: rgb(14 165 233 / 16%);
+  --info-100: rgb(14 165 233 / 26%);
+  --info-500: #38bdf8;
+  --info-700: #7dd3fc;
+  color-scheme: dark;
+}

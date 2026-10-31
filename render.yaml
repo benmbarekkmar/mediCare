@@ -1,0 +1,83 @@
+﻿services:
+  - type: web
+    name: medicare-kmarb-fuseki
+    runtime: docker
+    region: frankfurt
+    plan: free
+    dockerfilePath: infra/fuseki/Dockerfile
+    dockerContext: .
+    envVars:
+      - key: PORT
+        value: '3030'
+      - key: FUSEKI_ADMIN_PASSWORD
+        generateValue: true
+      - key: FUSEKI_DATASET_1
+        value: medicare
+      - key: JVM_ARGS
+        value: -Xmx256m
+
+  - type: web
+    name: medicare-kmarb-nlp
+    runtime: python
+    region: frankfurt
+    plan: free
+    rootDir: backend/nlp-service
+    buildCommand: pip install -r requirements.txt && python -m spacy download en_core_web_sm && python -m spacy download fr_core_news_sm
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.11
+      - key: SPACY_MODEL_SIZE
+        value: sm
+      - key: FUSEKI_DATASET
+        value: medicare
+      - key: FUSEKI_BASE_URL
+        fromService:
+          name: medicare-kmarb-fuseki
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: FUSEKI_ADMIN_PASSWORD
+        fromService:
+          name: medicare-kmarb-fuseki
+          type: web
+          envVarKey: FUSEKI_ADMIN_PASSWORD
+
+  - type: web
+    name: medicare-kmarb-api
+    runtime: node
+    region: frankfurt
+    plan: free
+    buildCommand: npm ci --include=dev --prefix backend && npm ci --include=dev --prefix frontend && npm --prefix frontend run build && npm --prefix backend run build
+    startCommand: npm --prefix backend start
+    healthCheckPath: /api/status
+    envVars:
+      - key: NODE_VERSION
+        value: 22.14.0
+      - key: NODE_ENV
+        value: production
+      - key: SQLITE_FILE
+        value: ':memory:'
+      - key: FUSEKI_DATASET
+        value: medicare
+      - key: FUSEKI_BASE_URL
+        fromService:
+          name: medicare-kmarb-fuseki
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: FUSEKI_ADMIN_PASSWORD
+        fromService:
+          name: medicare-kmarb-fuseki
+          type: web
+          envVarKey: FUSEKI_ADMIN_PASSWORD
+      - key: NLP_SERVICE_URL
+        fromService:
+          name: medicare-kmarb-nlp
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGINS
+        fromService:
+          name: medicare-kmarb-api
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL

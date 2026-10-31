@@ -1,0 +1,9 @@
+{
+  "detail": {
+    "data": "Recorded data",
+    "identity": "Store identity",
+    "noFields": "This individual carries no datatype properties yet.",
+    "notFound": "This record is not available",
+    "notFoundHint": "It may have been deleted, or the account you signed in with is not allowed to read it."
+  }
+}

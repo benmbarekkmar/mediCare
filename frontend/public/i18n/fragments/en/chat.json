@@ -1,0 +1,220 @@
+{
+  "chat": {
+    "subtitle": "Ask naturally in English, French, Arabic or Tunisian Derja. The local NLP pipeline maps supported medical questions to the application’s data.",
+    "portalSubtitle": "Ask a question about your own record or about a disease. Write it, or dictate it out loud.",
+    "thread": {
+      "label": "Conversation with the assistant"
+    },
+    "turn": {
+      "you": "You",
+      "assistant": "Assistant"
+    },
+    "empty": {
+      "title": "No question yet",
+      "hint": "Ask about medical information available in the application. Follow-up questions use the recent conversation."
+    },
+    "pending": "The assistant is working on your question",
+    "composer": {
+      "label": "Your question",
+      "placeholder": "Ask a question about available medical information",
+      "hint": "Enter sends the question, Shift+Enter starts a new line."
+    },
+    "send": "Send",
+    "language": {
+      "label": "Detected language",
+      "en": "English",
+      "fr": "French"
+    },
+    "intent": {
+      "label": "Intent"
+    },
+    "confidence": "Confidence {{value}}",
+    "entities": {
+      "label": "Recognised terms",
+      "open": "Open the {{label}} record"
+    },
+    "sparql": {
+      "label": "Generated SPARQL"
+    },
+    "results": {
+      "label": "Results",
+      "summary": "{{count}} rows in {{ms}} ms",
+      "empty": "The store returned no row for this question."
+    },
+    "explanation": {
+      "label": "What the assistant understood"
+    },
+    "technical": "Technical details",
+    "technicalHint": "Generated query, pipeline steps and classifier scores.",
+    "pipeline": {
+      "label": "Pipeline steps"
+    },
+    "scores": {
+      "label": "Intent scores"
+    },
+    "fallback": {
+      "title": "This question did not match a known intent",
+      "hint": "Try one of these questions instead: clicking a chip sends it."
+    },
+    "error": {
+      "hint": "The question could not be answered. Retry, or ask about information in the medical data."
+    },
+    "history": {
+      "title": "Conversation history",
+      "empty": "Your questions are kept on this device only, until you clear them.",
+      "count": "{{count}} questions on this device",
+      "clear": "Clear history",
+      "cleared": "The conversation was cleared.",
+      "open": "Re-open this answer",
+      "confirm": {
+        "title": "Clear the conversation?",
+        "message": "Every question and answer kept on this device will be deleted."
+      }
+    },
+    "examples": {
+      "title": "Example questions",
+      "hint": "The intents your own role may ask, taken from the service catalogue. Click one to send it.",
+      "unavailable": "The intent catalogue could not be loaded."
+    },
+    "category": {
+      "patient": "Patients",
+      "doctor": "Doctors",
+      "disease": "Diseases",
+      "symptom": "Symptoms",
+      "treatment": "Treatments",
+      "medication": "Medications",
+      "test": "Tests",
+      "appointment": "Appointments",
+      "hospital": "Hospitals",
+      "department": "Departments",
+      "ranking": "Rankings",
+      "browse": "Counts and listings",
+      "general": "Search and description"
+    },
+    "voice": {
+      "start": "Dictate",
+      "stop": "Stop dictation",
+      "failed": "Speech recognition failed"
+    }
+  },
+  "translator": {
+    "heroEyebrow": "Intelligent Medical Semantic Translator",
+    "searchTitle": "MedTranslate",
+    "searchSubtitle": "Explore medical knowledge through natural language and semantic intelligence.",
+    "searchPlaceholder": "Ask anything about the medical knowledge base...",
+    "clear": "Clear search",
+    "tryAsking": "Try asking",
+    "sampleQuestions": [
+      "Which hospitals are available?",
+      "What are the symptoms of diabetes?",
+      "Which doctors specialize in cardiology?",
+      "What treatments are associated with influenza?",
+      "Which medical examinations are available?"
+    ],
+    "recentTitle": "Recent searches",
+    "recentSession": "This session only",
+    "technicalTitle": "Explore the NLP Pipeline",
+    "pendingStepQuery": "Building the SPARQL query",
+    "status": {
+      "label": "Service status",
+      "nlp": { "label": "NLP Engine", "online": "Online", "offline": "Offline", "checking": "Checking" },
+      "ontology": { "label": "Ontology", "online": "Connected", "offline": "Disconnected", "checking": "Checking" },
+      "sparql": { "label": "SPARQL Endpoint", "online": "Ready", "offline": "Unavailable", "checking": "Checking" }
+    },
+    "analysisTitle": "NLP analysis",
+    "analysisLanguage": "Detected language",
+    "analysisIntent": "Detected intent",
+    "analysisConfidence": "Classification confidence",
+    "executionTitle": "Fuseki execution",
+    "executionStatus": "Status",
+    "executionComplete": "Completed",
+    "executionSkipped": "Not executed",
+    "executionTime": "Execution time",
+    "noQuery": "No SPARQL query was generated for this question.",
+    "subtitle": "Translate a natural-language question into SPARQL: Python and spaCy analyze it, RDFLib validates the query, and Apache Jena Fuseki executes it against the Protégé ontology.",
+    "outputLabel": "NLP to SPARQL translation result",
+    "emptyTitle": "Your medical knowledge search starts here.",
+    "emptyHint": "Ask a question in natural language to explore the medical knowledge represented in the ontology.",
+    "questionEcho": "Question analyzed",
+    "questionLabel": "Natural-language question",
+    "questionPlaceholder": "For example: What are the symptoms of diabetes?",
+    "questionHint": "Ask about diseases, symptoms, treatments, doctors, hospitals, tests or appointments. Results reflect only data available to your role.",
+    "run": "Search",
+    "pending": "Analyzing the question and running the SPARQL query",
+    "resultTitle": "Translation result",
+    "language": { "en": "English", "fr": "French", "ar": "Arabic", "tn": "Tunisian Arabic (Derja)" },
+    "confidence": "Intent confidence {{value}}",
+    "summary": {
+      "label": "Search summary",
+      "question": "Original question",
+      "intent": "Detected intent",
+      "language": "Language",
+      "count": "Results",
+      "executionTime": "Execution time",
+      "milliseconds": "{{ms}} ms"
+    },
+    "entities": {
+      "label": "Recognized entities",
+      "open": "Open the {{label}} record"
+    },
+    "unsupportedTitle": "No supported intent was recognized",
+    "unsupportedHint": "Rephrase the question around information available in the medical ontology. No SPARQL query is run when the intent cannot be identified.",
+    "interpretation": "NLP analysis",
+    "results": {
+      "label": "Fuseki results",
+      "summary": "{{count}} results · {{ms}} ms",
+      "one": "{{count}} result",
+      "other": "{{count}} results",
+      "empty": "No matching information found in the medical ontology.",
+      "emptyHint": "Try rephrasing your question or asking about another medical concept.",
+      "unnamed": "Result"
+    },
+    "technicalHint": "The generated query and NLP pipeline are shown below for inspection.",
+    "sparql": "Generated SPARQL",
+    "pipeline": {
+      "title": "NLP to SPARQL pipeline",
+      "state": { "complete": "Completed", "failed": "Failed", "skipped": "Not reached" },
+      "stages": {
+        "input": "Natural language input",
+        "spacy": "spaCy NLP analysis",
+        "recognition": "Intent and entity recognition",
+        "sparql": "SPARQL generation",
+        "rdflib": "RDFLib validation",
+        "fuseki": "Apache Jena Fuseki execution",
+        "results": "Semantic results"
+      },
+      "noTrace": "No processing trace was returned for this stage.",
+      "noValidation": "RDFLib validation was not confirmed by the service trace.",
+      "validationFailed": "SPARQL validation was not confirmed; inspect the technical trace.",
+      "noExecution": "Fuseki was not called for this question.",
+      "noResults": "No results were produced by a Fuseki execution.",
+      "resultCount": "{{count}} semantic result(s) returned by Fuseki."
+    },
+    "aside": { "label": "Search helpers" },
+    "recentEmpty": "Your searches from this session will appear here.",
+    "tips": {
+      "title": "Search tips",
+      "specific": "Use a specific medical term when possible.",
+      "languages": "Ask in English, French, Arabic or Tunisian Derja.",
+      "access": "Results depend on your role and available ontology data."
+    },
+    "domains": {
+      "title": "Explore medical topics",
+      "hint": "Choose a topic to fill the search field with a sample question.",
+      "items": [
+        { "title": "Hospitals", "description": "Places of care and facilities" },
+        { "title": "Diseases", "description": "Conditions and symptoms" },
+        { "title": "Doctors", "description": "Specialties and practitioners" },
+        { "title": "Treatments", "description": "Therapies and medicines" },
+        { "title": "Examinations", "description": "Tests and diagnostics" }
+      ]
+    },
+    "scores": "Intent classifier scores",
+    "errorHint": "Check your connection and try the search again.",
+    "error": {
+      "serviceUnavailable": "The medical search service is temporarily unavailable. Please try again shortly.",
+      "generic": "The search could not be completed. Please try again."
+    },
+    "voice": { "start": "Dictate", "stop": "Stop dictation" }
+  }
+}

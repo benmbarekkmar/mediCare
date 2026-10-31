@@ -1,0 +1,12 @@
+{
+  "palette": {
+    "title": "Command palette",
+    "placeholder": "Search records or jump to a page…",
+    "searching": "Searching…",
+    "empty": "Type at least two characters to search the ontology.",
+    "navigate": "to navigate",
+    "open": "to open",
+    "close": "to close",
+    "page": "Page"
+  }
+}

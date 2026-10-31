@@ -1,0 +1,121 @@
+{
+  "staff": {
+    "day": {
+      "title": "Votre journée en un coup d'œil",
+      "loading": "Chargement de votre journée…",
+      "kpiLabel": "Chiffres clés",
+      "errorHint": "La liste des rendez-vous n'a pas pu être lue. Vérifiez que le serveur est accessible, puis réessayez.",
+      "errorLoad": "Les données n'ont pas pu être chargées depuis le serveur.",
+      "roleDoctor": "Médecin",
+      "roleReceptionist": "Accueil",
+      "open": "Ouvrir",
+      "allList": "Tous les dossiers",
+      "groupCount": "{{count}} visite(s)",
+      "noPatient": "Patient non rattaché",
+      "noProfileHint": "Ce compte n'est pas encore rattaché à un individu de l'ontologie.",
+      "changeStatus": "Changer le statut",
+      "toast": {
+        "statusTitle": "Statut mis à jour",
+        "statusBody": "{{patient}} est maintenant {{status}}."
+      },
+      "status": {
+        "pending": "En attente",
+        "confirmed": "Confirmé",
+        "completed": "Terminé",
+        "cancelled": "Annulé",
+        "scheduled": "Planifié",
+        "unknown": "Sans statut"
+      },
+      "kpi": {
+        "today": "Visites du jour",
+        "todayHint": "Rendez-vous fixés à aujourd'hui",
+        "week": "Sept prochains jours",
+        "weekHint": "D'aujourd'hui à J+7",
+        "patients": "Mes patients",
+        "patientsHint": "Les patients que vous suivez",
+        "pendingTests": "Analyses à lire",
+        "pendingTestsHint": "Aucun résultat enregistré",
+        "pending": "À confirmer",
+        "pendingHint": "Demandes en attente de réponse",
+        "allPatients": "Tous les patients",
+        "allPatientsHint": "Enregistrés à l'hôpital",
+        "doctors": "Médecins",
+        "doctorsHint": "Référencés dans l'annuaire"
+      },
+      "doctor": {
+        "today": {
+          "title": "Rendez-vous du jour",
+          "subtitle": "{{count}} visite(s) à l'agenda aujourd'hui",
+          "subtitleEmpty": "Rien à l'agenda aujourd'hui",
+          "empty": "Aucun rendez-vous aujourd'hui",
+          "emptyHint": "Prenez un rendez-vous pour l'un de vos patients : il s'affiche ici."
+        },
+        "week": {
+          "title": "Semaine à venir",
+          "subtitle": "{{count}} visite(s) sur sept jours, {{patients}} patients suivis",
+          "empty": "Aucune visite dans les sept prochains jours",
+          "emptyHint": "Les nouvelles demandes de vos patients apparaissent ici automatiquement."
+        },
+        "tests": {
+          "title": "Analyses en attente de résultat",
+          "subtitle": "{{count}} examen(s) de vos patients sans résultat",
+          "empty": "Tous les examens ont leur résultat",
+          "emptyHint": "Le résultat se saisit sur la fiche de l'examen lui-même.",
+          "pending": "Résultat manquant"
+        },
+        "department": {
+          "title": "Mon service",
+          "open": "Retrouver dans les services",
+          "empty": "Aucun service rattaché"
+        },
+        "hospital": {
+          "title": "Mon hôpital",
+          "open": "Retrouver dans les hôpitaux",
+          "empty": "Aucun hôpital rattaché"
+        },
+        "links": {
+          "newAppointment": "Nouveau rendez-vous",
+          "newAppointmentHint": "Ouvrir le formulaire de rendez-vous",
+          "myPatients": "Mes patients",
+          "myPatientsHint": "La liste déjà limitée à votre patientèle",
+          "newTest": "Ajouter un examen",
+          "newTestHint": "Enregistrer un examen pour un patient",
+          "openCalendar": "Ouvrir l'agenda",
+          "openCalendarHint": "La vue hebdomadaire de toutes les visites"
+        }
+      },
+      "reception": {
+        "ctas": {
+          "title": "Actions de l'accueil",
+          "hint": "Les deux formulaires s'ouvrent directement, sans passer d'abord par les listes.",
+          "newAppointment": "Nouveau rendez-vous",
+          "newPatient": "Nouveau patient"
+        },
+        "queue": {
+          "title": "File du jour par statut",
+          "subtitle": "{{count}} visite(s) prévue(s) aujourd'hui",
+          "calendar": "Ouvrir l'agenda",
+          "empty": "Aucune visite aujourd'hui",
+          "emptyHint": "Enregistrez la première prise de rendez-vous du jour et la file se remplit."
+        },
+        "pending": {
+          "title": "En attente de confirmation",
+          "subtitle": "{{count}} demande(s) à confirmer ou à annuler",
+          "confirm": "Confirmer",
+          "cancel": "Annuler",
+          "empty": "Plus rien à confirmer",
+          "emptyHint": "Toutes les demandes des deux prochaines semaines ont déjà une réponse."
+        },
+        "doctors": {
+          "title": "Médecins"
+        },
+        "departments": {
+          "title": "Services"
+        },
+        "directoryCount": "{{count}} entrée(s) affichée(s)",
+        "directoryEmpty": "L'annuaire est vide",
+        "directoryHint": "Demandez à un administrateur d'enregistrer les praticiens et les services."
+      }
+    }
+  }
+}

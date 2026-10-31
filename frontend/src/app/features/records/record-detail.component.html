@@ -1,0 +1,111 @@
+<div class="page detail printable">
+  @if (loading()) {
+    <ui-card>
+      <div class="stack">
+        <ui-skeleton width="40%" height="1.6rem" />
+        <ui-skeleton width="100%" height="8rem" />
+        <ui-skeleton width="70%" />
+      </div>
+    </ui-card>
+  } @else if (failed()) {
+    <ui-error-state
+      [title]="'detail.notFound' | translate"
+      [message]="''"
+      [hint]="'detail.notFoundHint' | translate"
+      (retry)="load()"
+    />
+  } @else {
+    @if (row(); as individual) {
+    <header class="detail__head">
+      <div class="detail__heading">
+        <button type="button" class="detail__back" (click)="goBack()">
+          <ui-icon name="arrow-left" [size]="16" /> {{ 'common.back' | translate }}
+        </button>
+        <h1 class="detail__title">{{ individual.label }}</h1>
+        <div class="detail__types">
+          @for (type of individual.types; track type) {
+            <ui-badge kind="neutral">{{ type }}</ui-badge>
+          }
+        </div>
+      </div>
+      <div class="detail__actions no-print">
+        <ui-button variant="outline" icon="printer" (click)="print()">{{ 'common.print' | translate }}</ui-button>
+        @if (canUpdate) {
+          <ui-button icon="pencil" (click)="openEdit()">{{ 'common.edit' | translate }}</ui-button>
+        }
+        @if (canDelete) {
+          <ui-button variant="danger" icon="trash-2" (click)="askDelete()">{{ 'common.delete' | translate }}</ui-button>
+        }
+      </div>
+    </header>
+
+    <p class="print-header">{{ individual.label }}</p>
+
+    <div class="detail__grid">
+      <ui-card [title]="'detail.data' | translate" icon="file-text">
+        @if (fieldRows.length === 0) {
+          <p class="text-muted text-sm">{{ 'detail.noFields' | translate }}</p>
+        } @else {
+          <dl class="fields">
+            @for (row of fieldRows; track row.field) {
+              <div class="fields__row">
+                <dt>{{ row.label }}</dt>
+                <dd [class.fields__empty]="row.empty">{{ row.empty ? ('common.notSet' | translate) : row.value }}</dd>
+              </div>
+            }
+          </dl>
+        }
+      </ui-card>
+
+      <div class="stack">
+        @for (group of relationRows; track group.label) {
+          <ui-card [title]="group.label" icon="link">
+            @if (group.items.length === 0) {
+              <p class="text-muted text-sm">{{ 'common.none' | translate }}</p>
+            } @else {
+              <ul class="links">
+                @for (ref of group.items; track ref.id) {
+                  <li>
+                    <a [routerLink]="href(group.entity, ref.id)">
+                      <ui-icon name="arrow-up-right" [size]="14" />
+                      <span class="truncate">{{ ref.label }}</span>
+                    </a>
+                  </li>
+                }
+              </ul>
+            }
+          </ui-card>
+        }
+
+        <ui-card [title]="'detail.identity' | translate" icon="fingerprint" pad="md">
+          <dl class="fields fields--tight">
+            <div class="fields__row">
+              <dt>Id</dt>
+              <dd class="font-mono">{{ individual.id }}</dd>
+            </div>
+            <div class="fields__row">
+              <dt>IRI</dt>
+              <dd class="font-mono truncate" [attr.title]="individual.iri">{{ individual.iri }}</dd>
+            </div>
+          </dl>
+        </ui-card>
+      </div>
+    </div>
+
+    <ui-modal [(open)]="formOpen" size="lg" [busy]="saving()" [title]="'form.editTitle' | translate: { entity: meta()?.label ?? '' }">
+      @if (meta(); as meta) {
+        <entity-form [meta]="meta" [value]="individual" [busy]="saving()" [writable]="writable" (submitted)="save($event)" (cancelled)="formOpen.set(false)" />
+      }
+    </ui-modal>
+
+    <ui-confirm-dialog
+      [(open)]="confirmOpen"
+      [title]="'common.deleteConfirmTitle' | translate"
+      [message]="'common.deleteConfirmText' | translate: { label: individual.label }"
+      [dependents]="dependents()"
+      [(reassignTo)]="reassignTo"
+      (confirmed)="confirmDelete()"
+    />
+    }
+  }
+</div>

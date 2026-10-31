@@ -1,0 +1,220 @@
+{
+  "admin": {
+    "dashboard": {
+      "title": "Tableau de bord d'exploitation",
+      "generatedAt": "Données générées le {{time}}",
+      "refreshed": "Tableau de bord actualisé",
+      "loading": "Chargement du tableau de bord…",
+      "kpi": {
+        "patients": "Patients",
+        "doctors": "Médecins",
+        "appointments": "Rendez-vous",
+        "tests": "Examens médicaux",
+        "triples": "Triplets au total",
+        "today": "Rendez-vous aujourd'hui"
+      },
+      "charts": {
+        "appointmentsPerMonth": "Rendez-vous par mois",
+        "patientsByAgeClass": "Patients par classe d'âge",
+        "topDiseases": "Maladies les plus fréquentes",
+        "appointmentsByStatus": "Rendez-vous par statut",
+        "testsByType": "Examens par type",
+        "doctorsBySpecialty": "Médecins par spécialité",
+        "departmentsByHospital": "Services par hôpital"
+      },
+      "lists": {
+        "upcoming": "Prochains rendez-vous",
+        "upcomingEmpty": "Aucun rendez-vous à venir.",
+        "recentTests": "Examens récents",
+        "recentTestsEmpty": "Aucun examen enregistré.",
+        "viewCalendar": "Ouvrir le calendrier",
+        "allTests": "Tous les examens"
+      },
+      "columns": {
+        "appointment": "Rendez-vous",
+        "when": "Quand",
+        "patient": "Patient",
+        "department": "Service",
+        "status": "Statut",
+        "test": "Examen",
+        "date": "Date",
+        "result": "Résultat"
+      },
+      "actions": {
+        "newPatient": "Nouveau patient",
+        "newAppointment": "Nouveau rendez-vous",
+        "askAssistant": "Interroger l'assistant",
+        "openConsole": "Ouvrir la console"
+      },
+      "empty": {
+        "title": "Le magasin ne contient encore aucune donnée",
+        "hint": "Chargez l'ontologie et créez les premiers enregistrements ; le tableau de bord se remplira."
+      },
+      "error": {
+        "message": "Le serveur n'a pas pu calculer les chiffres du tableau de bord."
+      }
+    },
+    "users": {
+      "title": "Comptes utilisateurs",
+      "subtitle": "{{count}} compte(s) sur cette instance",
+      "searchPlaceholder": "Rechercher par nom, email ou rôle",
+      "create": "Nouveau compte",
+      "edit": "Modifier le compte",
+      "created": "Compte créé",
+      "updated": "Compte mis à jour",
+      "deleted": "Compte supprimé",
+      "activated": "Compte réactivé",
+      "deactivated": "Compte désactivé",
+      "deleteTitle": "Supprimer le compte",
+      "deleteMessage": "Supprimer {{email}} retire définitivement l'accès. Cette action est irréversible.",
+      "fixFields": "Veuillez corriger les champs surlignés.",
+      "empty": {
+        "title": "Aucun compte à afficher",
+        "hint": "Ajustez la recherche ou créez le premier compte."
+      },
+      "columns": {
+        "fullName": "Nom complet",
+        "email": "Email",
+        "role": "Rôle",
+        "linked": "Individu lié",
+        "active": "Actif",
+        "lastLogin": "Dernière connexion",
+        "created": "Créé le"
+      },
+      "row": {
+        "edit": "Modifier {{name}}",
+        "deactivate": "Désactiver {{name}}",
+        "activate": "Réactiver {{name}}",
+        "remove": "Supprimer {{name}}",
+        "enabled": "Activé",
+        "disabled": "Désactivé"
+      },
+      "form": {
+        "email": "Email",
+        "fullName": "Nom complet",
+        "role": "Rôle",
+        "locale": "Langue",
+        "password": "Mot de passe",
+        "passwordHint": "Au moins 8 caractères, avec des lettres et des chiffres. Il ne sera plus jamais affiché.",
+        "active": "Compte activé",
+        "activeHint": "Un compte désactivé conserve ses données mais ne peut plus se connecter.",
+        "linked": "Individu lié",
+        "linkedPatient": "L'individu Patient auquel ce compte est rattaché",
+        "linkedDoctor": "L'individu Doctor auquel ce compte est rattaché",
+        "linkedPlaceholder": "Saisissez un nom"
+      },
+      "role": {
+        "ADMIN": "Administrateur",
+        "DOCTOR": "Médecin",
+        "RECEPTIONIST": "Agent d'accueil",
+        "PATIENT": "Patient"
+      },
+      "entity": {
+        "patients": "Patients",
+        "doctors": "Médecins",
+        "diseases": "Maladies",
+        "symptoms": "Symptômes",
+        "treatments": "Traitements",
+        "medications": "Médicaments",
+        "tests": "Examens médicaux",
+        "appointments": "Rendez-vous",
+        "hospitals": "Hôpitaux",
+        "departments": "Services"
+      },
+      "localeOption": {
+        "fr": "Français",
+        "en": "Anglais"
+      },
+      "tabs": {
+        "accounts": "Comptes",
+        "matrix": "Matrice des permissions"
+      },
+      "matrix": {
+        "caption": "Actions autorisées par rôle et par entité",
+        "entity": "Entité",
+        "allowed": "{{role}} peut {{actions}} sur {{entity}}",
+        "denied": "{{role}} ne peut pas agir sur {{entity}}",
+        "action": {
+          "read": "lire",
+          "create": "créer",
+          "update": "modifier",
+          "delete": "supprimer"
+        }
+      }
+    },
+    "audit": {
+      "title": "Journal d'audit",
+      "subtitle": "500 dernières actions enregistrées",
+      "refreshed": "Journal d'audit actualisé",
+      "searchPlaceholder": "Rechercher un chemin ou un email",
+      "filters": {
+        "search": "Recherche",
+        "action": "Action",
+        "entity": "Entité",
+        "period": "Période"
+      },
+      "columns": {
+        "when": "Quand",
+        "email": "Compte",
+        "role": "Rôle",
+        "action": "Action",
+        "entity": "Entité",
+        "resource": "Ressource",
+        "request": "Requête",
+        "path": "Chemin"
+      },
+      "relative": "Temps relatif",
+      "absolute": "Heure exacte",
+      "details": "Détails de la requête",
+      "openDetails": "Afficher les détails de l'entrée {{id}}",
+      "noDetails": "Cette entrée ne contient aucune charge utile.",
+      "who": "Qui",
+      "limitHint": "L'API renvoie au maximum 500 entrées. Affinez les filtres pour voir les actions plus anciennes.",
+      "empty": {
+        "title": "Aucune action ne correspond à ces filtres",
+        "hint": "Élargissez la période ou effacez les filtres."
+      },
+      "error": {
+        "message": "La piste d'audit n'a pas pu être chargée."
+      }
+    },
+    "consistency": {
+      "title": "Contrôle de cohérence",
+      "subtitle": "Vérifié le {{time}}",
+      "refreshed": "Contrôles relancés",
+      "summary": {
+        "ok": "Aucune violation d'axiome : le graphe stocké est fermé vis-à-vis du TBox.",
+        "violations": "{{violations}} violation(s) détectée(s), dont {{fixable}} réparables automatiquement."
+      },
+      "repair": "Lancer la réparation",
+      "repairTitle": "Réparer le magasin",
+      "repairMessage": "Cette action écrit dans le triple store : chaque correctif automatique documenté est appliqué en une mise à jour atomique. Continuer ?",
+      "repaired": "Réparation appliquée : {{operations}} opération(s).",
+      "nothingToRepair": "Rien à réparer.",
+      "loading": "Audit des axiomes en cours…",
+      "check": {
+        "axiom": "Axiome",
+        "violationsCount": "{{count}} violation(s)",
+        "violations": "Individus fautifs",
+        "query": "Requête SPARQL",
+        "showQuery": "Afficher la requête SPARQL",
+        "hideQuery": "Masquer la requête SPARQL",
+        "fix": "Correctif documenté",
+        "manualFix": "Pas de correctif automatique : corrigez ces enregistrements à la main.",
+        "passed": "Conforme"
+      },
+      "stats": {
+        "title": "Recensement de l'ontologie",
+        "triples": "Triplets",
+        "classes": "Classes",
+        "objectProperties": "Propriétés d'objet",
+        "datatypeProperties": "Propriétés de données",
+        "namedIndividuals": "Individus nommés",
+        "individuals": "Individus du domaine"
+      },
+      "error": {
+        "message": "L'audit de cohérence n'a pas pu être exécuté."
+      }
+    }
+  }
+}

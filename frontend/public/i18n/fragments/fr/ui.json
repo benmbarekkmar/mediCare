@@ -1,0 +1,64 @@
+{
+  "ui": {
+    "button": { "busy": "Traitement…" },
+    "input": { "showPassword": "Afficher le mot de passe", "hidePassword": "Masquer le mot de passe", "characters": "{{count}} / {{max}} caractères" },
+    "select": { "placeholder": "Choisir une option" },
+    "combobox": {
+      "placeholder": "Saisir pour rechercher",
+      "searching": "Recherche en cours…",
+      "noOptions": "Aucun résultat, vérifiez l'orthographe",
+      "minChars": "Saisissez au moins {{count}} caractères",
+      "clear": "Vider la sélection",
+      "remove": "Retirer {{label}}",
+      "more": "+{{count}} de plus"
+    },
+    "date": { "invalid": "Saisissez une date valide", "after": "Doit être postérieure au {{date}}", "before": "Doit être antérieure au {{date}}" },
+    "table": {
+      "empty": "Aucun enregistrement à afficher",
+      "emptyFiltered": "Aucun enregistrement ne correspond à ces filtres",
+      "loading": "Chargement des enregistrements…",
+      "columns": "Colonnes",
+      "allColumns": "Toutes les colonnes",
+      "exportCsv": "Exporter CSV",
+      "actions": "Actions",
+      "rowMenu": "Actions pour {{label}}",
+      "selected": "{{count}} sélectionné(s)",
+      "selectAll": "Sélectionner la page",
+      "sortAsc": "Tri croissant",
+      "sortDesc": "Tri décroissant",
+      "sort": "Trier par {{column}}",
+      "page": "Page {{page}} sur {{total}}"
+    },
+    "pagination": {
+      "first": "Première page",
+      "previous": "Page précédente",
+      "next": "Page suivante",
+      "last": "Dernière page",
+      "page": "Aller à la page {{page}}",
+      "label": "Pagination"
+    },
+    "tabs": { "label": "Sections" },
+    "modal": { "close": "Fermer la boîte de dialogue" },
+    "drawer": { "close": "Fermer le panneau" },
+    "confirm": {
+      "delete": "Supprimer",
+      "cancel": "Annuler",
+      "dependentsWarning": "La suppression affecte les {{count}} enregistrements liés listés ci-dessous.",
+      "reassignRequired": "Choisissez où vont les enregistrements liés avant de confirmer.",
+      "typeToConfirm": "Saisissez le nom pour confirmer."
+    },
+    "toast": { "dismiss": "Fermer la notification" },
+    "alert": { "dismiss": "Masquer le message" },
+    "empty": { "title": "Rien pour le moment", "hint": "Créez le premier enregistrement pour commencer." },
+    "error": { "title": "Impossible de charger ce contenu", "retry": "Réessayer" },
+    "stepper": { "step": "Étape {{index}} sur {{total}}", "back": "Retour", "next": "Continuer" },
+    "code": { "copy": "Copier", "copied": "Copié", "openConsole": "Ouvrir dans la console", "label": "Code" },
+    "tree": { "expand": "Déployer {{label}}", "collapse": "Replier {{label}}", "search": "Filtrer l'arborescence" },
+    "filters": { "label": "Filtres", "active": "Filtres actifs", "clearOne": "Retirer le filtre {{label}}", "clearAll": "Tout effacer", "from": "à partir de", "to": "jusqu'à", "any": "Tous" },
+    "search": { "clear": "Effacer la recherche", "label": "Recherche" },
+    "chart": { "noData": "Aucune donnée sur cette période", "table": "Tableau de données" },
+    "avatar": { "initials": "Avatar de {{name}}" },
+    "timeline": { "label": "Historique chronologique" },
+    "pageHeader": { "back": "Revenir en arrière" }
+  }
+}

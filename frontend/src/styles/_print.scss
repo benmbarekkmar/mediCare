@@ -1,0 +1,75 @@
+/* Print stylesheet for the medical record and the patient summary.
+   Only .printable survives; the shell, navigation and actions are removed. */
+@media print {
+  @page {
+    margin: 14mm;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 11pt;
+  }
+
+  app-sidebar,
+  app-topbar,
+  .no-print,
+  button,
+  ui-pagination,
+  ui-filter-bar,
+  ui-toast-stack,
+  .drawer,
+  .modal {
+    display: none !important;
+  }
+
+  .shell__main,
+  .page {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+  }
+
+  .printable {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .printable .surface,
+  .printable ui-card {
+    border: 1px solid #bbb !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+
+  .printable h1 {
+    font-size: 18pt;
+  }
+  .printable h2 {
+    font-size: 14pt;
+  }
+  .printable h3 {
+    font-size: 12pt;
+  }
+
+  .print-header {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 2px solid #000;
+    padding-bottom: 6pt;
+    margin-bottom: 12pt;
+  }
+
+  a[href^='http']::after {
+    content: '';
+  }
+
+  table {
+    break-inside: auto;
+  }
+  tr {
+    break-inside: avoid;
+  }
+}

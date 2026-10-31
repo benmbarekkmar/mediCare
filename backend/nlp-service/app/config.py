@@ -9,7 +9,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
 
 # the pipeline is multilingual: one model per supported language
-SPACY_MODELS = {"en": "en_core_web_md", "fr": "fr_core_news_md"}
+SPACY_MODEL_SIZE = os.environ.get("SPACY_MODEL_SIZE", "md").strip() or "md"
+SPACY_MODELS = {"en": f"en_core_web_{SPACY_MODEL_SIZE}", "fr": f"fr_core_news_{SPACY_MODEL_SIZE}"}
 
 
 def _env(name: str, default: str = "") -> str:
@@ -20,7 +21,9 @@ class Settings:
     """Every value here is overridable through the environment, nothing secret is stored."""
 
     def __init__(self) -> None:
-        self.fuseki_url = _env("FUSEKI_BASE_URL", "http://localhost:3030").rstrip("/")
+        fuseki_hostport = _env("FUSEKI_HOSTPORT")
+        default_fuseki_url = f"http://{fuseki_hostport}" if fuseki_hostport else "http://localhost:3030"
+        self.fuseki_url = _env("FUSEKI_BASE_URL", default_fuseki_url).rstrip("/")
         self.fuseki_dataset = _env("FUSEKI_DATASET", "medicare")
         self.fuseki_user = _env("FUSEKI_USER", "admin")
         # same public development default the docker-compose file documents

@@ -1,0 +1,64 @@
+{
+  "ui": {
+    "button": { "busy": "Working…" },
+    "input": { "showPassword": "Show the password", "hidePassword": "Hide the password", "characters": "{{count}} / {{max}} characters" },
+    "select": { "placeholder": "Choose an option" },
+    "combobox": {
+      "placeholder": "Start typing to search",
+      "searching": "Searching…",
+      "noOptions": "No match, check the spelling",
+      "minChars": "Type at least {{count}} characters",
+      "clear": "Clear the selection",
+      "remove": "Remove {{label}}",
+      "more": "+{{count}} more"
+    },
+    "date": { "invalid": "Enter a valid date", "after": "Must be after {{date}}", "before": "Must be before {{date}}" },
+    "table": {
+      "empty": "No record to show",
+      "emptyFiltered": "No record matches these filters",
+      "loading": "Loading the records…",
+      "columns": "Columns",
+      "allColumns": "All columns",
+      "exportCsv": "Export CSV",
+      "actions": "Actions",
+      "rowMenu": "Actions for {{label}}",
+      "selected": "{{count}} selected",
+      "selectAll": "Select the page",
+      "sortAsc": "Sort ascending",
+      "sortDesc": "Sort descending",
+      "sort": "Sort by {{column}}",
+      "page": "Page {{page}} of {{total}}"
+    },
+    "pagination": {
+      "first": "First page",
+      "previous": "Previous page",
+      "next": "Next page",
+      "last": "Last page",
+      "page": "Go to page {{page}}",
+      "label": "Pagination"
+    },
+    "tabs": { "label": "Sections" },
+    "modal": { "close": "Close the dialog" },
+    "drawer": { "close": "Close the panel" },
+    "confirm": {
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "dependentsWarning": "Deleting this record affects the {{count}} linked records listed below.",
+      "reassignRequired": "Choose where the linked records go before confirming.",
+      "typeToConfirm": "Type the name to confirm."
+    },
+    "toast": { "dismiss": "Dismiss the notification" },
+    "alert": { "dismiss": "Hide the message" },
+    "empty": { "title": "Nothing here yet", "hint": "Create the first record to get started." },
+    "error": { "title": "We could not load this", "retry": "Try again" },
+    "stepper": { "step": "Step {{index}} of {{total}}", "back": "Back", "next": "Continue" },
+    "code": { "copy": "Copy", "copied": "Copied", "openConsole": "Open in the console", "label": "Code" },
+    "tree": { "expand": "Expand {{label}}", "collapse": "Collapse {{label}}", "search": "Filter the tree" },
+    "filters": { "label": "Filters", "active": "Active filters", "clearOne": "Remove the {{label}} filter", "clearAll": "Clear all", "from": "from", "to": "to", "any": "Any" },
+    "search": { "clear": "Clear the search", "label": "Search" },
+    "chart": { "noData": "No data for this period", "table": "Data table" },
+    "avatar": { "initials": "{{name}} avatar" },
+    "timeline": { "label": "Chronological history" },
+    "pageHeader": { "back": "Go back" }
+  }
+}

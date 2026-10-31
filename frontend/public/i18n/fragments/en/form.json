@@ -1,0 +1,22 @@
+{
+  "form": {
+    "section": {
+      "identity": "Identity",
+      "type": "Classification",
+      "links": "Linked records",
+      "clinical": "Clinical data"
+    },
+    "searchEntity": "Search {{entity}}…",
+    "noMatch": "No match, type to search",
+    "typeHint": "Chooses the ontology class the record is asserted to.",
+    "axiomNote": "Saved records are checked against the ontology axioms by the server.",
+    "required": "Required",
+    "createTitle": "New {{entity}}",
+    "editTitle": "Edit {{entity}}",
+    "created": "{{entity}} created",
+    "updated": "{{entity}} updated",
+    "unsaved": "You have unsaved changes.",
+    "discard": "Discard changes?",
+    "errors": "Please correct the highlighted fields."
+  }
+}

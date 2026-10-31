@@ -1,0 +1,89 @@
+:host {
+  display: block;
+}
+
+.shell {
+  display: flex;
+  gap: clamp(12px, 1.6vw, 22px);
+  min-height: 100vh;
+  padding: clamp(12px, 1.8vw, 24px);
+  background: var(--bg);
+}
+
+.shell__sidebar {
+  flex: 0 0 auto;
+  min-width: 0;
+  position: sticky;
+  top: clamp(12px, 1.8vw, 24px);
+  height: calc(100vh - clamp(24px, 3.6vw, 48px));
+}
+
+.shell__main {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+  min-height: calc(100vh - clamp(24px, 3.6vw, 48px));
+  overflow: clip;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
+}
+
+.shell__content {
+  flex: 1 1 auto;
+  min-width: 0;
+  outline: none;
+}
+
+.shell__crumbs {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding: var(--sp-4) var(--sp-5) 0;
+}
+
+@media (max-width: 1023px) {
+  .shell {
+    padding: 12px;
+  }
+
+  .shell__sidebar {
+    width: var(--sidebar-collapsed);
+    min-width: var(--sidebar-collapsed);
+  }
+
+  .shell__main {
+    min-width: 0;
+    min-height: calc(100vh - 24px);
+    border-radius: 20px;
+  }
+
+  .shell__crumbs {
+    padding: var(--sp-3) var(--sp-3) 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .shell {
+    padding: 8px;
+  }
+
+  .shell__main {
+    min-height: calc(100vh - 16px);
+    border-radius: 16px;
+  }
+}
+
+@media print {
+  .shell__sidebar,
+  .shell__crumbs,
+  app-topbar,
+  .skip-link {
+    display: none !important;
+  }
+
+  .shell__content {
+    padding: 0;
+  }
+}

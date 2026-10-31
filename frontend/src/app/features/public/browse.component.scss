@@ -1,0 +1,115 @@
+.browse__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--sp-5);
+  flex-wrap: wrap;
+  margin-bottom: var(--sp-5);
+}
+
+.browse__title {
+  margin: 0;
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.browse__lede {
+  max-width: 60ch;
+  margin: var(--sp-2) 0 0;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+ui-search-box {
+  min-width: min(320px, 100%);
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  height: 100%;
+  padding: var(--sp-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
+
+  &:hover {
+    border-color: var(--primary-300);
+    box-shadow: var(--shadow-sm);
+  }
+}
+
+.tile__icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-input);
+  background: var(--primary-soft);
+  color: var(--primary-600);
+}
+
+.tile__title {
+  margin: 0;
+  font-size: var(--fs-base);
+  font-weight: 600;
+}
+
+.tile__facts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    font-size: var(--fs-xs);
+  }
+
+  span {
+    flex: 0 0 auto;
+    color: var(--text-subtle);
+  }
+
+  strong {
+    font-weight: 600;
+  }
+}
+
+.tile__types {
+  display: flex;
+  gap: var(--sp-1);
+  flex-wrap: wrap;
+  margin: var(--sp-1) 0 0;
+
+  span {
+    padding: 1px 7px;
+    border-radius: var(--radius-pill);
+    background: var(--bg-sunken);
+    color: var(--text-subtle);
+    font-size: var(--fs-xs);
+  }
+}
+
+.browse__count {
+  margin: var(--sp-4) 0 0;
+  color: var(--text-subtle);
+  font-size: var(--fs-sm);
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .browse__head {
+    align-items: flex-start;
+  }
+}

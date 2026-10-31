@@ -1,0 +1,35 @@
+{
+  "uipage": {
+    "breadcrumb": { "label": "Breadcrumb" },
+    "chart": {
+      "category": "Category",
+      "value": "Value",
+      "series": "Series",
+      "aria": {
+        "bar": "Bar chart",
+        "line": "Line chart",
+        "doughnut": "Doughnut chart",
+        "pie": "Pie chart",
+        "area": "Area chart"
+      }
+    },
+    "filters": {
+      "chip": "{{label}}: {{value}}",
+      "bound": "{{from}} to {{to}}"
+    },
+    "retry": "Try again",
+    "selected": "{{count}} selected",
+    "showing": "Showing {{count}} of {{total}}",
+    "export": "Export CSV",
+    "columns": "Columns",
+    "columnsReset": "Show all",
+    "loadFailed": "We could not load these records",
+    "empty": "No record to show",
+    "selectAll": "Select all rows on this page",
+    "selectRow": "Select this row",
+    "actions": "Actions",
+    "perPage": "Rows per page",
+    "yes": "Yes",
+    "no": "No"
+  }
+}

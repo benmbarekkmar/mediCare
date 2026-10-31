@@ -1,0 +1,76 @@
+<nav class="sidebar" [class.sidebar--collapsed]="collapsed()" [attr.aria-label]="'nav.mainNavigation' | translate">
+  <a class="sidebar__brand" routerLink="/" [attr.aria-label]="'common.appName' | translate">
+    <span class="sidebar__mark"><ui-icon name="activity" [size]="20" /></span>
+    <span class="sidebar__name">{{ 'common.appName' | translate }}</span>
+  </a>
+
+  @for (group of visibleGroups(); track group.labelKey) {
+    <section class="sidebar__group">
+      @if (!collapsed()) {
+        <h2 class="sidebar__group-label">{{ group.labelKey | translate }}</h2>
+      }
+      <ul class="sidebar__list">
+        @for (item of group.items; track trackItem($index, item)) {
+          <li>
+            <a
+              class="sidebar__link"
+              [class.sidebar__link--active]="isActive(item.path)"
+              [routerLink]="item.path"
+              routerLinkActive="is-active"
+              [attr.title]="item.labelKey | translate"
+              [attr.aria-label]="item.labelKey | translate"
+              [attr.aria-current]="isActive(item.path) ? 'page' : null"
+             
+            >
+              <ui-icon [name]="item.icon" [size]="18" class="sidebar__icon" />
+              @if (!collapsed()) {
+                <span class="truncate">{{ item.labelKey | translate }}</span>
+              }
+            </a>
+          </li>
+        }
+      </ul>
+    </section>
+  }
+
+  <div class="sidebar__footer">
+    @if (!portal()) {
+      <a
+        class="sidebar__link"
+        [class.sidebar__link--active]="isActive('/profile')"
+        routerLink="/profile"
+        routerLinkActive="is-active"
+        [attr.title]="'nav.items.profile' | translate"
+        [attr.aria-label]="'nav.items.profile' | translate"
+        [attr.aria-current]="isActive('/profile') ? 'page' : null"
+      >
+        <ui-icon name="user" [size]="18" class="sidebar__icon" />
+        @if (!collapsed()) { <span class="truncate">{{ 'nav.items.profile' | translate }}</span> }
+      </a>
+      <a
+        class="sidebar__link"
+        [class.sidebar__link--active]="isActive('/settings')"
+        routerLink="/settings"
+        routerLinkActive="is-active"
+        [attr.title]="'nav.items.settings' | translate"
+        [attr.aria-label]="'nav.items.settings' | translate"
+        [attr.aria-current]="isActive('/settings') ? 'page' : null"
+      >
+        <ui-icon name="settings" [size]="18" class="sidebar__icon" />
+        @if (!collapsed()) { <span class="truncate">{{ 'nav.items.settings' | translate }}</span> }
+      </a>
+    }
+    <button
+      class="sidebar__link sidebar__logout"
+      type="button"
+      [attr.title]="'nav.items.logout' | translate"
+      [attr.aria-label]="'nav.items.logout' | translate"
+      (click)="signOut()"
+    >
+      <ui-icon name="log-out" [size]="18" class="sidebar__icon" />
+      @if (!collapsed()) {
+        <span class="truncate">{{ 'nav.items.logout' | translate }}</span>
+      }
+    </button>
+  </div>
+</nav>

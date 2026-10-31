@@ -1,0 +1,13 @@
+{
+  "uiforms": {
+    "switch": {
+      "on": "On",
+      "off": "Off"
+    },
+    "combobox": {
+      "chipsLabel": "Selected values",
+      "listLabel": "Suggestions",
+      "selected": "Selected"
+    }
+  }
+}

@@ -1,0 +1,361 @@
+{
+  "home": {
+    "eyebrow": "Ontology-driven care records",
+    "title": "MedicCare",
+    "lede": "One medical data centre where every patient, condition, test and appointment is described by a shared ontology, so the answer to a question is a query the system can show you.",
+    "tools": "Start anywhere",
+    "coverage": "What the store holds",
+    "howTitle": "How a question becomes an answer",
+    "askAnywhere": "See how the assistant works",
+    "privacy": "Public pages only show reference knowledge and the directory. Patient records require an account and are never listed here.",
+    "stat": {
+      "classes": "Classes",
+      "properties": "Properties",
+      "individuals": "Individuals",
+      "triples": "Triples"
+    },
+    "entry": {
+      "library": "Health library",
+      "libraryText": "Browse diseases with their symptoms, treatments and medications.",
+      "doctors": "Find a doctor",
+      "doctorsText": "Search the directory by specialty, department or hospital.",
+      "hospitals": "Hospitals and departments",
+      "hospitalsText": "See which department each hospital hosts.",
+      "ask": "Natural-language questions",
+      "askText": "Ask in English or French and read the SPARQL the answer was built from."
+    },
+    "how1Title": "Ask in plain language",
+    "how1Text": "The service detects the language, classifies the intent and links every word to a class, an individual or a value in the ontology.",
+    "how2Title": "Build the query",
+    "how2Text": "A parameterized SPARQL template is filled with the recognised entities: escaped values, enforced limit, role restrictions applied server-side.",
+    "how3Title": "Read the result",
+    "how3Text": "You get the rows, the explanation and the exact query that produced them, so any answer can be checked instead of trusted."
+  },
+  "nav": {
+    "items": {
+      "home": "Home",
+      "records": "Records"
+    }
+  },
+  "entities": {
+    "age": "Age"
+  },
+  "library": {
+    "title": "Health library",
+    "lede": "Reference knowledge from the hospital ontology: conditions with the symptoms they present and the treatments they respond to."
+  },
+  "symptoms": {
+    "title": "Symptoms",
+    "lede": "The symptom vocabulary, linked to the conditions each one points to."
+  },
+  "treatments": {
+    "title": "Treatments",
+    "lede": "Therapies recorded in the ontology, with their duration and the medications they combine."
+  },
+  "medications": {
+    "title": "Medications",
+    "lede": "The medication catalogue: dosage, drug class and the treatments each product belongs to."
+  },
+  "directory": {
+    "title": "Hospitals and departments",
+    "lede": "The organisation of care: which hospital hosts which department, and which doctors work there."
+  },
+  "departments": {
+    "title": "Departments",
+    "lede": "Every clinical department, its hospital and its medical team."
+  },
+  "findDoctor": {
+    "title": "Find a doctor",
+    "lede": "Browse the medical directory by specialty, department and hospital."
+  },
+  "assistant": {
+    "title": "MedTranslate",
+    "eyebrow": "Natural language to SPARQL",
+    "publicLede": "Python and spaCy analyze the question and link terms to the ontology. RDFLib validates the generated SPARQL, then Apache Jena Fuseki executes it and returns the stored rows. No LLM is used.",
+    "signinTitle": "Sign in to ask",
+    "signinBody": "Understanding a question is only half of it: the generated SPARQL runs against live records, so the endpoint requires an account and applies the role's data scope before returning a single row.",
+    "samplesTitle": "Example questions",
+    "stepAsk": "Ask",
+    "stepAskBody": "One sentence, in your own language.",
+    "examplesAsk": "Which symptoms does diabetes have?;How many appointments are pending?;Doctors working in cardiology",
+    "stepMatch": "Match",
+    "stepMatchBody": "lemmas, synonym dictionary and fuzzy matching against the ontology.",
+    "examplesMatch": "List the patients older than 40;Dosage of Metformin;Patients with chronic diseases",
+    "stepQuery": "Query",
+    "stepQueryBody": "a template filled with the linked IRIs, executed on the store.",
+    "examplesQuery": "Who is the doctor of Ahmed?;Which hospital hosts the neurology department?;Medications used for hypertension",
+    "samplesEn": "Which symptoms does diabetes have?;List the patients older than 40;Doctors working in cardiology;How many appointments are pending?;Medications used for hypertension",
+    "samplesFr": "Quels sont les symptômes de la grippe ?;Liste les patients de plus de 40 ans;Quels médecins travaillent en cardiologie ?;Combien de rendez-vous sont en attente ?;Médicaments utilisés pour l'hypertension"
+  },
+  "records": {
+    "list": {
+      "title": "Records"
+    },
+    "detail": {
+      "title": "Record"
+    }
+  },
+  "calendar": {
+    "title": "Appointments calendar"
+  },
+  "console": {
+    "title": "SPARQL console",
+    "subtitle": "Run read queries against the live ontology store.",
+    "run": "Run query",
+    "limit": "Maximum rows",
+    "templates": "Query templates",
+    "handoff": "Query opened from the assistant.",
+    "completions": {
+      "ontology": "Ontology terms"
+    },
+    "editor": {
+      "title": "Query editor",
+      "aria": "SPARQL query editor",
+      "placeholder": "Write a SPARQL query",
+      "dirty": "The query has unsaved edits."
+    },
+    "guard": {
+      "hint": "Updates require administrator permission and a second confirmation."
+    },
+    "ask": {
+      "hint": "This query returns a yes or no answer.",
+      "yes": "Yes, a matching fact exists.",
+      "no": "No matching fact was found."
+    },
+    "results": {
+      "title": "Results",
+      "meta": "{{count}} rows in {{ms}} ms",
+      "empty": "No rows",
+      "emptyHint": "Try changing the query or its filters.",
+      "idle": "Ready for a query",
+      "idleHint": "Choose a template or enter SPARQL above.",
+      "errorTitle": "Query failed",
+      "errorHint": "Check the query and try again.",
+      "graph": "The graph contains {{triples}} triples.",
+      "ntriples": "Graph result",
+      "executed": "Executed SPARQL",
+      "capped": "The result reached the {{limit}} row limit."
+    },
+    "history": {
+      "title": "Recent queries",
+      "count": "{{count}} saved in this browser",
+      "empty": "Queries you run will appear here.",
+      "clear": "Clear query history"
+    },
+    "saved": {
+      "title": "Saved queries",
+      "count": "{{count}} saved",
+      "empty": "Save a query to keep it here.",
+      "exists": "This query is already saved.",
+      "stored": "Query saved."
+    },
+    "list": {
+      "remove": "Remove query"
+    },
+    "prefixes": {
+      "title": "Prefixes",
+      "compact": "Show prefixes",
+      "hint": "These prefixes are added to each query."
+    },
+    "template": {
+      "title": "Replace the current query?",
+      "message": "This will replace the edits in the query editor.",
+      "confirm": "Replace query"
+    },
+    "update": {
+      "title": "Confirm SPARQL update",
+      "message": "This update will change the live ontology store.",
+      "detail": "Review the update carefully before running it.",
+      "confirm": "Run update",
+      "done": "Update completed: {{operations}} operation(s).",
+      "failed": "The update failed."
+    }
+  },
+  "explorer": {
+    "title": "Ontology explorer",
+    "readonly": "Read only",
+    "details": {
+      "title": "Details"
+    },
+    "page": {
+      "title": "Ontology explorer",
+      "lede": "Browse the classes, properties and individuals in the live ontology.",
+      "subtitle": "{{classes}} classes · {{objectProperties}} object properties · {{datatypeProperties}} data properties · {{individuals}} individuals · {{triples}} triples"
+    },
+    "census": {
+      "classes": "Classes",
+      "triples": "Triples"
+    },
+    "tree": {
+      "title": "Class hierarchy",
+      "hint": "Choose a class to inspect its definition and members."
+    },
+    "graph": {
+      "title": "Relationship graph",
+      "aria": "Ontology relationship graph",
+      "controls": "Graph controls",
+      "loading": "Loading graph",
+      "layout": "Layout",
+      "depth": "Neighbour depth",
+      "limit": "Triples per level",
+      "subtitle": "Explore related ontology terms.",
+      "counts": "{{nodes}} nodes and {{edges}} links",
+      "empty": "No relationships to show",
+      "fit": "Fit graph"
+    },
+    "filter": {
+      "class": "Filter by class",
+      "only": "Show this class only"
+    },
+    "legend": {
+      "title": "Graph legend",
+      "class": "Class",
+      "other": "Other",
+      "count": "{{label}}: {{count}}"
+    },
+    "class": {
+      "entity": "Record type",
+      "iri": "Class IRI",
+      "parent": "Parent class",
+      "root": "Top-level class",
+      "subclasses": "Subclasses",
+      "disjoint": "Disjoint classes",
+      "restrictions": "Restrictions",
+      "equivalent": "Equivalent classes",
+      "individuals": "Individuals",
+      "pick": "Select a class to see its individuals.",
+      "pager": "Page {{page}} of {{total}}",
+      "capped": "Showing {{shown}} of {{total}} individuals."
+    },
+    "property": {
+      "search": "Search properties",
+      "count": "{{count}} properties",
+      "empty": "No properties match this search.",
+      "subtitle": "Choose a property to inspect its domain and range.",
+      "kindLabel": "Property type",
+      "domain": "Domain",
+      "range": "Range",
+      "inverse": "Inverse property",
+      "classes": "Classes",
+      "chains": "Property chains",
+      "characteristics": "Characteristics"
+    },
+    "individual": {
+      "types": "Types",
+      "incoming": "Incoming relationships",
+      "outgoing": "Outgoing relationships",
+      "back": "Back to individuals",
+      "record": "Open record",
+      "pick": "Select an individual to see its facts."
+    },
+    "error": {
+      "tree": "The class hierarchy could not be loaded.",
+      "graph": "The graph could not be loaded.",
+      "properties": "The properties could not be loaded.",
+      "individuals": "The individuals could not be loaded."
+    },
+    "sparql": {
+      "label": "Graph query",
+      "note": "This is the SPARQL used to load up to {{count}} triples.",
+      "console": "Open in console"
+    },
+    "tab": {
+      "classes": "Classes",
+      "object": "Object properties",
+      "data": "Data properties",
+      "individuals": "Individuals"
+    }
+  },
+  "settings": {
+    "title": "Settings"
+  },
+  "staff": {
+    "day": {
+      "title": "My day"
+    }
+  },
+  "patient": {
+    "dashboard": {
+      "title": "My health",
+      "hello": "Hello, {{name}}",
+      "friend": "Welcome back",
+      "lede": "A clear view of your care and what comes next.",
+      "tips": "Health tips",
+      "greetingMorning": "Good morning",
+      "greetingAfternoon": "Good afternoon",
+      "greetingEvening": "Good evening"
+    },
+    "record": {
+      "title": "My medical record",
+      "eyebrow": "Your health information",
+      "lede": "A summary of your conditions, care and test results.",
+      "symptoms": "Symptoms",
+      "treatments": "Treatments and medicines",
+      "duration": "Duration: {{duration}}",
+      "print": "Print record",
+      "download": "Download summary"
+    },
+    "appointments": {
+      "title": "My appointments",
+      "subtitle": "View your upcoming and previous visits.",
+      "upcoming": "Upcoming",
+      "past": "Previous visits",
+      "agenda": "Agenda",
+      "list": "List",
+      "empty": "No appointments to show.",
+      "cancel": "Cancel appointment",
+      "dismiss": "Close appointment details"
+    },
+    "request": {
+      "title": "Request an appointment",
+      "subtitle": "Choose a department, doctor and available time.",
+      "review": "Review your request",
+      "confirm": "Confirm request"
+    },
+    "stepper": {
+      "aria": "Appointment request steps",
+      "back": "Back",
+      "next": "Continue",
+      "finish": "Confirm request",
+      "progress": "Step {{current}} of {{total}}"
+    }
+  },
+  "errors": {
+    "403": {
+      "title": "Access denied"
+    },
+    "404": {
+      "title": "Page not found"
+    },
+    "500": {
+      "title": "Server error"
+    }
+  },
+  "uidata": {
+    "avatar": {
+      "unknown": "No name"
+    },
+    "code": {
+      "copy": "Copy {{language}} code",
+      "copyFailed": "The clipboard is not available in this browser"
+    },
+    "stat": {
+      "trend": "{{value}}% since last period"
+    },
+    "tree": {
+      "label": "Class hierarchy",
+      "count": "Individuals: {{count}}",
+      "noMatch": "No class matches this search"
+    }
+  },
+  "uioverlay": {
+    "dropdown": {
+      "menu": "Menu",
+      "trigger": "Open menu"
+    },
+    "confirm": {
+      "reassignLabel": "Reassign the dependent records to",
+      "reassignPlaceholder": "Choose a target record"
+    }
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "profile": {
+    "title": "Profil",
+    "subtitle": "Les informations essentielles de votre compte.",
+    "loadFailed": "Votre compte n'a pas pu être chargé.",
+    "tabs": {
+      "account": "Compte",
+      "security": "Sécurité",
+      "preferences": "Préférences",
+      "sessions": "Sessions",
+      "platform": "Plateforme"
+    },
+    "roles": {
+      "ADMIN": "Administrateur",
+      "DOCTOR": "Médecin",
+      "RECEPTIONIST": "Accueil",
+      "PATIENT": "Patient"
+    },
+    "field": {
+      "fullName": "Nom complet",
+      "email": "E-mail",
+      "role": "Rôle",
+      "locale": "Langue de l'interface",
+      "status": "Statut",
+      "active": "Actif",
+      "inactive": "Désactivé",
+      "created": "Créé le",
+      "lastLogin": "Dernière connexion",
+      "id": "Identifiant du compte",
+      "value": "Valeur"
+    },
+    "account": {
+      "title": "Compte",
+      "subtitle": "Les informations principales de votre compte.",
+      "emailHint": "Utilisé pour se connecter.",
+      "adminNote": "En tant qu'administrateur, vous modifiez votre propre compte via le même endpoint que les autres comptes : les champs ci-dessous sont donc éditables.",
+      "openUsers": "Ouvrir l'écran des comptes utilisateurs",
+      "save": "Enregistrer les modifications",
+      "saved": "Compte mis à jour",
+      "clinicalTitle": "Profil clinique associé",
+      "clinicalSubtitle": "L'individu de l'ontologie auquel ce compte est relié.",
+      "noClinical": "Ce compte n'est relié à aucun individu clinique.",
+      "predicate": "Prédicat"
+    },
+    "security": {
+      "title": "Sécurité",
+      "subtitle": "Changer le mot de passe de ce compte.",
+      "current": "Mot de passe actuel",
+      "next": "Nouveau mot de passe",
+      "confirm": "Confirmer le nouveau mot de passe",
+      "policy": "Au moins 8 caractères, avec une lettre et un chiffre.",
+      "mismatch": "Les deux mots de passe ne correspondent pas.",
+      "revokeNote": "Le changement de mot de passe révoque toutes les sessions actives côté serveur : vous êtes déconnecté de tous vos appareils et devez vous reconnecter.",
+      "submit": "Changer le mot de passe",
+      "changed": "Mot de passe modifié",
+      "wrongCurrent": "Le mot de passe actuel est incorrect."
+    },
+    "preferences": {
+      "title": "Préférences",
+      "subtitle": "Thème et langue, mémorisés dans ce navigateur.",
+      "theme": "Thème",
+      "themeHint": "Système suit votre système d'exploitation.",
+      "language": "Langue",
+      "languageHint": "L'interface se traduit immédiatement, sans rechargement.",
+      "english": "Anglais",
+      "french": "Français",
+      "saved": "Préférences enregistrées"
+    },
+    "sessions": {
+      "title": "Sessions",
+      "subtitle": "Jetons de rafraîchissement actuellement actifs pour votre compte.",
+      "created": "Créée",
+      "expires": "Expire",
+      "relative": "Relatif",
+      "id": "Identifiant du jeton",
+      "empty": "Aucune autre session active.",
+      "hint": "Se déconnecter d'un appareil ou changer le mot de passe retire sa session de cette liste.",
+      "refresh": "Rafraîchir la liste"
+    },
+    "platform": {
+      "title": "Plateforme",
+      "subtitle": "État du magasin de triples et du service NLP, lus par la sonde de santé et le recensement de l'ontologie.",
+      "store": "Magasin de triples Fuseki",
+      "storeHint": "La sonde répond 503 quand le magasin est hors service ; le rapport est affiché ici comme une donnée.",
+      "nlp": "Service de questions-réponses NLP",
+      "reachable": "Joignable",
+      "unreachable": "Injoignable",
+      "triples": "Triples",
+      "dataset": "Jeu de données",
+      "classes": "Classes",
+      "individuals": "Individus nommés",
+      "axioms": "Axiomes",
+      "tbox": "Triples du T-Box",
+      "abox": "Triples du A-Box",
+      "objectProperties": "Propriétés d'objet",
+      "datatypeProperties": "Propriétés de données",
+      "refresh": "Recharger l'état de la plateforme",
+      "unavailable": "Non remonté"
+    }
+  }
+}

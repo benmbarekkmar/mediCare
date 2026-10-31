@@ -1,0 +1,55 @@
+{
+  "calendar": {
+    "title": "Appointments calendar",
+    "subtitle": "{{count}} appointment(s) in the visible window",
+    "listView": "Open the list",
+    "new": "New appointment",
+    "createTitle": "New appointment",
+    "editTitle": "Edit appointment",
+    "searchPlaceholder": "Search by patient, label or status",
+    "emptyTitle": "No appointment in this period",
+    "emptyHint": "Change the filters or pick another date on the calendar to create a visit.",
+    "errorTitle": "The calendar could not be loaded",
+    "errorMessage": "The appointments could not be fetched from the server.",
+    "errorHint": "Check that the API is running, then try again.",
+    "created": "Appointment created",
+    "saved": "Appointment saved",
+    "rescheduled": "Appointment rescheduled",
+    "view": {
+      "today": "Today",
+      "month": "Month",
+      "week": "Week",
+      "day": "Day"
+    },
+    "filters": {
+      "department": "Department",
+      "doctor": "Doctor",
+      "status": "Status",
+      "allDepartment": "All departments",
+      "allDoctor": "All doctors",
+      "allStatus": "All statuses",
+      "clear": "Clear filters"
+    },
+    "status": {
+      "confirmed": "Confirmed",
+      "pending": "Pending",
+      "scheduled": "Scheduled",
+      "cancelled": "Cancelled",
+      "neutral": "Other",
+      "completed": "Completed"
+    },
+    "type": {
+      "Consultation": "Consultation",
+      "FollowUpAppointment": "Follow-up",
+      "EmergencyAppointment": "Emergency"
+    },
+    "legend": {
+      "title": "Colour legend"
+    },
+    "clash": {
+      "title": "Possible double-booking",
+      "text": "The same doctor or department already has {{count}} appointment(s) at that exact minute.",
+      "hint": "Press Save again to book this appointment anyway."
+    }
+  }
+}

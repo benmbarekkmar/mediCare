@@ -1,0 +1,25 @@
+/* Global stylesheet: tokens, base element styles, layout utilities, print rules.
+   Component styles stay scoped and only consume these custom properties. */
+@use 'styles/base';
+@use 'styles/tokens';
+@use 'styles/forms';
+@use 'styles/utilities';
+@use 'styles/print';
+@use 'styles/assistant';
+
+.shell__content > router-outlet ~ *,
+.portal-main > router-outlet ~ * {
+  animation: route-enter 180ms ease both;
+}
+
+@keyframes route-enter {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shell__content > router-outlet ~ *,
+  .portal-main > router-outlet ~ * {
+    animation-duration: 1ms;
+  }
+}

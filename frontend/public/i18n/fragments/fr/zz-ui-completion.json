@@ -1,0 +1,369 @@
+{
+  "patient": {
+    "appointments": {
+      "status": {
+        "pending": "En attente",
+        "confirmed": "Confirmé",
+        "scheduled": "Programmé",
+        "completed": "Terminé",
+        "cancelled": "Annulé",
+        "canceled": "Annulé",
+        "inprogress": "En cours",
+        "rejected": "Refusé",
+        "noshow": "Absent",
+        "unknown": "Statut à préciser"
+      },
+      "type": {
+        "consultation": "Consultation",
+        "followupappointment": "Consultation de suivi",
+        "emergencyappointment": "Rendez-vous d’urgence",
+        "unknown": "Rendez-vous médical"
+      },
+      "agendaNoVisits": "Aucun rendez-vous prévu ce jour-là.",
+      "agendaTitle": "Agenda des rendez-vous",
+      "bookAnother": "Reprendre rendez-vous",
+      "cancelBlocked": "L’annulation en ligne n’est pas disponible pour ce rendez-vous. Veuillez contacter l’accueil.",
+      "cancelBody": "Confirmez-vous l’annulation du rendez-vous du {{when}} au service {{where}} ?",
+      "cancelConfirm": "Annuler le rendez-vous",
+      "cancelDoneBody": "Votre demande d’annulation a été prise en compte.",
+      "cancelDoneTitle": "Demande envoyée",
+      "cancelFallback": "Confirmez-vous l’annulation de ce rendez-vous ?",
+      "cancelTitle": "Annuler ce rendez-vous ?",
+      "errorAuth": "Votre session a expiré ou l’accès au dossier a été refusé.",
+      "errorGeneric": "Une erreur est survenue lors du chargement des rendez-vous.",
+      "errorHint": "Vérifiez votre connexion, puis réessayez.",
+      "errorOffline": "Le service est temporairement indisponible. Réessayez dans quelques instants.",
+      "errorTitle": "Impossible de charger vos rendez-vous",
+      "nextMonth": "Mois suivant",
+      "noDepartment": "Service non renseigné",
+      "noTime": "Horaire non renseigné",
+      "noType": "Type de rendez-vous non renseigné",
+      "prevMonth": "Mois précédent",
+      "requestCta": "Demander un rendez-vous",
+      "viewLabel": "Affichage des rendez-vous"
+    },
+    "shared": {
+      "status": {
+        "pending": "En attente",
+        "confirmed": "Confirmé",
+        "scheduled": "Programmé",
+        "completed": "Terminé",
+        "cancelled": "Annulé",
+        "canceled": "Annulé",
+        "inprogress": "En cours",
+        "rejected": "Refusé",
+        "noshow": "Absent",
+        "unknown": "Statut à préciser"
+      },
+      "appointmentType": {
+        "consultation": "Consultation",
+        "followupappointment": "Consultation de suivi",
+        "emergencyappointment": "Rendez-vous d’urgence",
+        "unknown": "Rendez-vous médical"
+      },
+      "specialty": {
+        "cardiologist": "Cardiologue",
+        "dermatologist": "Dermatologue",
+        "neurologist": "Neurologue",
+        "generalpractitioner": "Médecin généraliste",
+        "emergencyphysician": "Médecin urgentiste",
+        "pediatrician": "Pédiatre",
+        "surgeon": "Chirurgien",
+        "psychologist": "Psychologue",
+        "oncologist": "Oncologue",
+        "gynecologist": "Gynécologue",
+        "ophthalmologist": "Ophtalmologue",
+        "unknown": "Spécialité médicale"
+      },
+      "diseaseCategory": {
+        "communicabledisease": "Maladie infectieuse",
+        "chronicdisease": "Maladie chronique",
+        "noncommunicabledisease": "Maladie non transmissible",
+        "hereditarydisease": "Maladie héréditaire",
+        "unknown": "Catégorie de pathologie"
+      },
+      "testType": {
+        "bloodtest": "Analyse sanguine",
+        "labtest": "Analyse biologique",
+        "laboratorytest": "Analyse de laboratoire",
+        "medicalimaging": "Imagerie médicale",
+        "xray": "Radiographie",
+        "urinetest": "Analyse d’urine",
+        "ecg": "Électrocardiogramme",
+        "unknown": "Examen médical"
+      },
+      "treatmentType": {
+        "medicationbasedtreatment": "Traitement médicamenteux",
+        "medicationtreatment": "Traitement médicamenteux",
+        "surgicaltreatment": "Traitement chirurgical",
+        "therapy": "Thérapie",
+        "unknown": "Type de traitement"
+      },
+      "gender": {
+        "female": "Femme",
+        "male": "Homme",
+        "other": "Autre",
+        "unknown": "Non précisé"
+      },
+      "noDate": "Date non renseignée",
+      "noResult": "Résultat non renseigné",
+      "notSet": "Non renseigné"
+    },
+    "request": {
+      "type": {
+        "consultation": "Consultation",
+        "followupappointment": "Consultation de suivi",
+        "emergencyappointment": "Rendez-vous d’urgence",
+        "unknown": "Rendez-vous médical"
+      },
+      "specialty": {
+        "cardiologist": "Cardiologue",
+        "dermatologist": "Dermatologue",
+        "neurologist": "Neurologue",
+        "generalpractitioner": "Médecin généraliste",
+        "emergencyphysician": "Médecin urgentiste",
+        "pediatrician": "Pédiatre",
+        "surgeon": "Chirurgien",
+        "psychologist": "Psychologue",
+        "oncologist": "Oncologue",
+        "gynecologist": "Gynécologue",
+        "ophthalmologist": "Ophtalmologue",
+        "unknown": "Spécialité médicale"
+      },
+      "bookAnother": "Faire une nouvelle demande",
+      "chooseDepartment": "Sélectionnez le service dans lequel vous souhaitez être reçu.",
+      "chooseDoctor": "Choisissez un médecin si vous avez une préférence.",
+      "chooseTime": "Sélectionnez une date et un créneau disponibles.",
+      "closedDay": "Aucun rendez-vous ne peut être demandé ce jour-là. Choisissez une autre date.",
+      "dateLabel": "Date souhaitée",
+      "emergencyBadge": "Urgences",
+      "emergencyNote": "En cas d’urgence médicale, contactez immédiatement les services d’urgence ou rendez-vous au service des urgences le plus proche.",
+      "errDate": "Sélectionnez une date pour continuer.",
+      "errDepartment": "Sélectionnez un service pour continuer.",
+      "errTime": "Sélectionnez un créneau horaire pour continuer.",
+      "errorGeneric": "Votre demande n’a pas pu être envoyée. Vérifiez les informations et réessayez.",
+      "errorOffline": "Le service est temporairement indisponible. Réessayez dans quelques instants.",
+      "factDepartment": "Service",
+      "factDoctor": "Médecin",
+      "factType": "Type de rendez-vous",
+      "factWhen": "Date et heure",
+      "noDepartmentShort": "Service non sélectionné",
+      "noDepartments": "Aucun service ne peut actuellement recevoir de demandes de rendez-vous.",
+      "noPreference": "Je n’ai pas de préférence",
+      "noPreferenceShort": "Aucun médecin sélectionné",
+      "noWhenShort": "Date et heure à définir",
+      "pendingNote": "Votre demande a été transmise à l’établissement. Elle reste en attente de confirmation.",
+      "receptionNote": "Votre demande sera examinée par l’équipe d’accueil. Le rendez-vous sera confirmé par l’établissement.",
+      "referenceLabel": "Référence de la demande",
+      "seeAppointments": "Consulter mes rendez-vous",
+      "slotTaken": "Ce créneau n’est plus disponible.",
+      "stepDepartment": "Service",
+      "stepDoctor": "Médecin",
+      "stepReview": "Vérification",
+      "stepTime": "Date et heure",
+      "successTitle": "Demande de rendez-vous envoyée"
+    },
+    "dashboard": {
+      "actionAssistant": "Traduire une question",
+      "actionAssistantHint": "Convertissez le langage naturel en SPARQL et consultez les résultats de l'ontologie.",
+      "actionFindDoctor": "Trouver un médecin",
+      "actionRecord": "Consulter mon dossier",
+      "actionRecordHint": "Retrouvez vos informations et résultats de santé.",
+      "actionRequest": "Demander un rendez-vous",
+      "actionRequestHint": "Choisissez un service et un créneau disponible.",
+      "addToCalendar": "Ajouter à mon agenda",
+      "allResults": "Voir tous les résultats",
+      "allVisits": "Tous mes rendez-vous",
+      "cancelBlockedHint": "La modification de ce rendez-vous est réservée à l’équipe d’accueil. Contactez votre établissement pour obtenir de l’aide.",
+      "cancelBlockedTitle": "Annulation en ligne indisponible",
+      "cancelDialogBody": "Souhaitez-vous annuler le rendez-vous du {{when}} au service {{where}} ?",
+      "cancelDialogConfirm": "Confirmer l’annulation",
+      "cancelDialogFallback": "Souhaitez-vous vraiment annuler ce rendez-vous ?",
+      "cancelDialogTitle": "Annuler le rendez-vous ?",
+      "cancelDoneBody": "Votre rendez-vous a été annulé.",
+      "cancelDoneTitle": "Rendez-vous annulé",
+      "cancelNotOpen": "Pour modifier ou annuler ce rendez-vous, veuillez contacter l’accueil de votre établissement.",
+      "cancelVisit": "Annuler",
+      "conditionsFootnote": "Ces informations sont issues de votre dossier médical.",
+      "factNoDepartment": "Service non renseigné",
+      "hintConfirmed": "Votre rendez-vous est confirmé. Consultez les détails avant votre visite.",
+      "hintGeneric": "Consultez les informations de votre rendez-vous avant votre visite.",
+      "hintPending": "Votre demande est en attente de confirmation par l’établissement.",
+      "icsBadBody": "Le fichier d’agenda n’a pas pu être créé. Réessayez ou ajoutez le rendez-vous manuellement.",
+      "icsBadTitle": "Ajout à l’agenda impossible",
+      "icsDepartment": "Service",
+      "icsDoctor": "Médecin",
+      "icsDoneBody": "Le fichier du rendez-vous a été téléchargé. Ouvrez-le pour l’ajouter à votre agenda.",
+      "icsDoneTitle": "Fichier d’agenda téléchargé",
+      "icsIntro": "Rendez-vous médical",
+      "icsSummaryPrefix": "Rendez-vous médical",
+      "latestTests": "Examens récents",
+      "latestTestsEmpty": "Aucun résultat d’examen récent à afficher.",
+      "myConditions": "Mes pathologies",
+      "myConditionsCount": "{{count}} pathologie(s) dans votre dossier",
+      "myConditionsEmpty": "Aucune pathologie n’est renseignée dans votre dossier.",
+      "myDoctors": "Mon équipe médicale",
+      "myDoctorsEmpty": "Aucun médecin associé à votre suivi pour le moment.",
+      "nextVisit": "Prochain rendez-vous",
+      "noProfileHint": "Votre espace patient n’est pas encore relié à un dossier médical.",
+      "noProfileSupport": "Veuillez contacter l’accueil de votre établissement afin de faire vérifier l’association de votre compte.",
+      "noProfileTitle": "Dossier patient non associé",
+      "noVisitHint": "Vous n’avez pas de rendez-vous à venir. Vous pouvez en demander un ou consulter l’annuaire médical.",
+      "noVisitTitle": "Aucun rendez-vous à venir",
+      "openRecord": "Ouvrir mon dossier",
+      "partialError": "Certaines informations de votre suivi n’ont pas pu être chargées.",
+      "quickActions": "Accès rapides",
+      "tipsEmpty": "Aucun conseil de santé n’est disponible pour le moment.",
+      "tipsFootnote": "Ces contenus sont informatifs et ne remplacent pas un avis médical.",
+      "tipsReadMore": "En savoir plus",
+      "tipsSubtitle": "Des informations fiables pour mieux comprendre votre santé.",
+      "tipsSymptoms": "Symptômes associés",
+      "viewProfile": "Voir le profil"
+    },
+    "record": {
+      "careTeam": "Votre équipe médicale",
+      "conditionsEmpty": "Aucune pathologie n’est renseignée dans votre dossier.",
+      "downloadDoneBody": "Le résumé de votre dossier a été téléchargé.",
+      "downloadDoneTitle": "Téléchargement terminé",
+      "fieldAge": "Âge",
+      "fieldAgeValue": "{{value}} ans",
+      "fieldBlood": "Groupe sanguin",
+      "fieldGender": "Sexe",
+      "fieldName": "Nom",
+      "fieldPhone": "Téléphone",
+      "followedIn": "Suivi au sein du service",
+      "loadFailed": "Impossible de charger votre dossier médical.",
+      "noDepartment": "Service non renseigné",
+      "noMedications": "Aucun médicament renseigné.",
+      "noPatientAssistant": "Ouvrir MedTranslate",
+      "noPatientHint": "Aucun dossier patient n’est associé à votre compte.",
+      "noPatientSupport": "Contactez l’accueil de votre établissement pour faire vérifier votre accès.",
+      "noPatientTitle": "Dossier médical indisponible",
+      "noTreatments": "Aucun traitement renseigné.",
+      "openInLibrary": "Consulter la bibliothèque santé",
+      "overviewEmpty": "Aucune information médicale n’est disponible pour le moment.",
+      "printedOn": "Document imprimé le",
+      "symptomsUnknown": "Symptômes non renseignés",
+      "tabConditions": "Pathologies et traitements",
+      "tabOverview": "Vue d’ensemble",
+      "tabTests": "Examens",
+      "tabTimeline": "Historique",
+      "tabVisits": "Rendez-vous",
+      "testsEmpty": "Aucun examen n’est renseigné dans votre dossier.",
+      "visitsEmpty": "Aucun rendez-vous n’est renseigné dans votre dossier.",
+      "visitsHint": "Les rendez-vous à venir sont également disponibles dans la rubrique « Mes rendez-vous ».",
+      "duration": "Durée : {{value}}"
+    }
+  },
+  "explorer": {
+    "property": {
+      "kind": {
+        "object": "Propriété objet",
+        "datatype": "Propriété de données",
+        "annotation": "Propriété d’annotation"
+      },
+      "chainFlag": "Chaîne de propriétés",
+      "noCharacteristic": "Aucune caractéristique définie.",
+      "noDomain": "Aucun domaine défini.",
+      "noRange": "Aucune étendue définie.",
+      "noUsedBy": "Aucune classe ne référence cette propriété.",
+      "usedBy": "Utilisée par"
+    },
+    "layout": {
+      "cose": "Réseau de relations",
+      "circle": "Disposition circulaire",
+      "grid": "Disposition en grille",
+      "breadthfirst": "Hiérarchie"
+    },
+    "restriction": {
+      "some": "Au moins une valeur",
+      "min": "Minimum",
+      "max": "Maximum",
+      "key": "Propriété clé"
+    },
+    "census": {
+      "objectProperties": "Propriétés objet",
+      "datatypeProperties": "Propriétés de données",
+      "namedIndividuals": "Individus nommés"
+    },
+    "class": {
+      "noIndividuals": "Aucun individu dans cette classe",
+      "noIndividualsHint": "Cette classe ne contient actuellement aucun individu.",
+      "noneDisjoint": "Aucune classe disjointe.",
+      "noneEquivalent": "Aucune classe équivalente.",
+      "noneRestriction": "Aucune restriction définie.",
+      "noneSelected": "Aucune classe sélectionnée",
+      "noneSub": "Aucune sous-classe.",
+      "individuals": "Individus ({{total}})"
+    },
+    "details": {
+      "pickClass": "Sélectionnez une classe pour afficher ses détails."
+    },
+    "filter": {
+      "allClasses": "Toutes les classes"
+    },
+    "graph": {
+      "clearFocus": "Effacer la sélection",
+      "emptyFiltered": "Aucun lien ne correspond à cette classe.",
+      "emptyHint": "Sélectionnez un élément pour explorer ses relations.",
+      "subtitleFocus": "Relations autour de l’élément sélectionné (profondeur : {{depth}}).",
+      "zoomIn": "Agrandir le graphe",
+      "zoomOut": "Réduire le graphe"
+    },
+    "individual": {
+      "noIncoming": "Aucune relation entrante.",
+      "noOutgoing": "Aucune relation sortante.",
+      "noneSelected": "Aucun individu sélectionné"
+    },
+    "tree": {
+      "collapseAll": "Tout réduire",
+      "expandAll": "Tout développer"
+    }
+  },
+  "console": {
+    "exportJson": "Exporter en JSON",
+    "limitValue": "{{value}} lignes",
+    "readOnlyRole": "Lecture seule : les modifications sont réservées aux administrateurs.",
+    "runShortcut": "Exécuter la requête",
+    "saveQuery": "Enregistrer la requête",
+    "results": {
+      "metaAsk": "Réponse obtenue en {{ms}} ms",
+      "metaGraph": "{{triples}} triplets en {{ms}} ms",
+      "meta": "{{rows}} lignes en {{ms}} ms"
+    },
+    "groups": {
+      "reads": "Requêtes de lecture",
+      "writes": "Requêtes de modification"
+    },
+    "statement": {
+      "select": "Requête de sélection",
+      "ask": "Question oui/non",
+      "construct": "Construction de graphe",
+      "describe": "Description de ressource",
+      "update": "Mise à jour",
+      "empty": "En attente d’une requête"
+    },
+    "tpl": {
+      "patients": "Liste des patients",
+      "filter_contains": "Recherche filtrée de patients",
+      "counts": "Patients par pathologie",
+      "group_concat": "Symptômes par pathologie",
+      "ask": "Vérifier une association clinique",
+      "construct": "Construire un graphe clinique",
+      "describe": "Décrire un dossier patient",
+      "latest_tests": "Examens récents",
+      "symptom_to_disease": "Relier symptômes et pathologies",
+      "doctor_chain": "Médecins, spécialités et établissements",
+      "path_rollup": "Individus par classe",
+      "path_chain": "Pathologies et médicaments",
+      "optional_age": "Patients mineurs",
+      "write_insert": "Ajouter un libellé alternatif",
+      "write_delete": "Supprimer un libellé obsolète",
+      "write_delete_insert": "Modifier un numéro de téléphone"
+    },
+    "subtitle": "Exécutez des requêtes de lecture sur l’ontologie en direct ({{triples}} triplets)."
+  },
+  "entities": {
+    "ageGroup": "Tranche d’âge"
+  }
+}

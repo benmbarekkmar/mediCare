@@ -1,0 +1,9 @@
+{
+  "detail": {
+    "data": "Données enregistrées",
+    "identity": "Identifiant en magasin",
+    "noFields": "Cet individu ne porte pas encore de propriété de type de données.",
+    "notFound": "Ce dossier est indisponible",
+    "notFoundHint": "Il a peut-être été supprimé, ou le compte utilisé n’a pas le droit de le lire."
+  }
+}

@@ -16,6 +16,7 @@
     "lint": "eslint \"src/**/*.ts\" \"tests/**/*.ts\"",
     "format": "prettier --write \"{src,tests,scripts}/**/*.ts\"",
     "seed": "tsx scripts/seed.ts",
+    "render:init": "tsx scripts/render-init.ts",
     "seed:test-data": "tsx scripts/populate-test-data.ts",
     "nlp": "tsx scripts/run-nlp.ts serve",
     "nlp:test": "tsx scripts/run-nlp.ts test",
