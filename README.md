@@ -31,13 +31,12 @@
 - [Configuration](#configuration)
 - [Données et ontologie](#données-et-ontologie)
 - [Lancement en local](#lancement-en-local)
-- [API](#api)
-- [Tests et qualité](#tests-et-qualité)
-- [Comptes de démonstration](#comptes-de-démonstration)
-- [Déploiement sur Render](#déploiement-sur-render)
-- [Sécurité et limites](#sécurité-et-limites)
-- [Dépannage](#dépannage)
-- [Documentation complémentaire](#documentation-complémentaire)
+
+
+
+
+
+
 
 ## Présentation
 
@@ -226,24 +225,7 @@ FUSEKI_DATASET=medicare
 
 Ne commitez aucun de ces fichiers. Le dépôt ignore les fichiers .env, les bases SQLite, les dépendances et les artefacts de compilation.
 
-### Variables principales
 
-| Variable | Fichier | Rôle |
-|---|---|---|
-| NODE_ENV, PORT | backend/.env | Mode et port de l’API ; le port local par défaut est 4000. |
-| CORS_ORIGINS | backend/.env | Origines navigateur autorisées ; en local, http://localhost:4300. |
-| FUSEKI_BASE_URL, FUSEKI_DATASET | backend et service NLP | Adresse de Fuseki et nom du graphe utilisé, généralement medicare. |
-| FUSEKI_USER, FUSEKI_PASSWORD | backend/.env | Identifiants de connexion du backend à Fuseki. |
-| FUSEKI_ADMIN_PASSWORD | .env racine / Render | Mot de passe administrateur donné au conteneur Fuseki. |
-| JWT_SECRET | backend/.env | Secret de signature des sessions ; utiliser une valeur longue, aléatoire et privée. |
-| JWT_ACCESS_TTL_MINUTES, JWT_REFRESH_TTL_DAYS | backend/.env | Durée de vie des jetons d’accès et de renouvellement. |
-| SQLITE_FILE | backend/.env | Emplacement de la base SQLite ; par défaut ./data/app.db. |
-| NLP_SERVICE_URL, NLP_TIMEOUT_MS | backend/.env | Adresse et délai d’attente du service NLP ; par défaut http://localhost:8100. |
-| SEED_DEMO_PASSWORD | backend/.env | Mot de passe attribué aux comptes créés par la commande seed. Il n’est jamais affiché par le script. |
-| SPACY_MODEL_SIZE | service NLP | Taille des modèles spaCy ; md par défaut, sm dans la configuration Render. |
-| USE_EMBEDDINGS, EMBEDDING_MODEL, NLP_MIN_CONFIDENCE | service NLP | Réglages optionnels de recherche et seuil de confiance. |
-
-La liste complète des valeurs locales figure dans [backend/.env.example](backend/.env.example). En production, remplacer toutes les valeurs de développement par des secrets privés. Si USE_EMBEDDINGS=true, installer également sentence-transformers dans l’environnement Python du service NLP.
 
 ## Données et ontologie
 
@@ -305,130 +287,3 @@ npm run web
 
 En mode développement, Angular et l’API tournent séparément. Dans la configuration de production, l’API sert aussi les fichiers compilés du frontend.
 
-## API
-
-La documentation interactive est disponible à /api/docs et le document OpenAPI brut à /api/openapi.json.
-
-Les principaux groupes de routes sont :
-
-- /api/auth, /api/users, /api/permissions et /api/audit : comptes, sessions et audit.
-- /api/public : catalogues publics.
-- /api/patients, /api/doctors, /api/diseases, /api/symptoms, /api/treatments, /api/medications, /api/tests, /api/appointments, /api/hospitals et /api/departments : données cliniques.
-- /api/search et /api/dashboard : recherche et indicateurs.
-- /api/ontology et /api/consistency : exploration et cohérence du graphe.
-- /api/nlp : assistant et traduction en requêtes.
-- /api/console et /api/sparql : outils SPARQL réservés selon le rôle.
-- /api/status : état de l’API et connexion à Fuseki.
-
-Les contrôles de droits sont appliqués par l’API, indépendamment de l’interface Angular.
-
-## Tests et qualité
-
-Depuis la racine du dépôt :
-
-~~~bash
-npm run build
-npm run test:api
-npm run test:web
-npm run test:nlp
-npm run lint
-npm --prefix frontend run check-i18n
-~~~
-
-- npm run build compile l’API TypeScript et le frontend Angular.
-- npm run test:api exécute les tests API et d’intégration.
-- npm run test:web exécute les tests Angular avec Chrome Headless.
-- npm run test:nlp exécute les tests Python du service NLP.
-- npm run lint lance ESLint sur les projets backend et frontend.
-- npm --prefix frontend run check-i18n vérifie les traductions française et anglaise.
-
-### Tests de bout en bout
-
-Les scénarios Playwright nécessitent Fuseki, le service NLP, l’API et l’application web en marche. Utiliser un jeu de test isolé :
-
-1. Dans backend/.env, définir FUSEKI_DATASET=medicare_test, un fichier SQLite de test et un mot de passe de démonstration privé.
-2. Démarrer Fuseki avec npm run infra, puis charger l’ontologie et les comptes dans ce jeu avec npm run ontology et npm run seed.
-3. Démarrer npm run nlp, npm run api et npm run web.
-4. Définir E2E_DEMO_PASSWORD avec la même valeur que SEED_DEMO_PASSWORD, puis lancer :
-
-~~~bash
-npm run test:e2e
-~~~
-
-Les tests vérifient que l’API cible bien un jeu dont le nom se termine par _test avant d’effectuer des écritures. Le serveur Playwright utilise Chrome installé sur la machine. Les détails de configuration sont dans [frontend/playwright.config.ts](frontend/playwright.config.ts).
-
-L’évaluation NLP documentée se trouve dans [docs/nlp-evaluation.md](docs/nlp-evaluation.md). Elle décrit le jeu de questions de démonstration, la mesure sur Fuseki et les limites de cette mesure.
-
-## Comptes de démonstration
-
-npm run seed crée les comptes suivants. Le mot de passe initial est la valeur privée définie dans SEED_DEMO_PASSWORD au moment de leur création.
-
-| Adresse | Rôle | Exemple d’usage |
-|---|---|---|
-| admin@medicare.tn | ADMIN | Interface française, administration et outils. |
-| nour.elamri@medicare.tn | ADMIN | Exemple d’interface anglaise. |
-| reception@medicare.tn | RECEPTIONIST | Enregistrement des patients et rendez-vous. |
-| salma.benali@medicare.tn | DOCTOR | Espace médecin avec périmètre patient associé. |
-| hatem.trabelsi@medicare.tn | DOCTOR | Deuxième compte médecin pour comparer les périmètres. |
-| ahmed@medicare.tn | PATIENT | Portail patient et dossier personnel. |
-| sara@medicare.tn | PATIENT | Deuxième compte patient de démonstration. |
-
-Le script n’écrase pas les comptes existants. Si un compte existe déjà, une nouvelle valeur de SEED_DEMO_PASSWORD ne changera pas son mot de passe.
-
-## Déploiement sur Render
-
-Le Blueprint [render.yaml](render.yaml) décrit trois services :
-
-1. **API Node.js** : compile l’API et Angular, puis sert l’interface web et les routes /api depuis la même adresse.
-2. **Fuseki** : héberge le graphe RDF.
-3. **Service NLP Python** : exécute FastAPI avec les modèles spaCy plus petits adaptés à cette configuration.
-
-Pour déployer, pousser le dépôt vers GitHub, puis choisir **New → Blueprint** dans Render et connecter le dépôt.
-
-Après le premier déploiement :
-
-1. Définir une valeur privée pour SEED_DEMO_PASSWORD dans l’environnement du service API.
-2. Dans un shell du service API, ou un environnement d’administration configuré avec les variables des services, exécuter :
-
-~~~bash
-npm --prefix backend run render:init
-~~~
-
-Cette commande attend Fuseki, charge l’ontologie si le graphe est vide et crée les comptes de démonstration. Si le service NLP a démarré avant le chargement des données, le redémarrer pour qu’il recharge le vocabulaire depuis Fuseki.
-
-La configuration Render actuelle est destinée à une démonstration :
-
-- SQLite est configuré en mémoire (SQLITE_FILE=:memory:).
-- Aucun disque persistant n’est déclaré pour le service Fuseki.
-- Les comptes, les journaux, les modifications du graphe et les autres données peuvent donc être perdus lors d’un redémarrage ou d’un redéploiement.
-- Ne pas y enregistrer de vraies données médicales. Pour conserver des données, configurer des services et un stockage persistants avant tout usage autre qu’une démonstration.
-
-## Sécurité et limites
-
-- MedicCare est une démonstration logicielle, pas un outil de diagnostic ni un dossier médical certifié.
-- Utiliser uniquement des données synthétiques ou non sensibles.
-- Remplacer JWT_SECRET, les mots de passe Fuseki et SEED_DEMO_PASSWORD avant toute exposition publique.
-- Ne jamais commiter .env, les clés, les mots de passe ou les bases locales.
-- Les mots de passe des comptes sont hachés dans SQLite ; le service conserve aussi les jetons de renouvellement et les traces d’audit.
-- Les contrôles de rôles doivent rester côté serveur ; ne pas se fier uniquement à l’affichage conditionnel dans le frontend.
-- L’assistant NLP sert à interroger les données structurées. Il ne remplace ni un professionnel de santé ni une évaluation clinique.
-- La récupération de mot de passe n’envoie pas de courriel dans la configuration actuelle.
-
-## Dépannage
-
-| Problème | Vérifications |
-|---|---|
-| Fuseki ne répond pas | Vérifier Docker, docker compose ps, docker compose logs fuseki, l’URL de base, le jeu et l’alignement entre FUSEKI_ADMIN_PASSWORD et FUSEKI_PASSWORD. |
-| Le catalogue ou les tableaux de bord sont vides | Vérifier FUSEKI_DATASET, puis charger l’ontologie dans le jeu voulu. Le chargement par défaut efface d’abord ce jeu. |
-| Le seed refuse un compte médecin ou patient | Charger l’ontologie avant npm run seed ; chaque compte lié doit correspondre à un individu existant. |
-| Le service NLP ne démarre pas | Vérifier Python 3.11, l’environnement backend/nlp-service/.venv et les deux modèles spaCy. |
-| Le NLP ne trouve pas de termes | Vérifier la connexion du service NLP à Fuseki et la présence de l’ontologie, puis redémarrer le service NLP ou recharger son vocabulaire. |
-| Le frontend ne peut pas appeler l’API | Vérifier CORS_ORIGINS, l’URL de l’API configurée et que le backend écoute sur le port attendu. |
-| Le mot de passe de démonstration ne fonctionne pas | Vérifier la valeur utilisée à la première création du compte ; le seed laisse les comptes existants inchangés. |
-
-## Documentation complémentaire
-
-- [backend/.env.example](backend/.env.example) — variables d’environnement locales.
-- [docs/nlp-evaluation.md](docs/nlp-evaluation.md) — méthode, résultats mesurés et limites de l’évaluation NLP.
-- [docs/sparql-examples.md](docs/sparql-examples.md) — exemples de requêtes SPARQL et vocabulaire de l’ontologie.
-- [frontend/src/app/shared/ui/CONTRACT.md](frontend/src/app/shared/ui/CONTRACT.md) — conventions et contrat des composants UI.
