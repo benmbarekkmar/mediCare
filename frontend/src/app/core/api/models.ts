@@ -318,12 +318,18 @@ export interface NlpParse {
   safety?: string;
 }
 
+export interface SemanticPath {
+  nodes: { id: string; label: string }[];
+  predicates: string[];
+}
+
 export interface AskResult {
   parse: NlpParse;
   sparql: string;
   columns: string[];
   rows: Record<string, string>[];
   executionMs: number;
+  semanticPaths?: SemanticPath[];
 }
 
 export interface NlpHealth {

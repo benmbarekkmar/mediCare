@@ -9,11 +9,29 @@ import { sparql } from '../sparql/client';
 import { prefixes } from '../sparql/prefixes';
 import { badRequest, forbidden } from '../core/errors';
 import { guardReadQuery, readForm } from '../services/query-guard';
-import { iriToken } from '../sparql/escape';
+import { iriToken, ONT } from '../sparql/escape';
 import { audit } from '../auth/audit';
 import { logger } from '../config/logger';
 
 const MAX_ROWS = 200;
+
+const SEMANTIC_PATH_SPECS = {
+  disease_medications: { sourceSlot: 'disease', targetColumn: 'medication', predicates: ['hasTreatment', 'usesMedication'] },
+  disease_treatments: { sourceSlot: 'disease', targetColumn: 'treatment', predicates: ['hasTreatment'] },
+  disease_symptoms: { sourceSlot: 'disease', targetColumn: 'symptom', predicates: ['hasSymptom'] },
+  symptom_diseases: { sourceSlot: 'symptom', targetColumn: 'd', predicates: ['isSymptomOf'] },
+  treatment_medications: { sourceSlot: 'treatment', targetColumn: 'medication', predicates: ['usesMedication'] },
+} as const;
+
+interface SemanticPathNode {
+  id: string;
+  label: string;
+}
+
+interface SemanticExplanationPath {
+  nodes: SemanticPathNode[];
+  predicates: string[];
+}
 
 export const nlpRouter = Router();
 
@@ -51,6 +69,7 @@ nlpRouter.post(
     const answer = plan.sparql
       ? await execute(plan.sparql, user, plan)
       : { sparql: '', columns: [], rows: [] as Record<string, string>[], executionMs: 0 };
+    const semanticPaths = answer.sparql ? await buildSemanticPaths(plan, answer) : [];
 
     logger.info({ intent: plan.intent, role: user.role, ms: answer.executionMs }, 'nlp answer');
     const pipeline = answer.sparql
@@ -77,6 +96,7 @@ nlpRouter.post(
       columns: answer.columns,
       rows: answer.rows,
       executionMs: answer.executionMs,
+      semanticPaths,
     });
   }),
 );
@@ -262,6 +282,69 @@ async function execute(generated: string, user: AuthUser, plan: NlpParse): Promi
   });
   if (doctorPatientLocals) rows = ownPatientFilter(doctorPatientLocals)(rows);
   return { sparql: query, columns: result.vars, rows, executionMs: result.executionMs };
+}
+
+function localOntologyId(value: unknown): string | null {
+  if (typeof value !== 'string') return null;
+  let local = value.trim();
+  if (local.startsWith('<') && local.endsWith('>')) local = local.slice(1, -1);
+  if (local.startsWith(ONT)) local = local.slice(ONT.length);
+  else if (local.startsWith('ont:')) local = local.slice('ont:'.length);
+  else if (local.includes(':')) return null;
+  return /^[A-Za-z][A-Za-z0-9_-]{0,127}$/.test(local) ? local : null;
+}
+
+/** Explain selected public knowledge intents using allow-listed ontology properties. */
+async function buildSemanticPaths(plan: NlpParse, answer: Answer): Promise<SemanticExplanationPath[]> {
+  const spec = SEMANTIC_PATH_SPECS[plan.intent as keyof typeof SEMANTIC_PATH_SPECS];
+  if (!spec || !answer.columns.includes(spec.targetColumn)) return [];
+
+  const source = localOntologyId(plan.slots[spec.sourceSlot]);
+  const targets = [
+    ...new Set(
+      answer.rows
+        .map((row) => localOntologyId(row[spec.targetColumn]))
+        .filter((id): id is string => id !== null),
+    ),
+  ].slice(0, 30);
+  if (!source || targets.length === 0) return [];
+
+  const variables = Array.from({ length: spec.predicates.length + 1 }, (_, index) => '?node' + index);
+  const lastVariable = '?node' + spec.predicates.length;
+  const selected = variables.flatMap((variable, index) => [variable, '?label' + index]).join(' ');
+  const patterns = [
+    'VALUES ?node0 { ' + iriToken(source) + ' }',
+    'VALUES ' + lastVariable + ' { ' + targets.map(iriToken).join(' ') + ' }',
+    ...spec.predicates.map((predicate, index) => variables[index]! + ' ont:' + predicate + ' ' + variables[index + 1]! + ' .'),
+    ...variables.map((variable, index) => 'OPTIONAL { ' + variable + ' rdfs:label ?label' + index + ' . }'),
+  ];
+  const query = finalQuery(
+    prefixes.withPrefixes('SELECT DISTINCT ' + selected + ' WHERE {\n' + patterns.join('\n') + '\n}\nLIMIT 60'),
+  );
+
+  try {
+    const result = await sparql.select(query);
+    const paths: SemanticExplanationPath[] = [];
+    const seen = new Set<string>();
+    for (const row of result.rows) {
+      const nodes: SemanticPathNode[] = [];
+      for (let index = 0; index < variables.length; index += 1) {
+        const id = localOntologyId(row['node' + index]?.value);
+        if (!id) break;
+        const label = String(row['label' + index]?.value ?? '').trim();
+        nodes.push({ id, label: label || id.replace(/_/g, ' ').replace(/([a-z0-9])([A-Z])/g, '$1 $2') });
+      }
+      if (nodes.length !== variables.length) continue;
+      const key = nodes.map((node) => node.id).join('>');
+      if (seen.has(key)) continue;
+      seen.add(key);
+      paths.push({ nodes, predicates: [...spec.predicates] });
+    }
+    return paths;
+  } catch (error) {
+    logger.warn({ intent: plan.intent, error: String(error) }, 'semantic path lookup failed');
+    return [];
+  }
 }
 
 const PATIENT_QUERY_TERMS = /(?:ont:|#)(?:Patient|AdultPatient|ChildPatient|ElderlyPatient|ChronicPatient|EmergencyPatient|MedicalTest|BloodTest|UrineTest|XRay|MRI|CTScan|MedicalAppointment|Consultation|FollowUpAppointment|EmergencyAppointment)(?:\b|_)/i;

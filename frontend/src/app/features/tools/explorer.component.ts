@@ -11,7 +11,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import cytoscape from 'cytoscape';
@@ -1218,6 +1218,7 @@ export class ExplorerComponent {
   private readonly toast = inject(ToastService);
   private readonly translate = inject(TranslateService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
   private readonly viewport = viewChild<ElementRef<HTMLDivElement>>('viewport');
   private readonly tree = viewChild<UiTreeComponent>('tree');
@@ -1663,6 +1664,12 @@ export class ExplorerComponent {
   });
 
   constructor() {
+    const initialFocus = this.route.snapshot.queryParamMap.get('focus');
+    if (initialFocus !== null && /^[A-Za-z][A-Za-z0-9_-]{0,127}$/.test(initialFocus)) {
+      this.focusId.set(initialFocus);
+      this.tab.set('individuals');
+      this.loadDetail(initialFocus);
+    }
     this.meta.load().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({ error: () => undefined });
     this.loadHierarchy();
     this.loadProperties();
@@ -1825,6 +1832,7 @@ export class ExplorerComponent {
   selectIndividual(id: string): void {
     if (id.length === 0) return;
     this.focusId.set(id);
+    this.syncFocusQuery(id);
     this.tab.set('individuals');
     this.loadDetail(id);
     this.loadGraph();
@@ -1832,15 +1840,27 @@ export class ExplorerComponent {
 
   clearFocus(): void {
     this.focusId.set(null);
+    this.syncFocusQuery(null);
     this.detail.set(null);
     this.loadGraph();
   }
 
   backToClass(): void {
     this.focusId.set(null);
+    this.syncFocusQuery(null);
     this.detail.set(null);
     this.tab.set('classes');
     this.loadGraph();
+  }
+
+  private syncFocusQuery(id: string | null): void {
+    if (this.route.snapshot.queryParamMap.get('focus') === id) return;
+    void this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { focus: id },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
   }
 
   selectProperty(name: string): void {

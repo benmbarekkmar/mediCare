@@ -409,6 +409,41 @@ page-assistant {
 
   .block__tools { display: flex; justify-content: flex-end; }
 
+  .semantic-explanations {
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    background: var(--surface-alt);
+  }
+  .semantic-explanations > div:first-child { display: grid; gap: 0.35rem; }
+  .semantic-explanations .block__meta { margin: 0; }
+  .semantic-paths { display: grid; gap: 0.55rem; margin: 0; padding: 0; list-style: none; }
+  .semantic-path {
+    min-width: 0;
+    padding: 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+  }
+  .semantic-path__chain { display: flex; align-items: center; flex-wrap: wrap; gap: 0.4rem; }
+  .semantic-path__node {
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    padding: 0.4rem 0.65rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--primary-50);
+    color: var(--primary);
+    font-size: var(--fs-sm);
+    font-weight: 650;
+    overflow-wrap: anywhere;
+  }
+  .semantic-path__node--link { text-decoration: none; }
+  .semantic-path__node--link:hover { text-decoration: underline; }
+  .semantic-path__node--link:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+  .semantic-path__relation { color: var(--text-muted); font-size: var(--fs-xs); font-weight: 600; }
+
   .rows {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(270px, 100%), 1fr));

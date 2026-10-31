@@ -368,6 +368,36 @@ const nextTurnId = (): string => `t${Date.now().toString(36)}x${(turnSequence +=
                         </div>
                       </div>
 
+                      @if (answer.semanticPaths?.length) {
+                        <section class="block semantic-explanations">
+                          <div>
+                            <p class="block__label">{{ 'translator.path.title' | translate }}</p>
+                            <p class="block__meta">{{ 'translator.path.hint' | translate }}</p>
+                          </div>
+                          <ul class="semantic-paths">
+                            @for (path of answer.semanticPaths ?? []; track $index) {
+                              <li class="semantic-path">
+                                <div class="semantic-path__chain" [attr.aria-label]="'translator.path.chain' | translate">
+                                  @for (node of path.nodes; track node.id; let index = $index) {
+                                    @if (index > 0) {
+                                      <span class="semantic-path__relation">{{ ('translator.path.predicates.' + path.predicates[index - 1]) | translate }}</span>
+                                    }
+                                    @if (portal) {
+                                      <span class="semantic-path__node">{{ node.label }}</span>
+                                    } @else {
+                                      <a class="semantic-path__node semantic-path__node--link"
+                                        [routerLink]="['/tools/explorer']"
+                                        [queryParams]="{ focus: node.id }"
+                                        [attr.title]="'translator.path.open' | translate: { label: node.label }">{{ node.label }}</a>
+                                    }
+                                  }
+                                </div>
+                              </li>
+                            }
+                          </ul>
+                        </section>
+                      }
+
                       <section class="pipeline" [attr.aria-label]="'translator.pipeline.title' | translate">
                         <div class="pipeline__heading">
                           <ui-icon name="route" [size]="17" />

@@ -106,6 +106,7 @@
     "tryAsking": "Essayez ces questions",
     "sampleQuestions": [
       "Quels hôpitaux sont disponibles ?",
+      "Quels m\u00e9dicaments sont utilis\u00e9s pour le diab\u00e8te ?",
       "Quels sont les symptômes du diabète ?",
       "Quels médecins sont spécialisés en cardiologie ?",
       "Quels traitements sont associés à la grippe ?",
@@ -168,6 +169,18 @@
       "empty": "Aucune information correspondante dans l'ontologie médicale.",
       "emptyHint": "Reformulez votre question ou interrogez un autre concept médical.",
       "unnamed": "Résultat"
+    },
+    "path": {
+      "title": "Pourquoi ces r\u00e9sultats ?",
+      "hint": "Chaque cha\u00eene montre les relations de l'ontologie qui relient le concept de la question au r\u00e9sultat.",
+      "chain": "Chemin s\u00e9mantique",
+      "open": "Explorer {{label}} dans le graphe de l'ontologie",
+      "predicates": {
+        "hasTreatment": "a pour traitement",
+        "usesMedication": "utilise le m\u00e9dicament",
+        "hasSymptom": "a pour sympt\u00f4me",
+        "isSymptomOf": "est un sympt\u00f4me de"
+      }
     },
     "technicalHint": "La requête générée et les étapes du pipeline NLP sont affichées ci-dessous.",
     "sparql": "Requête SPARQL générée",

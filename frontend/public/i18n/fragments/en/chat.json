@@ -106,6 +106,7 @@
     "tryAsking": "Try asking",
     "sampleQuestions": [
       "Which hospitals are available?",
+      "Which medications are used for diabetes?",
       "What are the symptoms of diabetes?",
       "Which doctors specialize in cardiology?",
       "What treatments are associated with influenza?",
@@ -168,6 +169,18 @@
       "empty": "No matching information found in the medical ontology.",
       "emptyHint": "Try rephrasing your question or asking about another medical concept.",
       "unnamed": "Result"
+    },
+    "path": {
+      "title": "Why these results?",
+      "hint": "Each chain shows which ontology relationships connect the question's concept to a result.",
+      "chain": "Semantic path",
+      "open": "Explore {{label}} in the ontology graph",
+      "predicates": {
+        "hasTreatment": "has treatment",
+        "usesMedication": "uses medication",
+        "hasSymptom": "has symptom",
+        "isSymptomOf": "is a symptom of"
+      }
     },
     "technicalHint": "The generated query and NLP pipeline are shown below for inspection.",
     "sparql": "Generated SPARQL",
