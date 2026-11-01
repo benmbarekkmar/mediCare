@@ -6,9 +6,9 @@
       "links": "Dossiers liés",
       "clinical": "Données cliniques"
     },
-    "searchEntity": "Rechercher un/une {{entity}}…",
+    "searchEntity": "Rechercher : {{entity}}…",
     "noMatch": "Aucun résultat, saisissez une recherche",
-    "typeHint": "Définit la classe d’ontologie à laquelle l’individu est assertion.",
+    "typeHint": "Choisissez la classe d’ontologie de cet enregistrement.",
     "axiomNote": "À l’enregistrement, le serveur vérifie les axiomes de l’ontologie.",
     "required": "Obligatoire",
     "createTitle": "Nouveau {{entity}}",

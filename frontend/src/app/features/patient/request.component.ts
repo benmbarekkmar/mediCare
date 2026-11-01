@@ -316,12 +316,6 @@ const pad = (value: number): string => String(value).padStart(2, '0');
               <div class="sk-lines">
                 <ui-skeleton width="100%" height="44px" [radius]="'var(--radius-input)'" />
               </div>
-            } @else {
-              <div class="actions">
-                <ui-button variant="primary" icon="send" [disabled]="!canSubmit()" (click)="submit()">
-                  {{ 'patient.request.confirm' | translate }}
-                </ui-button>
-              </div>
             }
           </div>
         }

@@ -1,3 +1,4 @@
+import type { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -163,6 +164,12 @@ export class RecordDetailComponent {
     return this.auth.can(this.entityKey(), 'delete');
   }
 
+  protected entityName(): string {
+    const entity = this.entityKey();
+    const meta = this.meta();
+    return labelOf(this.translate, 'entities.' + entity + '.singular', meta?.label ?? entity);
+  }
+
   protected get writable(): string[] | null {
     return this.auth.editableFields(this.entityKey());
   }
@@ -180,9 +187,12 @@ export class RecordDetailComponent {
         this.saving.set(false);
         this.formOpen.set(false);
         this.row.set(saved);
-        this.toast.success(this.translate.instant('form.updated', { entity: this.meta()?.label ?? '' }), saved.label);
+        this.toast.success(this.translate.instant('form.updated', { entity: this.entityName() }), saved.label);
       },
-      error: () => this.saving.set(false),
+      error: (error: HttpErrorResponse) => {
+        this.saving.set(false);
+        this.toast.fromProblem(error);
+      },
     });
   }
 

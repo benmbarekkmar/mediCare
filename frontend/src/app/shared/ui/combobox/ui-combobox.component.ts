@@ -5,7 +5,6 @@ import {
   DestroyRef,
   Injector,
   ElementRef,
-  HostListener,
   OnInit,
   computed,
   forwardRef,
@@ -13,6 +12,7 @@ import {
   input,
   signal,
 } from '@angular/core';
+import { Overlay, OverlayModule, type ConnectedPosition } from '@angular/cdk/overlay';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   NG_VALUE_ACCESSOR,
@@ -23,7 +23,7 @@ import {
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import type { Observable } from 'rxjs';
 import { Subject, of } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { catchError, debounceTime, switchMap } from 'rxjs/operators';
 import type { Ref } from '../../../core/api/models';
 import { translateOrText } from '../../../core/util/labels';
 import { UiIconComponent } from '../icon/ui-icon.component';
@@ -58,7 +58,7 @@ const refFromId = (id: string): Ref => ({ id, iri: '', label: id, type: '' });
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'ui-combobox',
   standalone: true,
-  imports: [TranslateModule, UiIconComponent],
+  imports: [TranslateModule, UiIconComponent, OverlayModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => UiComboboxComponent), multi: true }],
   template: `
@@ -92,7 +92,7 @@ const refFromId = (id: string): Ref => ({ id, iri: '', label: id, type: '' });
           </ul>
         }
 
-        <div class="input-row">
+        <div class="input-row" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
           <input
             class="ui-control"
             role="combobox"
@@ -102,6 +102,7 @@ const refFromId = (id: string): Ref => ({ id, iri: '', label: id, type: '' });
             [attr.placeholder]="displayText(placeholder() ?? 'ui.combobox.placeholder')"
             [attr.disabled]="isDisabled() ? '' : null"
             [attr.required]="required() ? '' : null"
+            aria-haspopup="listbox"
             autocomplete="off"
             [attr.aria-required]="required() || null"
             [attr.aria-expanded]="open()"
@@ -109,25 +110,28 @@ const refFromId = (id: string): Ref => ({ id, iri: '', label: id, type: '' });
             [attr.aria-activedescendant]="activeDescendant()"
             [attr.aria-invalid]="hasErrors() ? 'true' : null"
             [attr.aria-describedby]="describedBy()"
-            (input)="onInput($event)"
             (keydown)="onKeydown($event)"
-            (focus)="onFocus()"
+            (input)="onInput($event)"
+            (click)="toggleDropdown()"
             (blur)="onBlur()"
           />
-          <button
-            class="clear"
-            type="button"
-            [attr.aria-label]="'ui.combobox.clear' | translate"
-            [disabled]="isDisabled() || (selectedIds().length === 0 && text() === '')"
-            (click)="clearAll()"
-          >
-            <ui-icon name="x" size="16" />
-          </button>
+
           <ui-icon class="caret" name="chevron-down" size="16" />
         </div>
 
-        @if (open()) {
-          <ul class="list" [id]="listId" role="listbox" [attr.aria-label]="'uiforms.combobox.listLabel' | translate">
+        <ng-template
+          cdkConnectedOverlay
+          [cdkConnectedOverlayOrigin]="trigger"
+          [cdkConnectedOverlayOpen]="open()"
+          [cdkConnectedOverlayPositions]="dropdownPositions"
+          [cdkConnectedOverlayScrollStrategy]="dropdownScrollStrategy"
+          [cdkConnectedOverlayWidth]="trigger.elementRef.nativeElement.clientWidth"
+          [cdkConnectedOverlayViewportMargin]="8"
+          [cdkConnectedOverlayFlexibleDimensions]="true"
+          [cdkConnectedOverlayPush]="true"
+          (overlayOutsideClick)="close()"
+        >
+          <ul class="list" [style.max-height.px]="dropdownMaxHeight" [id]="listId" role="listbox" [attr.aria-label]="'uiforms.combobox.listLabel' | translate">
             @if (loading()) {
               <li class="list__status">
                 <ui-icon class="list__spinner" name="loader" size="16" />
@@ -163,7 +167,7 @@ const refFromId = (id: string): Ref => ({ id, iri: '', label: id, type: '' });
               }
             }
           </ul>
-        }
+        </ng-template>
       </div>
 
       @if (hint() !== null) {
@@ -196,41 +200,16 @@ const refFromId = (id: string): Ref => ({ id, iri: '', label: id, type: '' });
         align-items: center;
       }
       .ui-control {
-        padding-inline-end: calc(var(--sp-8) + var(--sp-2));
+        padding-inline-end: var(--sp-8);
+        cursor: pointer;
+        caret-color: transparent;
+        user-select: none;
       }
       .caret {
         position: absolute;
-        inset-inline-end: var(--sp-6);
+        inset-inline-end: var(--sp-4);
         color: var(--text-subtle);
         pointer-events: none;
-      }
-      .clear {
-        position: absolute;
-        inset-inline-end: var(--sp-1);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: var(--sp-1);
-        border: 0;
-        border-radius: var(--radius-input);
-        background: transparent;
-        color: var(--text-muted);
-        cursor: pointer;
-        transition:
-          color var(--duration) var(--ease),
-          background var(--duration) var(--ease);
-      }
-      .clear:hover:not(:disabled) {
-        color: var(--primary);
-        background: var(--primary-soft);
-      }
-      .clear:focus-visible {
-        outline: none;
-        box-shadow: var(--focus-ring);
-      }
-      .clear:disabled {
-        color: var(--text-subtle);
-        cursor: not-allowed;
       }
       .chips {
         display: flex;
@@ -279,18 +258,17 @@ const refFromId = (id: string): Ref => ({ id, iri: '', label: id, type: '' });
         box-shadow: var(--focus-ring);
       }
       .list {
-        position: absolute;
-        inset-block-start: 100%;
-        inset-inline: 0;
-        z-index: var(--z-popover);
+        box-sizing: border-box;
         display: flex;
         flex-direction: column;
         gap: var(--sp-1);
-        max-height: calc(var(--sp-8) * 5);
-        margin: var(--sp-1) 0 0;
+        width: 100%;
+        max-height: min(calc(var(--sp-8) * 5), calc(100dvh - var(--sp-6)));
+        margin: 0;
         padding: var(--sp-1);
         list-style: none;
-        overflow-y: auto;
+        overflow: auto;
+        overscroll-behavior: contain;
         background: var(--surface);
         border: 1px solid var(--border);
         border-radius: var(--radius-input);
@@ -367,6 +345,7 @@ export class UiComboboxComponent implements OnInit, ControlValueAccessor {
   readonly errorsId = `${this.inputId}-errors`;
 
   protected readonly text = signal('');
+  private readonly typeahead = signal('');
   protected readonly results = signal<Ref[]>([]);
   protected readonly loading = signal(false);
   protected readonly open = signal(false);
@@ -380,6 +359,42 @@ export class UiComboboxComponent implements OnInit, ControlValueAccessor {
   private readonly injector = inject(Injector);
   private ngControl: NgControl | null = null;
   private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly overlay = inject(Overlay);
+  private readonly belowFirstPositions: ConnectedPosition[] = [
+    { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetY: 4 },
+    { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetY: -4 },
+  ];
+  private readonly aboveFirstPositions: ConnectedPosition[] = [
+    { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetY: -4 },
+    { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetY: 4 },
+  ];
+  protected readonly dropdownScrollStrategy = this.overlay.scrollStrategies.reposition({ scrollThrottle: 16 });
+
+  protected get dropdownPositions(): ConnectedPosition[] {
+    const { above, below } = this.dropdownSpace();
+    return below >= above ? this.belowFirstPositions : this.aboveFirstPositions;
+  }
+
+  protected get dropdownMaxHeight(): number {
+    const { above, below } = this.dropdownSpace();
+    return Math.min(320, Math.max(above, below));
+  }
+
+  private dropdownSpace(): { above: number; below: number } {
+    const root = this.host.nativeElement;
+    const view = root.ownerDocument.defaultView;
+    const origin = root.querySelector('.input-row') as HTMLElement | null;
+    if (!view || !origin) return { above: 320, below: 320 };
+
+    const panel = (root.closest('.ui-modal') as HTMLElement | null)?.getBoundingClientRect();
+    const originRect = origin.getBoundingClientRect();
+    const top = Math.max(8, (panel?.top ?? 0) + (panel ? 8 : 0));
+    const bottom = Math.min(view.innerHeight - 8, (panel?.bottom ?? view.innerHeight) - (panel ? 8 : 0));
+    return {
+      above: Math.max(0, originRect.top - top - 4),
+      below: Math.max(0, bottom - originRect.bottom - 4),
+    };
+  }
   private readonly cd = inject(ChangeDetectorRef);
   private readonly destroyRef = inject(DestroyRef);
   private readonly queries = new Subject<string>();
@@ -394,7 +409,6 @@ export class UiComboboxComponent implements OnInit, ControlValueAccessor {
     this.queries
       .pipe(
         debounceTime(300),
-        distinctUntilChanged(),
         switchMap((term) => this.runSearch(term)),
         takeUntilDestroyed(this.destroyRef),
       )
@@ -403,7 +417,6 @@ export class UiComboboxComponent implements OnInit, ControlValueAccessor {
         this.results.set(refs);
         this.loading.set(false);
         this.activeIndex.set(refs.length > 0 ? 0 : -1);
-        this.open.set(true);
         if (this.multiple()) this.text.set('');
         this.cd.markForCheck();
       });
@@ -483,22 +496,16 @@ export class UiComboboxComponent implements OnInit, ControlValueAccessor {
     return this.optionId(this.activeIndex());
   }
 
-  protected onInput(event: Event): void {
-    const value = (event.target as HTMLInputElement).value;
-    this.text.set(value);
-    this.loading.set(true);
-    this.open.set(true);
-    this.queries.next(value);
-  }
-
-  protected onFocus(): void {
+  protected toggleDropdown(): void {
     if (this.isDisabled()) return;
-    this.open.set(true);
+    if (this.open()) this.close();
+    else this.searchNow();
   }
 
   protected onBlur(): void {
     this.touch();
     this.stateTick.update((tick) => tick + 1);
+    this.close();
   }
 
   protected onKeydown(event: KeyboardEvent): void {
@@ -529,9 +536,13 @@ export class UiComboboxComponent implements OnInit, ControlValueAccessor {
           this.scrollActiveIntoView();
         }
         break;
-      case 'Enter': {
-        if (!this.open() || count === 0) return;
+      case 'Enter':
+      case ' ': {
         event.preventDefault();
+        if (!this.open()) {
+          this.searchNow();
+          break;
+        }
         const picked = this.results()[this.activeIndex()];
         if (picked !== undefined) this.pick(picked);
         break;
@@ -539,25 +550,38 @@ export class UiComboboxComponent implements OnInit, ControlValueAccessor {
       case 'Escape':
         if (!this.open()) return;
         event.preventDefault();
+        event.stopPropagation();
         this.close();
         break;
-      case 'Backspace':
-        if (this.multiple() && this.text() === '' && this.selectedIds().length > 0) {
+      case 'Backspace': {
+        const query = this.typeahead();
+        const hasSelection = this.selectedIds().length > 0;
+        if (query.length > 0) {
+          event.preventDefault();
+          this.searchFor(query.slice(0, -1));
+        } else if (this.multiple() && hasSelection) {
           event.preventDefault();
           this.removeLastChip();
+        } else if (!this.multiple() && hasSelection) {
+          event.preventDefault();
+          this.clearAll();
         }
         break;
+      }
       default:
+        if (event.key.length === 1 && !event.altKey && !event.ctrlKey && !event.metaKey) {
+          event.preventDefault();
+          this.searchFor((this.typeahead() + event.key).slice(0, 80));
+        }
         break;
     }
   }
 
-  @HostListener('document:click', ['$event'])
-  protected onDocumentClick(event: MouseEvent): void {
-    if (!this.open()) return;
-    const target: Node | null = event.target instanceof Node ? event.target : null;
-    if (target === null || this.host.nativeElement.contains(target)) return;
-    this.close();
+  protected onInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const value = input.value.slice(0, 80);
+    this.text.set(value);
+    this.searchFor(value);
   }
 
   protected pick(ref: Ref): void {
@@ -596,9 +620,14 @@ export class UiComboboxComponent implements OnInit, ControlValueAccessor {
   }
 
   private searchNow(): void {
+    this.searchFor('');
+  }
+
+  private searchFor(term: string): void {
+    this.typeahead.set(term);
     this.loading.set(true);
     this.open.set(true);
-    this.queries.next(this.text());
+    this.queries.next(term);
   }
 
   private move(delta: number): void {
@@ -614,11 +643,11 @@ export class UiComboboxComponent implements OnInit, ControlValueAccessor {
   }
 
   private scrollActiveIntoView(): void {
-    const option = (this.host.nativeElement as HTMLElement).querySelector<HTMLElement>(`#${this.optionId(this.activeIndex())}`);
+    const option = this.host.nativeElement.ownerDocument.getElementById(this.optionId(this.activeIndex()));
     option?.scrollIntoView({ block: 'nearest' });
   }
 
-  private close(): void {
+  protected close(): void {
     this.open.set(false);
     this.activeIndex.set(-1);
   }

@@ -1,3 +1,4 @@
+import type { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, DestroyRef, OnDestroy, computed, effect, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -148,6 +149,10 @@ export class RecordListComponent implements OnDestroy {
     const fallback = this.metaFor()?.plural?.trim() || entity;
     return labelOf(this.translate, 'entities.' + entity + '.plural', fallback);
   });
+  protected entityName(): string {
+    const entity = this.entityKey();
+    return labelOf(this.translate, 'entities.' + entity + '.singular', this.metaFor()?.label ?? entity);
+  }
   protected readonly canCreate = computed(() => this.auth.can(this.entityKey(), 'create'));
   protected readonly canUpdate = computed(() => this.auth.can(this.entityKey(), 'update'));
   protected readonly canDelete = computed(() => this.auth.can(this.entityKey(), 'delete'));
@@ -322,7 +327,10 @@ export class RecordListComponent implements OnDestroy {
         );
         this.load();
       },
-      error: () => this.saving.set(false),
+      error: (error: HttpErrorResponse) => {
+        this.saving.set(false);
+        this.toast.fromProblem(error);
+      },
     });
   }
 

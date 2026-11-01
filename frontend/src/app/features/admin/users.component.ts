@@ -274,7 +274,7 @@ const ACTIONS = ['read', 'create', 'update', 'delete'] as const;
           <div class="row">
             <ui-button variant="ghost" (click)="closeModal()">{{ 'common.cancel' | translate }}</ui-button>
             <ui-button (click)="save()" [loading]="saving()">
-              {{ (editing() ? 'common.updated' : 'common.create') | translate }}
+              {{ (editing() ? 'common.save' : 'common.create') | translate }}
             </ui-button>
           </div>
         </ng-template>

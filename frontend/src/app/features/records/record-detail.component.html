@@ -16,6 +16,7 @@
     />
   } @else {
     @if (row(); as individual) {
+    <div class="records-page-surface">
     <header class="detail__head">
       <div class="detail__heading">
         <button type="button" class="detail__back" (click)="goBack()">
@@ -92,9 +93,13 @@
       </div>
     </div>
 
-    <ui-modal [(open)]="formOpen" size="lg" [busy]="saving()" [title]="'form.editTitle' | translate: { entity: meta()?.label ?? '' }">
-      @if (meta(); as meta) {
-        <entity-form [meta]="meta" [value]="individual" [busy]="saving()" [writable]="writable" (submitted)="save($event)" (cancelled)="formOpen.set(false)" />
+    </div>
+
+    <ui-modal [(open)]="formOpen" size="xl" [busy]="saving()" [title]="'form.editTitle' | translate: { entity: entityName() }">
+      @if (formOpen()) {
+        @if (meta(); as meta) {
+          <entity-form [meta]="meta" [value]="individual" [busy]="saving()" [writable]="writable" (submitted)="save($event)" (cancelled)="formOpen.set(false)" />
+        }
       }
     </ui-modal>
 

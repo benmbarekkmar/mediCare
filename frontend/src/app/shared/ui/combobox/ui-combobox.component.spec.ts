@@ -64,7 +64,8 @@ describe('UiComboboxComponent', () => {
   };
 
   const root = (): HTMLElement => fixture.nativeElement as HTMLElement;
-  const options = (): HTMLElement[] => Array.from(root().querySelectorAll('[role=option]'));
+  const options = (): HTMLElement[] => Array.from(document.body.querySelectorAll('[role=option]'));
+  const listbox = (): HTMLElement | null => document.body.querySelector('[role=listbox]');
   const chips = (): string[] =>
     Array.from(root().querySelectorAll('.chip__label')).map((node) => node.textContent?.trim() ?? '');
 
@@ -93,19 +94,19 @@ describe('UiComboboxComponent', () => {
 
     expect(host.terms).toEqual(['ad']);
     expect(options().map((node) => node.textContent?.trim())).toEqual(['Ada Lovelace']);
-    expect(root().querySelector('[role=listbox]')).not.toBeNull();
+    expect(listbox()).not.toBeNull();
     expect(inputEl.getAttribute('aria-expanded')).toBe('true');
   }));
 
   it('shows a loading row while the request is in flight', fakeAsync(() => {
     setup();
     type('ada');
-    expect(root().textContent).toContain('ui.combobox.searching');
+    expect(document.body.textContent).toContain('ui.combobox.searching');
 
     tick(300);
     fixture.detectChanges();
-    expect(root().textContent).not.toContain('ui.combobox.searching');
-    expect(root().textContent).toContain('Ada Lovelace');
+    expect(document.body.textContent).not.toContain('ui.combobox.searching');
+    expect(document.body.textContent).toContain('Ada Lovelace');
   }));
 
   it('navigates the listbox with the keyboard and writes ids to the form', fakeAsync(() => {
@@ -131,7 +132,7 @@ describe('UiComboboxComponent', () => {
     expect(options()[0]?.getAttribute('aria-selected')).toBe('true');
 
     key('Escape');
-    expect(root().querySelector('[role=listbox]')).toBeNull();
+    expect(listbox()).toBeNull();
     expect(inputEl.getAttribute('aria-expanded')).toBe('false');
   }));
 
@@ -189,7 +190,7 @@ describe('UiComboboxComponent', () => {
     key('Enter');
     expect(host.control.value).toBe('pat_3');
     expect(inputEl.value).toBe('Barbara Liskov');
-    expect(root().querySelector('[role=listbox]')).toBeNull();
+    expect(listbox()).toBeNull();
   }));
 
   it('disables the field and reports the required error once touched', fakeAsync(() => {

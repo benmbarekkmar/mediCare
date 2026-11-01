@@ -364,6 +364,39 @@
     "subtitle": "Exécutez des requêtes de lecture sur l’ontologie en direct ({{triples}} triplets)."
   },
   "entities": {
-    "ageGroup": "Tranche d’âge"
+    "ageGroup": "Tranche d’âge",
+    "patients": { "singular": "Patient", "plural": "Patients" },
+    "doctors": { "singular": "Médecin", "plural": "Médecins" },
+    "diseases": { "singular": "Maladie", "plural": "Maladies" },
+    "symptoms": { "singular": "Symptôme", "plural": "Symptômes" },
+    "treatments": { "singular": "Traitement", "plural": "Traitements" },
+    "medications": { "singular": "Médicament", "plural": "Médicaments" },
+    "tests": { "singular": "Examen médical", "plural": "Examens médicaux" },
+    "appointments": { "singular": "Rendez-vous médical", "plural": "Rendez-vous" },
+    "hospitals": { "singular": "Hôpital", "plural": "Hôpitaux" },
+    "departments": { "singular": "Service médical", "plural": "Services médicaux" },
+    "fields": {
+      "name": "Nom", "label": "Nom", "age": "Âge", "gender": "Genre", "bloodType": "Groupe sanguin",
+      "phone": "Téléphone", "licenseNumber": "Numéro de licence", "description": "Description", "duration": "Durée",
+      "dosage": "Posologie", "drugClass": "Classe de médicament", "date": "Date et heure", "result": "Résultat",
+      "status": "Statut", "specialty": "Spécialité", "categories": "Catégories", "type": "Classification"
+    },
+    "values": {
+      "Male": "Homme", "Female": "Femme", "Pending": "En attente", "Confirmed": "Confirmé", "Completed": "Terminé",
+      "Cancelled": "Annulé", "GeneralPractitioner": "Médecin généraliste", "EmergencyPhysician": "Médecin urgentiste",
+      "Cardiologist": "Cardiologue", "Dermatologist": "Dermatologue", "Neurologist": "Neurologue",
+      "CardiologyDepartment": "Cardiologie", "DermatologyDepartment": "Dermatologie", "NeurologyDepartment": "Neurologie",
+      "EmergencyDepartment": "Urgences", "GeneralMedicineDepartment": "Médecine générale",
+      "InfectiousDisease": "Maladie infectieuse", "ChronicDisease": "Maladie chronique",
+      "CardiovascularDisease": "Maladie cardiovasculaire", "RespiratoryDisease": "Maladie respiratoire", "Fever": "Fièvre",
+      "Headache": "Mal de tête", "Cough": "Toux", "Fatigue": "Fatigue", "ChestPain": "Douleur thoracique",
+      "SkinRash": "Éruption cutanée", "MedicationTreatment": "Traitement médicamenteux",
+      "SurgicalTreatment": "Traitement chirurgical", "Physiotherapy": "Kinésithérapie", "Antibiotic": "Antibiotique",
+      "Analgesic": "Analgésique", "Antiviral": "Antiviral", "Antihypertensive": "Antihypertenseur",
+      "Antidiabetic": "Antidiabétique", "BloodTest": "Analyse sanguine", "UrineTest": "Analyse d’urine",
+      "XRay": "Radiographie", "MRI": "IRM", "CTScan": "Scanner", "Consultation": "Consultation",
+      "FollowUpAppointment": "Rendez-vous de suivi", "EmergencyAppointment": "Rendez-vous d’urgence",
+      "PublicHospital": "Hôpital public", "PrivateHospital": "Hôpital privé", "UniversityHospital": "Hôpital universitaire"
+    }
   }
 }

@@ -8,7 +8,7 @@
     },
     "searchEntity": "Search {{entity}}…",
     "noMatch": "No match, type to search",
-    "typeHint": "Chooses the ontology class the record is asserted to.",
+    "typeHint": "Select the ontology class for this record.",
     "axiomNote": "Saved records are checked against the ontology axioms by the server.",
     "required": "Required",
     "createTitle": "New {{entity}}",

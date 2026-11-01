@@ -1,5 +1,5 @@
 @if (metaFor(); as meta) {
-  <div class="page">
+  <div class="page records-page-surface">
     <ui-page-header [title]="title()" [subtitle]="meta.description" [icon]="'table'">
       <div uiPageActions>
         @if (canCreate()) {
@@ -52,8 +52,10 @@
     </ui-card>
   </div>
 
-  <ui-modal [(open)]="formOpen" size="lg" [busy]="saving()" [title]="(formValue() ? 'form.editTitle' : 'form.createTitle') | translate: { entity: title() }">
-    <entity-form [meta]="meta" [value]="formValue()" [busy]="saving()" [writable]="writableFor()" (submitted)="save($event)" (cancelled)="closeForm()" />
+  <ui-modal [(open)]="formOpen" size="xl" [busy]="saving()" [title]="(formValue() ? 'form.editTitle' : 'form.createTitle') | translate: { entity: entityName() }">
+    @if (formOpen()) {
+      <entity-form [meta]="meta" [value]="formValue()" [busy]="saving()" [writable]="writableFor()" (submitted)="save($event)" (cancelled)="closeForm()" />
+    }
   </ui-modal>
 
   <ui-confirm-dialog
@@ -66,7 +68,7 @@
     (confirmed)="confirmDelete()"
   />
 } @else {
-  <div class="page">
+  <div class="page records-page-surface">
     @if (metaLoadError()) {
       <ui-error-state [title]="'uipage.loadFailed' | translate" [message]="''" (retry)="loadMetadata(true)" />
     } @else {

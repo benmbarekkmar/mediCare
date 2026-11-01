@@ -364,6 +364,39 @@
     "subtitle": "Run read queries against the live ontology store ({{triples}} triples)."
   },
   "entities": {
-    "ageGroup": "Age group"
+    "ageGroup": "Age group",
+    "patients": { "singular": "Patient", "plural": "Patients" },
+    "doctors": { "singular": "Doctor", "plural": "Doctors" },
+    "diseases": { "singular": "Disease", "plural": "Diseases" },
+    "symptoms": { "singular": "Symptom", "plural": "Symptoms" },
+    "treatments": { "singular": "Treatment", "plural": "Treatments" },
+    "medications": { "singular": "Medication", "plural": "Medications" },
+    "tests": { "singular": "Medical Test", "plural": "Medical Tests" },
+    "appointments": { "singular": "Medical Appointment", "plural": "Appointments" },
+    "hospitals": { "singular": "Hospital", "plural": "Hospitals" },
+    "departments": { "singular": "Medical Department", "plural": "Departments" },
+    "fields": {
+      "name": "Name", "label": "Name", "age": "Age", "gender": "Gender", "bloodType": "Blood type",
+      "phone": "Phone number", "licenseNumber": "License number", "description": "Description", "duration": "Duration",
+      "dosage": "Dosage", "drugClass": "Drug class", "date": "Date and time", "result": "Result", "status": "Status",
+      "specialty": "Specialty", "categories": "Categories", "type": "Classification"
+    },
+    "values": {
+      "Male": "Male", "Female": "Female", "Pending": "Pending", "Confirmed": "Confirmed", "Completed": "Completed",
+      "Cancelled": "Cancelled", "GeneralPractitioner": "General practitioner", "EmergencyPhysician": "Emergency physician",
+      "Cardiologist": "Cardiologist", "Dermatologist": "Dermatologist", "Neurologist": "Neurologist",
+      "CardiologyDepartment": "Cardiology", "DermatologyDepartment": "Dermatology", "NeurologyDepartment": "Neurology",
+      "EmergencyDepartment": "Emergency medicine", "GeneralMedicineDepartment": "General medicine",
+      "InfectiousDisease": "Infectious disease", "ChronicDisease": "Chronic disease",
+      "CardiovascularDisease": "Cardiovascular disease", "RespiratoryDisease": "Respiratory disease", "Fever": "Fever",
+      "Headache": "Headache", "Cough": "Cough", "Fatigue": "Fatigue", "ChestPain": "Chest pain", "SkinRash": "Skin rash",
+      "MedicationTreatment": "Medication", "SurgicalTreatment": "Surgical treatment", "Physiotherapy": "Physiotherapy",
+      "Antibiotic": "Antibiotic", "Analgesic": "Analgesic", "Antiviral": "Antiviral",
+      "Antihypertensive": "Antihypertensive", "Antidiabetic": "Antidiabetic", "BloodTest": "Blood test",
+      "UrineTest": "Urine test", "XRay": "X-ray", "MRI": "MRI", "CTScan": "CT scan",
+      "Consultation": "Consultation", "FollowUpAppointment": "Follow-up appointment",
+      "EmergencyAppointment": "Emergency appointment", "PublicHospital": "Public hospital",
+      "PrivateHospital": "Private hospital", "UniversityHospital": "University hospital"
+    }
   }
 }

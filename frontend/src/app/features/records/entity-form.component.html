@@ -1,71 +1,93 @@
 <form [formGroup]="form" (ngSubmit)="submit()" class="eform" novalidate>
-  <fieldset class="eform__fieldset">
-    <legend class="eform__legend">{{ 'form.section.identity' | translate }}</legend>
-    <div class="eform__grid">
-      @for (field of controls; track field.field) {
-        @if (editable(field.field)) {
-          <div class="eform__cell" [class.eform__cell--wide]="field.datatype === 'string' && !field.values && (field.maxLength ?? 0) > 40">
-            @if (field.values && field.values.length > 0) {
-              <ui-select
-                [formControlName]="field.field"
-                [label]="fieldLabel(field.field)"
-                [options]="optionsFor(field)"
-                [required]="field.required"
-                [placeholder]="'common.select' | translate"
-                [errors]="errorsFor(field.field)"
-              />
-            } @else if (field.datatype === 'boolean') {
-              <ui-checkbox [formControlName]="field.field" [label]="fieldLabel(field.field)" />
-            } @else if (field.datatype === 'date') {
-              <ui-date-input
-                [formControlName]="field.field"
-                [label]="fieldLabel(field.field)"
-                [required]="field.required"
-                [errors]="errorsFor(field.field)"
-              />
-            } @else if (field.datatype === 'dateTime') {
-              <ui-datetime-input
-                [formControlName]="field.field"
-                [label]="fieldLabel(field.field)"
-                [required]="field.required"
-                [errors]="errorsFor(field.field)"
-              />
-            } @else if (field.datatype === 'string' && (field.maxLength ?? 0) > 120) {
-              <ui-textarea
-                [formControlName]="field.field"
-                [label]="fieldLabel(field.field)"
-                [required]="field.required"
-                [maxCharacters]="field.maxLength"
-                [errors]="errorsFor(field.field)"
-              />
-            } @else {
-              <ui-input
-                [formControlName]="field.field"
-                [label]="fieldLabel(field.field)"
-                [type]="field.datatype === 'integer' || field.datatype === 'decimal' ? 'number' : 'text'"
-                [required]="field.required"
-                [min]="field.min"
-                [max]="field.max"
-                [errors]="errorsFor(field.field)"
-              />
-            }
-          </div>
+  @if (hasIdentityFields) {
+    <fieldset class="eform__fieldset">
+      <legend class="eform__legend">{{ 'form.section.identity' | translate }}</legend>
+      <div class="eform__grid">
+        @for (field of controls; track field.field) {
+          @if (editable(field.field)) {
+            <div class="eform__cell" [class.eform__cell--wide]="field.datatype === 'string' && !field.values && (field.maxLength ?? 0) > 40">
+              @if (field.values && field.values.length > 0) {
+                <ui-select
+                  [formControlName]="field.field"
+                  [label]="fieldLabel(field.field)"
+                  [options]="optionsFor(field)"
+                  [required]="field.required"
+                  [placeholder]="'common.select' | translate"
+                  [allowEmpty]="!field.required"
+                  [errors]="errorsFor(field.field)"
+                />
+              } @else if (field.datatype === 'boolean') {
+                <ui-checkbox [formControlName]="field.field" [label]="fieldLabel(field.field)" />
+              } @else if (field.datatype === 'date') {
+                <ui-date-input
+                  [formControlName]="field.field"
+                  [label]="fieldLabel(field.field)"
+                  [required]="field.required"
+                  [errors]="errorsFor(field.field)"
+                />
+              } @else if (field.datatype === 'dateTime') {
+                <ui-datetime-input
+                  [formControlName]="field.field"
+                  [label]="fieldLabel(field.field)"
+                  [required]="field.required"
+                  [errors]="errorsFor(field.field)"
+                />
+              } @else if (field.datatype === 'string' && (field.maxLength ?? 0) > 120) {
+                <ui-textarea
+                  [formControlName]="field.field"
+                  [label]="fieldLabel(field.field)"
+                  [required]="field.required"
+                  [maxCharacters]="field.maxLength"
+                  [errors]="errorsFor(field.field)"
+                />
+              } @else {
+                <ui-input
+                  [formControlName]="field.field"
+                  [label]="fieldLabel(field.field)"
+                  [type]="field.datatype === 'integer' || field.datatype === 'decimal' ? 'number' : 'text'"
+                  [required]="field.required"
+                  [min]="field.min"
+                  [max]="field.max"
+                  [errors]="errorsFor(field.field)"
+                />
+              }
+            </div>
+          }
         }
-      }
 
-      @if (typeFacet; as facet) {
-        <div class="eform__cell">
-          <ui-select
-            [formControlName]="facet.field"
-            [label]="typeFacetLabel()"
-            [options]="facetOptions(facet.classes)"
-            [required]="!value()"
-            [hint]="'form.typeHint' | translate"
-          />
-        </div>
-      }
-    </div>
-  </fieldset>
+        @if (typeFacet; as facet) {
+          @if (editable(facet.field)) {
+            <div class="eform__cell">
+              @if (facet.multiple) {
+                <ui-combobox
+                  [formControlName]="facet.field"
+                  [label]="typeFacetLabel()"
+                  [search]="searchFacet(facet.classes)"
+                  [initial]="facetInitial()"
+                  [multiple]="true"
+                  [required]="facet.required"
+                  [placeholder]="'common.select' | translate"
+                  [emptyMessage]="'form.noMatch' | translate"
+                  [hint]="'form.typeHint' | translate"
+                />
+              } @else {
+                <ui-select
+                  [formControlName]="facet.field"
+                  [label]="typeFacetLabel()"
+                  [options]="facetOptions(facet.classes)"
+                  [required]="facet.required"
+                  [allowEmpty]="!facet.required"
+                  [placeholder]="'common.select' | translate"
+                  [hint]="'form.typeHint' | translate"
+                  [errors]="errorsFor(facet.field)"
+                />
+              }
+            </div>
+          }
+        }
+      </div>
+    </fieldset>
+  }
 
   @if (relations.length > 0) {
     <fieldset class="eform__fieldset">
@@ -76,7 +98,7 @@
             <div class="eform__cell">
               <ui-combobox
                 [formControlName]="'rel:' + relation.field"
-                [label]="relation.targetLabel"
+                [label]="relationLabel(relation)"
                 [search]="searchRefs(relation.target)"
                 [initial]="initialRefs(relation)"
                 [multiple]="relation.cardinality === 'many'"

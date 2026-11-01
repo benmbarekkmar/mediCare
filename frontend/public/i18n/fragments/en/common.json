@@ -8,6 +8,7 @@
     "created": "Created",
     "deleted": "Deleted",
     "updated": "Updated",
+    "save": "Save",
     "operationFailed": "The operation could not be completed",
     "retry": "Try again",
     "close": "Close",

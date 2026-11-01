@@ -1,7 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnInit,
+  OnChanges,
+  SimpleChanges,
   inject,
   input,
   output,
@@ -9,9 +10,9 @@ import {
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { EntitiesService } from '../../core/api/entity.service';
-import type { DataFieldMeta, EntityInput, EntityMeta, Individual, Ref, RelationMeta } from '../../core/api/models';
+import type { DataFieldMeta, EntityInput, EntityKey, EntityMeta, Individual, Ref, RelationMeta } from '../../core/api/models';
 import { toDateInput, toDateTimeInput } from '../../core/util/format';
 import { labelOf } from '../../core/util/labels';
 import { UiCheckboxComponent } from '../../shared/ui/checkbox/ui-checkbox.component';
@@ -52,7 +53,7 @@ const HIDDEN_FIELDS = new Set<string>();
   templateUrl: './entity-form.component.html',
   styleUrls: ['./entity-form.component.scss'],
 })
-export class EntityFormComponent implements OnInit {
+export class EntityFormComponent implements OnChanges {
   private readonly fb = inject(FormBuilder);
   private readonly entities = inject(EntitiesService);
   private readonly translate = inject(TranslateService);
@@ -67,20 +68,24 @@ export class EntityFormComponent implements OnInit {
   readonly submitted = output<EntityInput>();
   readonly cancelled = output<void>();
 
-  readonly form = inject(FormBuilder).group({});
+  readonly form = this.fb.group({});
   readonly relationIds = signal<Record<string, Ref[]>>({});
 
-  ngOnInit(): void {
-    // Create controls before the first render binds formControlName directives.
-    this.build();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['meta'] || changes['value'] || changes['writable']) this.build();
   }
 
   get controls(): readonly DataFieldMeta[] {
-    return this.meta().data.filter((field) => !HIDDEN_FIELDS.has(field.field));
+    return this.meta().data.filter((field) => !HIDDEN_FIELDS.has(field.field) && this.editable(field.field));
   }
 
   get relations(): readonly RelationMeta[] {
-    return this.meta().relations.filter((relation) => !relation.readOnly && !relation.virtual);
+    return this.meta().relations.filter((relation) => !relation.readOnly && !relation.virtual && this.editable(relation.field));
+  }
+
+  get hasIdentityFields(): boolean {
+    const facet = this.typeFacet;
+    return this.controls.length > 0 || (!!facet && this.editable(facet.field));
   }
 
   get typeFacet(): EntityMeta['typeFacet'] {
@@ -106,19 +111,44 @@ export class EntityFormComponent implements OnInit {
   }
 
   searchPlaceholder(target: string): string {
-    return this.translate.instant('form.searchEntity', { entity: labelOf(this.translate, `entities.keys.${target}`, target) });
+    const entity = labelOf(this.translate, 'entities.' + target + '.plural', target);
+    return this.translate.instant('form.searchEntity', { entity });
+  }
+
+  relationLabel(relation: RelationMeta): string {
+    return labelOf(this.translate, 'entities.' + relation.target + '.singular', relation.targetLabel);
   }
 
   labelOfValue(value: string): string {
-    return labelOf(this.translate, `entities.values.${value}`, value);
+    return labelOf(this.translate, 'entities.values.' + value, value);
   }
 
   facetOptions(values: readonly string[]): SelectOption[] {
     return values.map((value) => ({ value, label: this.labelOfValue(value) }));
   }
 
+  facetInitial(): Ref[] {
+    const facet = this.typeFacet;
+    if (!facet) return [];
+    const types = this.value()?.types ?? [];
+    return facet.classes
+      .filter((value) => types.includes(value))
+      .map((value) => ({ id: value, iri: '', label: this.labelOfValue(value), type: value }));
+  }
+
+  searchFacet(values: readonly string[]): (term: string) => Observable<Ref[]> {
+    return (term: string) => {
+      const query = term.trim().toLocaleLowerCase();
+      return of(
+        values
+          .filter((value) => !query || value.toLocaleLowerCase().includes(query) || this.labelOfValue(value).toLocaleLowerCase().includes(query))
+          .map((value) => ({ id: value, iri: '', label: this.labelOfValue(value), type: value })),
+      );
+    };
+  }
+
   searchRefs(target: string): (term: string) => Observable<Ref[]> {
-    return (term: string) => this.entities.refs(target as never, term, 20);
+    return (term: string) => this.entities.refs(target as EntityKey, term, 20);
   }
 
   initialRefs(relation: RelationMeta): Ref[] {
@@ -127,13 +157,15 @@ export class EntityFormComponent implements OnInit {
 
   errorsFor(field: string): string[] {
     const control = this.form.get(field);
-    if (!control || control.valid || control.pristine) return [];
+    if (!control || control.valid || (control.pristine && !control.touched)) return [];
     const out: string[] = [];
     if (control.hasError('required')) out.push(this.translate.instant('errors.field.required'));
     if (control.hasError('min')) out.push(this.translate.instant('errors.field.min', { min: control.getError('min')['min'] }));
     if (control.hasError('max')) out.push(this.translate.instant('errors.field.max', { max: control.getError('max')['max'] }));
     if (control.hasError('maxlength'))
-      out.push(this.translate.instant('errors.field.maxlength', { required: control.getError('maxlength')['requiredLength'] }));
+      out.push(this.translate.instant('errors.field.maxlength', { requiredLength: control.getError('maxlength')['requiredLength'] }));
+    if (control.hasError('minlength'))
+      out.push(this.translate.instant('errors.field.minlength', { requiredLength: control.getError('minlength')['requiredLength'] }));
     if (control.hasError('pattern')) out.push(this.translate.instant('errors.field.pattern'));
     if (control.hasError('email')) out.push(this.translate.instant('errors.field.email'));
     if (control.hasError('date')) out.push(this.translate.instant('errors.field.date'));
@@ -141,7 +173,7 @@ export class EntityFormComponent implements OnInit {
   }
 
   get canSubmit(): boolean {
-    return this.form.valid && !this.busy();
+    return !this.busy();
   }
 
   submit(): void {
@@ -150,18 +182,26 @@ export class EntityFormComponent implements OnInit {
       return;
     }
     const meta = this.meta();
+    const current = this.value();
+    const facet = this.typeFacet;
     const raw = this.form.getRawValue() as Record<string, unknown>;
     const body: EntityInput = { relations: {}, label: '' };
     for (const [key, value] of Object.entries(raw)) {
-      if (key.startsWith('rel:')) continue;
-      if (value === '' || value === null || value === undefined) continue;
+      if (key.startsWith('rel:') || key === facet?.field || !meta.data.some((field) => field.field === key)) continue;
+      if (current && !this.form.get(key)?.dirty) continue;
+      if (value === '' || value === null || value === undefined) {
+        if (current) body[key] = null;
+        continue;
+      }
       body[key] = value as string | number | boolean | string[];
     }
     // the label is the human name the store indexes and the tables show
     const nameValue = body[meta.nameField];
-    body['label'] = typeof nameValue === 'string' ? nameValue : String(nameValue ?? '');
+    if (nameValue !== undefined) body['label'] = typeof nameValue === 'string' ? nameValue : String(nameValue ?? '');
     for (const relation of this.relations) {
+      if (!this.editable(relation.field)) continue;
       const control = this.form.get(`rel:${relation.field}`);
+      if (!control) continue;
       const selected = control ? (control.value as unknown as string | string[] | Ref | Ref[] | null) : null;
       const ids = Array.isArray(selected)
         ? selected.map((ref) => (typeof ref === 'string' ? ref : ref.id))
@@ -172,10 +212,13 @@ export class EntityFormComponent implements OnInit {
             : [];
       (body['relations'] as Record<string, string[]>)[relation.field] = ids;
     }
-    const facet = this.typeFacet;
-    if (facet) {
-      const type = raw[facet.field] as string | undefined;
-      if (type) body['types'] = [type];
+    if (facet && this.editable(facet.field)) {
+      const control = this.form.get(facet.field);
+      if (control && (!current || control.dirty)) {
+        const selected = raw[facet.field];
+        const types = Array.isArray(selected) ? selected.map(String) : selected ? [String(selected)] : [];
+        body['types'] = types;
+      }
     }
     this.submitted.emit(body);
   }
@@ -185,6 +228,7 @@ export class EntityFormComponent implements OnInit {
   }
 
   private build(): void {
+    for (const name of Object.keys(this.form.controls)) this.form.removeControl(name);
     const current = this.value();
     const fields = current?.fields ?? {};
     const relations = current?.relations ?? {};
@@ -208,10 +252,10 @@ export class EntityFormComponent implements OnInit {
     }
     this.relationIds.set(initial);
     const facet = this.typeFacet;
-    if (facet && !current) {
-      this.form.addControl(facet.field, this.fb.control(facet.classes[0] ?? '', [Validators.required]));
-    } else if (facet) {
-      this.form.addControl(facet.field, this.fb.control(facet.classes[0] ?? ''));
+    if (facet && this.editable(facet.field)) {
+      const selectedTypes = facet.classes.filter((type) => current?.types.includes(type) ?? false);
+      const value = facet.multiple ? selectedTypes : selectedTypes[0] ?? '';
+      this.form.addControl(facet.field, this.fb.control(value, facet.required ? [Validators.required] : []));
     }
   }
 

@@ -20,8 +20,10 @@ import { FocusTrapDirective } from '../focus-trap.directive';
 
 /** Class put on `<body>` while an overlay is open, so the page cannot scroll. */
 const SCROLL_LOCK_CLASS = 'ui-overlay-scroll-lock';
+const OVERLAY_ACTIVE_CLASS = 'ui-overlay-active';
 
 let nextModalSequence = 0;
+let openModalCount = 0;
 
 /**
  * The dialog shell of the product: inline rendering (no portal), a `--scrim`
@@ -88,23 +90,27 @@ let nextModalSequence = 0;
       .ui-modal__backdrop {
         position: fixed;
         inset: 0;
-        z-index: var(--z-modal);
+        z-index: 2140;
         background: var(--scrim);
+        -webkit-backdrop-filter: blur(10px) saturate(115%);
+        backdrop-filter: blur(10px) saturate(115%);
         animation: ui-modal-backdrop var(--duration) var(--ease);
       }
       .ui-modal {
-        --dialog-width: 560px;
+        --dialog-width: 680px;
 
         position: fixed;
         inset-block-start: 50%;
         inset-inline-start: 50%;
         translate: -50% -50%;
-        z-index: var(--z-modal);
+        z-index: 2141;
         display: flex;
         flex-direction: column;
         box-sizing: border-box;
-        width: min(100% - var(--sp-4), var(--dialog-width));
-        max-height: min(85vh, 100% - var(--sp-5));
+        width: min(calc(100vw - var(--sp-6)), var(--dialog-width));
+        min-height: min(30dvh, 240px);
+        max-height: min(94dvh, calc(100dvh - var(--sp-6)));
+        overflow: hidden;
         background: var(--surface);
         border: 1px solid var(--border);
         border-radius: var(--radius-card);
@@ -116,17 +122,21 @@ let nextModalSequence = 0;
         }
       }
       .ui-modal[data-size='sm'] {
-        --dialog-width: 420px;
+        --dialog-width: 460px;
+        min-height: 0;
       }
       .ui-modal[data-size='lg'] {
-        --dialog-width: 720px;
+        --dialog-width: 960px;
+        min-height: min(48dvh, 520px);
       }
       .ui-modal[data-size='xl'] {
-        --dialog-width: 960px;
+        --dialog-width: 1200px;
+        min-height: min(52dvh, 580px);
       }
       .ui-modal__header {
         display: flex;
-        align-items: flex-start;
+        flex: 0 0 auto;
+        align-items: center;
         justify-content: space-between;
         gap: var(--sp-3);
         padding: var(--sp-4) var(--sp-4) var(--sp-3);
@@ -176,14 +186,20 @@ let nextModalSequence = 0;
         }
       }
       .ui-modal__body {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        min-height: 0;
         padding: var(--sp-4);
-        overflow-y: auto;
+        overflow: auto;
         overscroll-behavior: contain;
+        scrollbar-gutter: stable;
         color: var(--text);
         font-size: var(--fs-base);
       }
       .ui-modal__footer {
         display: flex;
+        flex: 0 0 auto;
         align-items: center;
         justify-content: flex-end;
         flex-wrap: wrap;
@@ -210,6 +226,22 @@ let nextModalSequence = 0;
         to {
           opacity: 1;
           transform: none;
+        }
+      }
+      @media (max-width: 640px) {
+        .ui-modal {
+          width: min(calc(100vw - var(--sp-3)), var(--dialog-width));
+          max-height: calc(100dvh - var(--sp-3));
+          border-radius: var(--radius-input);
+        }
+        .ui-modal__header {
+          padding: var(--sp-3);
+        }
+        .ui-modal__body {
+          padding: var(--sp-3);
+        }
+        .ui-modal__footer {
+          padding: var(--sp-3);
         }
       }
     `,
@@ -299,7 +331,9 @@ export class UiModalComponent {
     if (!body) return;
     const gap = Math.max(0, body.offsetWidth - body.clientWidth);
     this.scrollLock = { overflow: body.style.overflow, paddingInlineEnd: body.style.paddingInlineEnd };
+    openModalCount += 1;
     body.classList.add(SCROLL_LOCK_CLASS);
+    body.classList.add(OVERLAY_ACTIVE_CLASS);
     body.style.overflow = 'hidden';
     if (gap > 0) body.style.paddingInlineEnd = `calc(${body.style.paddingInlineEnd || '0px'} + ${gap}px)`;
   }
@@ -310,7 +344,10 @@ export class UiModalComponent {
     this.scrollLock = null;
     const body = this.document.body;
     if (!body) return;
+    openModalCount = Math.max(0, openModalCount - 1);
+    if (openModalCount > 0) return;
     body.classList.remove(SCROLL_LOCK_CLASS);
+    body.classList.remove(OVERLAY_ACTIVE_CLASS);
     body.style.overflow = saved.overflow;
     body.style.paddingInlineEnd = saved.paddingInlineEnd;
   }

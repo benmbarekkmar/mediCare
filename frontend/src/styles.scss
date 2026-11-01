@@ -7,6 +7,30 @@
 @use 'styles/print';
 @use 'styles/assistant';
 
+/* Modal content is rendered inline to preserve projected templates. Keep CDK
+   popovers above the modal when a combobox/select is expanded inside it. */
+.cdk-overlay-container {
+  z-index: 2142;
+}
+
+/* The modal is projected inside the active page, so make the background state
+   explicit on body as well. This keeps sticky topbars blurred even when a page
+   introduces its own stacking context. */
+body.ui-overlay-active app-topbar,
+body.ui-overlay-active .portal-bar,
+body.ui-overlay-active app-sidebar,
+body.ui-overlay-active .portal-sidebar {
+  filter: blur(7px);
+  transition: filter var(--duration-fast) var(--ease);
+}
+
+/* Route components keep their modal as a sibling of the page surface. Blur
+   only those page children so the projected modal remains perfectly sharp. */
+body.ui-overlay-active .records-page-surface {
+  filter: blur(7px);
+  transition: filter var(--duration-fast) var(--ease);
+}
+
 .shell__content > router-outlet ~ *,
 .portal-main > router-outlet ~ * {
   animation: route-enter 180ms ease both;

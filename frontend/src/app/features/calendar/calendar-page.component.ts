@@ -220,7 +220,7 @@ const TYPE_TOKENS: { readonly key: string; readonly token: string }[] = [
         [open]="dialogOpen()"
         (openChange)="dialogOpen.set($event)"
         [title]="dialogTitle()"
-        size="lg"
+        size="xl"
         [busy]="saving()"
       >
         @if (conflicts().length > 0) {
@@ -229,15 +229,17 @@ const TYPE_TOKENS: { readonly key: string; readonly token: string }[] = [
             <span class="clash-hint">{{ 'calendar.clash.hint' | translate }}</span>
           </ui-alert>
         }
-        @if (metaFor(); as meta) {
-          <entity-form
-            [meta]="meta"
-            [value]="formValue()"
-            [busy]="saving()"
-            [writable]="writable()"
-            (submitted)="onSubmit($event)"
-            (cancelled)="closeForm()"
-          />
+        @if (dialogOpen()) {
+          @if (metaFor(); as meta) {
+            <entity-form
+              [meta]="meta"
+              [value]="formValue()"
+              [busy]="saving()"
+              [writable]="writable()"
+              (submitted)="onSubmit($event)"
+              (cancelled)="closeForm()"
+            />
+          }
         }
       </ui-modal>
     </div>

@@ -75,7 +75,7 @@ const toEntries = (errors: ValidationErrors | null): FieldErrorEntry[] => {
         (change)="onChange($event)"
         (blur)="onBlur()"
       >
-        <option value="" [disabled]="true" [hidden]="true">
+        <option value="" [disabled]="!allowEmpty()" [hidden]="!allowEmpty()">
           {{ text(placeholder() ?? 'ui.select.placeholder') }}
         </option>
         @for (option of options(); track optionKey(option)) {
@@ -117,6 +117,7 @@ export class UiSelectComponent implements OnInit, ControlValueAccessor {
   readonly options = input<SelectOption[]>([]);
   readonly hint = input<string | null>(null);
   readonly placeholder = input<string | null>(null);
+  readonly allowEmpty = input<boolean>(false);
   readonly required = input<boolean>(false);
   readonly disabled = input<boolean>(false);
   readonly name = input<string | null>(null);

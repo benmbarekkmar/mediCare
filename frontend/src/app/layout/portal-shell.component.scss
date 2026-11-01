@@ -33,7 +33,7 @@
   flex-direction: column;
   min-width: 0;
   min-height: calc(100dvh - 42px);
-  overflow: clip;
+  overflow: visible;
   border: 1px solid var(--border);
   border-radius: 24px;
   background: var(--surface);
@@ -43,7 +43,7 @@
 .portal-bar {
   position: sticky;
   top: 12px;
-  z-index: var(--z-sticky);
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: var(--sp-3);
