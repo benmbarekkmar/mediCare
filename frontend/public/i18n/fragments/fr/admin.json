@@ -58,6 +58,12 @@
       "title": "Comptes utilisateurs",
       "subtitle": "{{count}} compte(s) sur cette instance",
       "searchPlaceholder": "Rechercher par nom, email ou rôle",
+      "filters": {
+        "role": "Rôle",
+        "status": "Statut du compte",
+        "all": "Tous",
+        "clear": "Effacer les filtres"
+      },
       "create": "Nouveau compte",
       "edit": "Modifier le compte",
       "created": "Compte créé",

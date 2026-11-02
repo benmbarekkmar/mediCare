@@ -217,6 +217,14 @@ export class EntityRepository {
           bucket[rel.field] = list;
         }
       }
+      if (rel.virtual === 'hospitalDoctors') {
+        const hospitalDoctors = await this.hospitalDoctors(unique);
+        for (const [hospital, doctors] of hospitalDoctors) {
+          const bucket = result.get(hospital);
+          if (!bucket) continue;
+          bucket[rel.field] = doctors;
+        }
+      }
       // guarantee the key exists so the API shape is stable
       for (const iri of unique) {
         const bucket = result.get(iri);
@@ -225,6 +233,49 @@ export class EntityRepository {
           bucket[rel.field] = rel.cardinality === 'one' ? null : [];
         }
       }
+    }
+    return result;
+  }
+
+  /** Resolve the virtual hospital -> doctors relation through departments. */
+  private async hospitalDoctors(hospitalIris: string[]): Promise<Map<string, Ref[]>> {
+    const result = new Map<string, Ref[]>();
+    const unique = [...new Set(hospitalIris.filter(Boolean))];
+    if (unique.length === 0) return result;
+    const hospitals = unique.map(iriToken).join(' ');
+    const query = prefixes.withPrefixes(
+      `SELECT DISTINCT ?hospital ?doctor ?dlabel ?dtype WHERE {
+        VALUES ?hospital { ${hospitals} }
+        ?department ${iriToken('locatedIn')} ?hospital .
+        ?doctor ${iriToken('worksIn')} ?department .
+        OPTIONAL { ?doctor rdfs:label ?dlabel }
+        OPTIONAL { ?doctor rdf:type ?dtype }
+      }`,
+    );
+    const { rows } = await this.s.select(query);
+    const typesByDoctor = new Map<string, string[]>();
+    for (const row of rows) {
+      const doctor = row['doctor']?.value;
+      const type = row['dtype']?.value;
+      if (!doctor) continue;
+      if (!typesByDoctor.has(doctor)) typesByDoctor.set(doctor, []);
+      if (type) typesByDoctor.get(doctor)?.push(shortType(type));
+    }
+    const doctorDef = ENTITY_DEFS.doctors;
+    for (const row of rows) {
+      const hospital = row['hospital']?.value;
+      const doctor = row['doctor']?.value;
+      if (!hospital || !doctor) continue;
+      const doctors = result.get(hospital) ?? [];
+      if (!doctors.some((ref) => ref.iri === doctor)) {
+        doctors.push({
+          id: localOf(doctor),
+          iri: doctor,
+          label: row['dlabel']?.value ?? localOf(doctor),
+          type: refType(typesByDoctor.get(doctor) ?? [], doctorDef),
+        });
+      }
+      result.set(hospital, doctors);
     }
     return result;
   }

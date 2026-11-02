@@ -574,7 +574,7 @@ const EMPTY_PAGE: Page<Individual> = {
                 />
               } @else {
                 <ul class="rows">
-                  @for (slot of pendingSlots(); track slot.id) {
+                  @for (slot of visiblePendingSlots(); track slot.id) {
                     <li class="row-item row-item--tall">
                       <span class="row-time">{{ timeText(slot.date) }}</span>
                       <span class="row-main">
@@ -617,6 +617,31 @@ const EMPTY_PAGE: Page<Individual> = {
                     </li>
                   }
                 </ul>
+                @if (pendingPageCount() > 1) {
+                  <nav class="list-pagination" [attr.aria-label]="'staff.day.reception.pending.pagination' | translate">
+                    <ui-button
+                      variant="ghost"
+                      size="sm"
+                      icon="arrow-left"
+                      [disabled]="pendingPage() === 1"
+                      (click)="previousPendingPage()"
+                    >
+                      {{ 'staff.day.reception.pending.previous' | translate }}
+                    </ui-button>
+                    <span class="list-pagination__status">
+                      {{ 'staff.day.reception.pending.page' | translate: { current: pendingPage(), total: pendingPageCount() } }}
+                    </span>
+                    <ui-button
+                      variant="ghost"
+                      size="sm"
+                      iconRight="arrow-right"
+                      [disabled]="pendingPage() === pendingPageCount()"
+                      (click)="nextPendingPage()"
+                    >
+                      {{ 'staff.day.reception.pending.next' | translate }}
+                    </ui-button>
+                  </nav>
+                }
               }
             </ui-card>
           </section>
@@ -624,14 +649,14 @@ const EMPTY_PAGE: Page<Individual> = {
           <section class="blocks">
             <ui-card
               [title]="'staff.day.reception.doctors.title' | translate"
-              [subtitle]="directoryCountLabel(doctorItems())"
+              [subtitle]="directoryCountLabel(doctorItems(), doctorTotal())"
               icon="stethoscope"
               [pad]="'none'"
             >
               <ng-template uiCardActions>
                 <a class="card-link" routerLink="/records/doctors">
                   <ui-button variant="ghost" size="sm" iconRight="arrow-right">
-                    {{ 'staff.day.allList' | translate }}
+                    {{ 'staff.day.seeAll' | translate }}
                   </ui-button>
                 </a>
               </ng-template>
@@ -655,7 +680,7 @@ const EMPTY_PAGE: Page<Individual> = {
                 />
               } @else {
                 <ul class="rows">
-                  @for (doctor of doctorItems(); track doctor.id) {
+                  @for (doctor of visibleDoctors(); track doctor.id) {
                     <li class="row-item row-item--plain">
                       <span class="row-main">
                         <a class="link truncate" [routerLink]="['/records/doctors', doctor.id]">{{ doctor.label }}</a>
@@ -676,14 +701,14 @@ const EMPTY_PAGE: Page<Individual> = {
 
             <ui-card
               [title]="'staff.day.reception.departments.title' | translate"
-              [subtitle]="directoryCountLabel(departmentItems())"
+              [subtitle]="directoryCountLabel(departmentItems(), departmentItems().length)"
               icon="building"
               [pad]="'none'"
             >
               <ng-template uiCardActions>
                 <a class="card-link" routerLink="/records/departments">
                   <ui-button variant="ghost" size="sm" iconRight="arrow-right">
-                    {{ 'staff.day.allList' | translate }}
+                    {{ 'staff.day.seeAll' | translate }}
                   </ui-button>
                 </a>
               </ng-template>
@@ -707,7 +732,7 @@ const EMPTY_PAGE: Page<Individual> = {
                 />
               } @else {
                 <ul class="rows">
-                  @for (department of departmentItems(); track department.id) {
+                  @for (department of visibleDepartments(); track department.id) {
                     <li class="row-item row-item--plain">
                       <span class="row-main">
                         <a class="link truncate" [routerLink]="['/records/departments', department.id]">
@@ -821,6 +846,20 @@ const EMPTY_PAGE: Page<Individual> = {
       }
       .rows .row-item:last-child {
         border-bottom: 0;
+      }
+      .list-pagination {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--sp-2);
+        padding: var(--sp-3) var(--sp-4);
+        border-top: 1px solid var(--border);
+        background: var(--surface-alt);
+      }
+      .list-pagination__status {
+        color: var(--text-muted);
+        font-size: var(--fs-sm);
+        text-align: center;
       }
       .row-item--tall {
         align-items: start;
@@ -1036,6 +1075,15 @@ export class StaffDayComponent {
   });
 
   readonly pendingSlots = computed(() => this.pendingItems().map((item) => slotOf(item)));
+  readonly pendingPage = signal(1);
+  readonly pendingPageSize = 5;
+  readonly pendingPageCount = computed(() => Math.max(1, Math.ceil(this.pendingSlots().length / this.pendingPageSize)));
+  readonly visiblePendingSlots = computed(() => {
+    const start = (this.pendingPage() - 1) * this.pendingPageSize;
+    return this.pendingSlots().slice(start, start + this.pendingPageSize);
+  });
+  readonly visibleDoctors = computed(() => this.doctorItems().slice(0, 5));
+  readonly visibleDepartments = computed(() => this.departmentItems().slice(0, 5));
 
   readonly pendingTests = computed(
     () => this.testItems().filter((test) => this.isPendingResult(test)),
@@ -1238,6 +1286,7 @@ export class StaffDayComponent {
       .subscribe({
         next: (page: Page<Individual>) => {
           this.pendingItems.set(page.items);
+          this.pendingPage.set(1);
           this.pendingLoading.set(false);
         },
         error: () => {
@@ -1348,6 +1397,14 @@ export class StaffDayComponent {
         },
         complete: () => this.loadDirectoryDepartments(),
       });
+  }
+
+  protected previousPendingPage(): void {
+    this.pendingPage.update((page) => Math.max(1, page - 1));
+  }
+
+  protected nextPendingPage(): void {
+    this.pendingPage.update((page) => Math.min(this.pendingPageCount(), page + 1));
   }
 
   private loadDirectoryDepartments(): void {
@@ -1505,8 +1562,11 @@ export class StaffDayComponent {
     return this.translate.instant('staff.day.reception.pending.subtitle', { count: this.pendingSlots().length });
   }
 
-  protected directoryCountLabel(items: Individual[]): string {
-    return this.translate.instant('staff.day.reception.directoryCount', { count: items.length });
+  protected directoryCountLabel(items: Individual[], total: number | null): string {
+    return this.translate.instant('staff.day.reception.directoryCount', {
+      count: Math.min(items.length, 5),
+      total: total ?? items.length,
+    });
   }
 
   protected departmentDetail(): string | null {

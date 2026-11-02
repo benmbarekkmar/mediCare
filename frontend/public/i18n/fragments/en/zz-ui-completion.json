@@ -132,6 +132,8 @@
       },
       "bookAnother": "Make another request",
       "chooseDepartment": "Choose the department where you would like to be seen.",
+      "departmentSearchPlaceholder": "Search a department, specialty or hospital",
+      "noDepartmentSearchResults": "No department matches your search.",
       "chooseDoctor": "Choose a doctor if you have a preference.",
       "chooseTime": "Select an available date and time.",
       "closedDay": "Appointments cannot be requested on this day. Please choose another date.",

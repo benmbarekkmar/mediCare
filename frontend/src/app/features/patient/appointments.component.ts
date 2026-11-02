@@ -17,6 +17,7 @@ import { UiEmptyStateComponent } from '../../shared/ui/empty-state/ui-empty-stat
 import { UiErrorStateComponent } from '../../shared/ui/error-state/ui-error-state.component';
 import { UiIconComponent } from '../../shared/ui/icon/ui-icon.component';
 import { UiPageHeaderComponent } from '../../shared/ui/page-header/ui-page-header.component';
+import { UiSearchBoxComponent } from '../../shared/ui/search-box/ui-search-box.component';
 import { UiSkeletonComponent } from '../../shared/ui/skeleton/ui-skeleton.component';
 
 type PortalLang = 'en' | 'fr';
@@ -85,6 +86,7 @@ const addDays = (value: Date, days: number): Date =>
     UiErrorStateComponent,
     UiIconComponent,
     UiPageHeaderComponent,
+    UiSearchBoxComponent,
     UiSkeletonComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -125,6 +127,39 @@ const addDays = (value: Date, days: number): Date =>
       </div>
     </ui-page-header>
 
+    @if (!loading() && !loadError()) {
+      <section class="appointment-filters" [attr.aria-label]="'patient.appointments.filters.label' | translate">
+        <ui-search-box
+          [value]="search()"
+          [placeholder]="'patient.appointments.filters.search' | translate"
+          (valueChange)="search.set($event)"
+        />
+        <label class="filter-select">
+          <span>{{ 'patient.appointments.filters.status' | translate }}</span>
+          <select [value]="statusFilter()" (change)="statusFilter.set($any($event.target).value)">
+            <option value="">{{ 'patient.appointments.filters.all' | translate }}</option>
+            @for (status of statusOptions(); track status) {
+              <option [value]="status">{{ statusLabel(status) }}</option>
+            }
+          </select>
+        </label>
+        <label class="filter-select">
+          <span>{{ 'patient.appointments.filters.type' | translate }}</span>
+          <select [value]="typeFilter()" (change)="typeFilter.set($any($event.target).value)">
+            <option value="">{{ 'patient.appointments.filters.all' | translate }}</option>
+            @for (type of typeOptions(); track type) {
+              <option [value]="type">{{ typeLabel(type) }}</option>
+            }
+          </select>
+        </label>
+        @if (hasFilters()) {
+          <button type="button" class="filter-clear" (click)="clearFilters()">
+            {{ 'patient.appointments.filters.clear' | translate }}
+          </button>
+        }
+      </section>
+    }
+
     @if (loading()) {
       <ui-card [title]="cardTitle()" elevated>
         <div class="stack">
@@ -158,10 +193,10 @@ const addDays = (value: Date, days: number): Date =>
       </ui-card>
     } @else {
       @if (view() === 'list') {
-        @if (upcoming().length > 0) {
+        @if (filteredUpcoming().length > 0) {
           <ui-card [title]="'patient.appointments.upcoming' | translate" elevated>
             <div class="stack">
-              @for (visit of upcoming(); track visit.id) {
+              @for (visit of filteredUpcoming(); track visit.id) {
                 <div class="visit">
                   <div class="visit__when">
                     <span class="visit__day">{{ visit.dayLabel }}</span>
@@ -198,10 +233,10 @@ const addDays = (value: Date, days: number): Date =>
           </ui-card>
         }
 
-        @if (past().length > 0) {
+        @if (filteredPast().length > 0) {
           <ui-card [title]="'patient.appointments.past' | translate" elevated class="mt">
             <div class="stack">
-              @for (visit of past(); track visit.id) {
+              @for (visit of filteredPast(); track visit.id) {
                 <div class="visit">
                   <div class="visit__when">
                     <span class="visit__day">{{ visit.dayLabel }}</span>
@@ -319,6 +354,55 @@ const addDays = (value: Date, days: number): Date =>
         align-items: center;
         gap: var(--sp-3);
         flex-wrap: wrap;
+      }
+      .appointment-filters {
+        display: flex;
+        align-items: end;
+        gap: var(--sp-3);
+        flex-wrap: wrap;
+        padding: var(--sp-3);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-card);
+        box-shadow: var(--shadow-sm);
+      }
+      .appointment-filters > ui-search-box {
+        flex: 1 1 18rem;
+        min-width: min(100%, 16rem);
+      }
+      .filter-select {
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp-1);
+        min-width: 10rem;
+        color: var(--text-muted);
+        font-size: var(--fs-xs);
+        font-weight: 600;
+      }
+      .filter-select select {
+        min-block-size: 2.5rem;
+        padding: 0 var(--sp-3);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-input);
+        background: var(--surface);
+        color: var(--text);
+        font: inherit;
+        font-size: var(--fs-sm);
+      }
+      .filter-select select:focus-visible {
+        outline: none;
+        box-shadow: var(--focus-ring);
+        border-color: var(--primary);
+      }
+      .filter-clear {
+        min-block-size: 2.5rem;
+        border: 0;
+        background: transparent;
+        color: var(--primary);
+        font: inherit;
+        font-size: var(--fs-sm);
+        font-weight: 600;
+        cursor: pointer;
       }
       .seg {
         display: inline-flex;
@@ -627,6 +711,9 @@ export class PatientAppointmentsComponent implements OnInit {
   readonly view = signal<'list' | 'agenda'>('list');
   readonly upcoming = signal<Visit[]>([]);
   readonly past = signal<Visit[]>([]);
+  readonly search = signal('');
+  readonly statusFilter = signal('');
+  readonly typeFilter = signal('');
 
   readonly loading = signal(true);
   readonly loadError = signal<string | null>(null);
@@ -644,9 +731,35 @@ export class PatientAppointmentsComponent implements OnInit {
   private cancelId: string | null = null;
 
   readonly cardTitle = computed(() => this.translate.instant('patient.appointments.title'));
-  readonly isEmpty = computed(() => this.upcoming().length === 0 && this.past().length === 0);
+  readonly statusOptions = computed(() => [...new Set([...this.upcoming(), ...this.past()].map((visit) => visit.status))].sort());
+  readonly typeOptions = computed(() => [...new Set([...this.upcoming(), ...this.past()].map((visit) => visit.type).filter((type): type is string => Boolean(type)))].sort());
+  readonly filteredUpcoming = computed(() => this.filterVisits(this.upcoming()));
+  readonly filteredPast = computed(() => this.filterVisits(this.past()));
+  readonly isEmpty = computed(() => this.filteredUpcoming().length === 0 && this.filteredPast().length === 0);
+  readonly hasFilters = computed(() => Boolean(this.search().trim() || this.statusFilter() || this.typeFilter()));
 
   readonly agenda = computed(() => this.buildAgenda(this.month(), this.selectedDay()));
+
+  clearFilters(): void {
+    this.search.set('');
+    this.statusFilter.set('');
+    this.typeFilter.set('');
+  }
+
+  private filterVisits(visits: Visit[]): Visit[] {
+    const term = this.search().trim().toLowerCase();
+    const status = this.statusFilter();
+    const type = this.typeFilter();
+    return visits.filter((visit) => {
+      if (status && visit.status !== status) return false;
+      if (type && visit.type !== type) return false;
+      if (!term) return true;
+      return [visit.departmentLabel, visit.doctorLabel ?? '', visit.status, visit.type ?? '', visit.dayLabel, visit.timeLabel]
+        .join(' ')
+        .toLowerCase()
+        .includes(term);
+    });
+  }
 
   agendaTitle(): string {
     return this.translate.instant('patient.appointments.agendaTitle');

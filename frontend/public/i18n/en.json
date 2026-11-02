@@ -58,6 +58,12 @@
       "title": "User accounts",
       "subtitle": "{{count}} account(s) on this instance",
       "searchPlaceholder": "Search by name, email or role",
+      "filters": {
+        "role": "Role",
+        "status": "Account status",
+        "all": "All",
+        "clear": "Clear filters"
+      },
       "create": "New account",
       "edit": "Edit account",
       "created": "Account created",
@@ -794,7 +800,7 @@
     "switchLanguage": "Switch the language",
     "userMenu": "Account menu",
     "globalSearch": "Search patients, doctors, diseases…",
-    "searchPlaceholder": "Type at least two characters",
+    "searchPlaceholder": "Search patients, doctors, diseases…",
     "searchEmpty": "Nothing found for {{term}}",
     "commandPalette": "Open the command palette",
     "notifications": "Upcoming appointments",
@@ -1391,6 +1397,7 @@
       "roleReceptionist": "Reception desk",
       "open": "Open",
       "allList": "All records",
+      "seeAll": "See all",
       "groupCount": "{{count}} visit(s)",
       "noPatient": "Patient not linked",
       "noProfileHint": "This account is not linked to an individual of the ontology yet.",
@@ -1484,6 +1491,10 @@
           "subtitle": "{{count}} booking(s) to confirm or cancel",
           "confirm": "Confirm",
           "cancel": "Cancel",
+          "pagination": "Confirmation pages",
+          "previous": "Previous",
+          "next": "Next",
+          "page": "Page {{current}} of {{total}}",
           "empty": "Nothing left to confirm",
           "emptyHint": "Every booking of the next two weeks already has an answer."
         },
@@ -1493,7 +1504,7 @@
         "departments": {
           "title": "Departments"
         },
-        "directoryCount": "{{count}} entry(ies) shown",
+        "directoryCount": "Showing {{count}} of {{total}} entries",
         "directoryEmpty": "The directory is empty",
         "directoryHint": "Ask an administrator to register the staff and the departments."
       }
@@ -1613,6 +1624,14 @@
       "past": "Previous visits",
       "agenda": "Agenda",
       "list": "List",
+      "filters": {
+        "label": "Filter appointments",
+        "search": "Search by doctor, department or date",
+        "status": "Status",
+        "type": "Type",
+        "all": "All",
+        "clear": "Clear filters"
+      },
       "empty": "No appointments to show.",
       "cancel": "Cancel appointment",
       "dismiss": "Close appointment details",
@@ -1684,6 +1703,8 @@
       },
       "bookAnother": "Make another request",
       "chooseDepartment": "Choose the department where you would like to be seen.",
+      "departmentSearchPlaceholder": "Search a department, specialty or hospital",
+      "noDepartmentSearchResults": "No department matches your search.",
       "chooseDoctor": "Choose a doctor if you have a preference.",
       "chooseTime": "Select an available date and time.",
       "closedDay": "Appointments cannot be requested on this day. Please choose another date.",

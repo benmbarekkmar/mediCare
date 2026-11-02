@@ -10,6 +10,7 @@
       "roleReceptionist": "Reception desk",
       "open": "Open",
       "allList": "All records",
+      "seeAll": "See all",
       "groupCount": "{{count}} visit(s)",
       "noPatient": "Patient not linked",
       "noProfileHint": "This account is not linked to an individual of the ontology yet.",
@@ -103,6 +104,10 @@
           "subtitle": "{{count}} booking(s) to confirm or cancel",
           "confirm": "Confirm",
           "cancel": "Cancel",
+          "pagination": "Confirmation pages",
+          "previous": "Previous",
+          "next": "Next",
+          "page": "Page {{current}} of {{total}}",
           "empty": "Nothing left to confirm",
           "emptyHint": "Every booking of the next two weeks already has an answer."
         },
@@ -112,7 +117,7 @@
         "departments": {
           "title": "Departments"
         },
-        "directoryCount": "{{count}} entry(ies) shown",
+        "directoryCount": "Showing {{count}} of {{total}} entries",
         "directoryEmpty": "The directory is empty",
         "directoryHint": "Ask an administrator to register the staff and the departments."
       }

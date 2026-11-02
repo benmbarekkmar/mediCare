@@ -132,6 +132,8 @@
       },
       "bookAnother": "Faire une nouvelle demande",
       "chooseDepartment": "Sélectionnez le service dans lequel vous souhaitez être reçu.",
+      "departmentSearchPlaceholder": "Rechercher un service, une spécialité ou un hôpital",
+      "noDepartmentSearchResults": "Aucun service ne correspond à votre recherche.",
       "chooseDoctor": "Choisissez un médecin si vous avez une préférence.",
       "chooseTime": "Sélectionnez une date et un créneau disponibles.",
       "closedDay": "Aucun rendez-vous ne peut être demandé ce jour-là. Choisissez une autre date.",

@@ -302,6 +302,14 @@
       "past": "Passés",
       "agenda": "Agenda",
       "list": "Liste",
+      "filters": {
+        "label": "Filtrer les rendez-vous",
+        "search": "Rechercher par médecin, service ou date",
+        "status": "Statut",
+        "type": "Type",
+        "all": "Tous",
+        "clear": "Effacer les filtres"
+      },
       "empty": "Aucun rendez-vous à afficher.",
       "cancel": "Annuler le rendez-vous",
       "dismiss": "Fermer les détails du rendez-vous"

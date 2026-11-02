@@ -10,7 +10,7 @@
     "switchLanguage": "Switch the language",
     "userMenu": "Account menu",
     "globalSearch": "Search patients, doctors, diseases…",
-    "searchPlaceholder": "Type at least two characters",
+    "searchPlaceholder": "Search patients, doctors, diseases…",
     "searchEmpty": "Nothing found for {{term}}",
     "commandPalette": "Open the command palette",
     "notifications": "Upcoming appointments",

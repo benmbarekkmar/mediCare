@@ -58,6 +58,12 @@
       "title": "User accounts",
       "subtitle": "{{count}} account(s) on this instance",
       "searchPlaceholder": "Search by name, email or role",
+      "filters": {
+        "role": "Role",
+        "status": "Account status",
+        "all": "All",
+        "clear": "Clear filters"
+      },
       "create": "New account",
       "edit": "Edit account",
       "created": "Account created",

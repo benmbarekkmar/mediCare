@@ -95,6 +95,28 @@ const ACTIONS = ['read', 'create', 'update', 'delete'] as const;
                 (valueChange)="term.set($event)"
                 [loading]="loading()"
               />
+              <label class="toolbar__select">
+                <span>{{ 'admin.users.filters.role' | translate }}</span>
+                <select [value]="roleFilter()" (change)="roleFilter.set($any($event.target).value); page.set(1)">
+                  <option value="">{{ 'admin.users.filters.all' | translate }}</option>
+                  @for (role of roleList(); track role) {
+                    <option [value]="role">{{ roleLabel(role) }}</option>
+                  }
+                </select>
+              </label>
+              <label class="toolbar__select">
+                <span>{{ 'admin.users.filters.status' | translate }}</span>
+                <select [value]="activeFilter()" (change)="activeFilter.set($any($event.target).value); page.set(1)">
+                  <option value="">{{ 'admin.users.filters.all' | translate }}</option>
+                  <option value="active">{{ 'admin.users.row.enabled' | translate }}</option>
+                  <option value="inactive">{{ 'admin.users.row.disabled' | translate }}</option>
+                </select>
+              </label>
+              @if (roleFilter() || activeFilter()) {
+                <button type="button" class="toolbar__clear" (click)="clearFilters()">
+                  {{ 'admin.users.filters.clear' | translate }}
+                </button>
+              }
             </div>
 
             @if (loading()) {
@@ -301,7 +323,42 @@ const ACTIONS = ['read', 'create', 'update', 'delete'] as const;
       }
       .toolbar {
         display: flex;
-        max-width: 480px;
+        align-items: end;
+        gap: var(--sp-3);
+        flex-wrap: wrap;
+      }
+      .toolbar > ui-search-box {
+        flex: 1 1 18rem;
+        max-width: 30rem;
+      }
+      .toolbar__select {
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp-1);
+        min-width: 9rem;
+        color: var(--text-muted);
+        font-size: var(--fs-xs);
+        font-weight: 600;
+      }
+      .toolbar__select select {
+        min-block-size: 2.5rem;
+        padding: 0 var(--sp-3);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-input);
+        background: var(--surface);
+        color: var(--text);
+        font: inherit;
+        font-size: var(--fs-sm);
+      }
+      .toolbar__clear {
+        min-block-size: 2.5rem;
+        border: 0;
+        background: transparent;
+        color: var(--primary);
+        font: inherit;
+        font-size: var(--fs-sm);
+        font-weight: 600;
+        cursor: pointer;
       }
       .table-skeleton {
         display: flex;
@@ -362,6 +419,8 @@ export class UsersComponent {
   readonly loading = signal(true);
   readonly loadError = signal(false);
   readonly term = signal('');
+  readonly roleFilter = signal('');
+  readonly activeFilter = signal('');
   readonly sortSig = signal<{ field: string; order: 'asc' | 'desc' } | null>(null);
   readonly page = signal(1);
   readonly pageSize = signal(20);
@@ -432,13 +491,20 @@ export class UsersComponent {
   readonly filtered = computed<PublicUser[]>(() => {
     const term = this.term().trim().toLowerCase();
     const all = this.users();
-    if (!term) return all;
     return all.filter((user) =>
-      [user.fullName, user.email, user.role, user.linkedId ?? ''].some((value) =>
+      (!this.roleFilter() || user.role === this.roleFilter()) &&
+      (!this.activeFilter() || (this.activeFilter() === 'active' ? user.active : !user.active)) &&
+      (!term || [user.fullName, user.email, user.role, user.linkedId ?? ''].some((value) =>
         value.toLowerCase().includes(term),
-      ),
+      )),
     );
   });
+
+  clearFilters(): void {
+    this.roleFilter.set('');
+    this.activeFilter.set('');
+    this.page.set(1);
+  }
 
   readonly sorted = computed<PublicUser[]>(() => {
     const sort = this.sortSig();

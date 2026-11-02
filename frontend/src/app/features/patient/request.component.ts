@@ -18,6 +18,7 @@ import { UiEmptyStateComponent } from '../../shared/ui/empty-state/ui-empty-stat
 import { UiIconComponent } from '../../shared/ui/icon/ui-icon.component';
 import { UiPageHeaderComponent } from '../../shared/ui/page-header/ui-page-header.component';
 import { UiSelectComponent, type SelectOption } from '../../shared/ui/select/ui-select.component';
+import { UiSearchBoxComponent } from '../../shared/ui/search-box/ui-search-box.component';
 import { UiSkeletonComponent } from '../../shared/ui/skeleton/ui-skeleton.component';
 import { UiStepperComponent, type UiStep } from '../../shared/ui/stepper/ui-stepper.component';
 
@@ -83,6 +84,7 @@ const pad = (value: number): string => String(value).padStart(2, '0');
     UiIconComponent,
     UiPageHeaderComponent,
     UiSelectComponent,
+    UiSearchBoxComponent,
     UiSkeletonComponent,
     UiStepperComponent,
   ],
@@ -93,6 +95,7 @@ const pad = (value: number): string => String(value).padStart(2, '0');
       [title]="'patient.request.title' | translate"
       [subtitle]="'patient.request.subtitle' | translate"
       icon="calendar-check"
+      tone="hero"
       back="/patient/appointments"
     />
 
@@ -134,6 +137,7 @@ const pad = (value: number): string => String(value).padStart(2, '0');
       </ui-card>
     } @else {
       <ui-stepper
+        class="request-stepper"
         [steps]="steps()"
         [(index)]="step"
         [completed]="completedFlags()"
@@ -144,6 +148,11 @@ const pad = (value: number): string => String(value).padStart(2, '0');
         @if (step() === 0) {
           <div class="panel">
             <p class="panel__hint">{{ 'patient.request.chooseDepartment' | translate }}</p>
+            <ui-search-box
+              class="department-search"
+              [(value)]="departmentSearch"
+              [placeholder]="'patient.request.departmentSearchPlaceholder' | translate"
+            />
 
             @if (loadingDepartments()) {
               <div class="sk-lines">
@@ -153,9 +162,11 @@ const pad = (value: number): string => String(value).padStart(2, '0');
               </div>
             } @else if (departments().length === 0) {
               <ui-empty-state icon="building" [title]="'patient.request.noDepartments' | translate" />
+            } @else if (filteredDepartments().length === 0) {
+              <ui-empty-state icon="search" [title]="'patient.request.noDepartmentSearchResults' | translate" />
             } @else {
               <div class="grid">
-                @for (dept of departments(); track dept.id) {
+                @for (dept of filteredDepartments(); track dept.id) {
                   <button
                     type="button"
                     class="opt"
@@ -329,9 +340,29 @@ const pad = (value: number): string => String(value).padStart(2, '0');
         display: block;
       }
       .request-page {
+        position: relative;
         display: flex;
         flex-direction: column;
         gap: var(--sp-4);
+      }
+      .request-page::before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        inset-block-start: 2rem;
+        inset-inline-end: -8rem;
+        inline-size: 22rem;
+        block-size: 22rem;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgb(67 97 211 / 10%), rgb(67 97 211 / 0%) 70%);
+        pointer-events: none;
+      }
+      .request-stepper {
+        border-color: rgb(67 97 211 / 16%);
+        background:
+          linear-gradient(180deg, rgb(255 255 255 / 96%), rgb(248 250 255 / 98%)),
+          var(--surface);
+        box-shadow: 0 18px 45px rgb(31 48 94 / 8%);
       }
       .panel {
         display: flex;
@@ -339,13 +370,28 @@ const pad = (value: number): string => String(value).padStart(2, '0');
         gap: var(--sp-4);
       }
       .panel__hint {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-2);
         margin: 0;
         font-size: var(--fs-sm);
         color: var(--text-muted);
         overflow-wrap: anywhere;
       }
+      .panel__hint::before {
+        content: '';
+        inline-size: 7px;
+        block-size: 7px;
+        flex: none;
+        border-radius: 50%;
+        background: var(--primary);
+        box-shadow: 0 0 0 5px var(--primary-soft);
+      }
       .field {
         max-width: 22rem;
+      }
+      .department-search {
+        max-width: 34rem;
       }
       .grid {
         display: grid;
@@ -353,23 +399,40 @@ const pad = (value: number): string => String(value).padStart(2, '0');
         gap: var(--sp-3);
       }
       .opt {
+        position: relative;
         display: flex;
         flex-direction: column;
         gap: var(--sp-1);
         text-align: left;
-        min-block-size: 8.5rem;
-        padding: var(--sp-4);
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
+        min-block-size: 9.5rem;
+        padding: var(--sp-4) var(--sp-4) var(--sp-3);
+        background: rgb(255 255 255 / 84%);
+        border: 1px solid rgb(112 132 180 / 22%);
+        border-radius: calc(var(--radius) + 4px);
         color: var(--text);
         font: inherit;
         cursor: pointer;
-        transition: border-color var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
+        overflow: hidden;
+        transition:
+          transform var(--duration) var(--ease),
+          border-color var(--duration) var(--ease),
+          box-shadow var(--duration) var(--ease),
+          background var(--duration) var(--ease);
+      }
+      .opt::before {
+        content: '';
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline: 0;
+        block-size: 3px;
+        background: linear-gradient(90deg, var(--primary), #6f8cff);
+        opacity: 0;
+        transition: opacity var(--duration) var(--ease);
       }
       .opt:hover {
+        transform: translateY(-2px);
         border-color: var(--primary);
-        box-shadow: var(--shadow-sm);
+        box-shadow: 0 12px 24px rgb(37 60 124 / 12%);
       }
       .opt:focus-visible {
         outline: none;
@@ -377,12 +440,16 @@ const pad = (value: number): string => String(value).padStart(2, '0');
       }
       .opt--on {
         border-color: var(--primary);
-        background: var(--primary-soft);
-        box-shadow: inset 0 0 0 1px var(--primary);
+        background: linear-gradient(145deg, var(--primary-soft), rgb(255 255 255 / 96%));
+        box-shadow: inset 0 0 0 1px var(--primary), 0 12px 24px rgb(37 60 124 / 12%);
+      }
+      .opt--on::before {
+        opacity: 1;
       }
       .opt__title {
         font-size: var(--fs-base);
         font-weight: 600;
+        line-height: 1.35;
       }
       .opt__sub {
         font-size: var(--fs-sm);
@@ -431,28 +498,33 @@ const pad = (value: number): string => String(value).padStart(2, '0');
         gap: var(--sp-2);
       }
       .slot {
-        padding: var(--sp-2);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-input);
-        background: var(--surface);
+        min-block-size: 2.75rem;
+        padding: var(--sp-2) var(--sp-3);
+        border: 1px solid rgb(112 132 180 / 24%);
+        border-radius: var(--radius-pill);
+        background: rgb(255 255 255 / 84%);
         color: var(--text);
         font: inherit;
         font-family: var(--font-mono);
         font-size: var(--fs-sm);
         cursor: pointer;
+        transition: transform var(--duration) var(--ease), border-color var(--duration) var(--ease), background var(--duration) var(--ease);
       }
       .slot:hover:not(:disabled) {
+        transform: translateY(-1px);
         border-color: var(--primary);
+        background: var(--primary-soft);
       }
       .slot:focus-visible {
         outline: none;
         box-shadow: var(--focus-ring);
       }
       .slot--on {
-        background: var(--primary-soft);
+        background: var(--primary);
         border-color: var(--primary);
-        color: var(--primary);
+        color: var(--text-inverse);
         font-weight: 600;
+        box-shadow: 0 8px 18px rgb(67 97 211 / 24%);
       }
       .slot:disabled {
         opacity: 0.45;
@@ -465,9 +537,10 @@ const pad = (value: number): string => String(value).padStart(2, '0');
         gap: var(--sp-2);
         margin: 0;
         padding: var(--sp-3);
-        background: var(--surface-alt);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
+        background: linear-gradient(145deg, var(--surface-alt), rgb(255 255 255 / 94%));
+        border: 1px solid rgb(112 132 180 / 20%);
+        border-radius: calc(var(--radius) + 2px);
+        box-shadow: inset 0 1px 0 rgb(255 255 255 / 80%);
       }
       .review__row {
         display: flex;
@@ -589,6 +662,17 @@ const pad = (value: number): string => String(value).padStart(2, '0');
         .field {
           max-width: 100%;
         }
+        .department-search {
+          max-width: 100%;
+        }
+        .request-page::before {
+          inset-inline-end: -13rem;
+          inline-size: 20rem;
+          block-size: 20rem;
+        }
+        .grid {
+          grid-template-columns: 1fr;
+        }
         .review__row {
           flex-direction: column;
           gap: 0;
@@ -613,6 +697,7 @@ export class RequestAppointmentComponent implements OnInit {
   private readonly appointmentsMeta = signal<EntityMeta | undefined>(undefined);
 
   readonly departments = signal<Array<Individual & { typeLabel: string; emergency: boolean }>>([]);
+  readonly departmentSearch = signal('');
   readonly department = signal<Individual | null>(null);
   readonly loadingDepartments = signal(true);
 
@@ -641,6 +726,15 @@ export class RequestAppointmentComponent implements OnInit {
     { id: 'time', label: this.translate.instant('patient.request.stepTime') },
     { id: 'review', label: this.translate.instant('patient.request.stepReview') },
   ]);
+
+  readonly filteredDepartments = computed(() => {
+    const term = this.departmentSearch().trim().toLowerCase();
+    if (!term) return this.departments();
+    return this.departments().filter((dept) => {
+      const hospital = this.hospitalOf(dept) ?? '';
+      return [dept.label, dept.typeLabel, hospital].some((value) => value.toLowerCase().includes(term));
+    });
+  });
 
   readonly completedFlags = computed<boolean[]>(() => {
     const done = [

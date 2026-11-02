@@ -10,6 +10,7 @@
       "roleReceptionist": "Accueil",
       "open": "Ouvrir",
       "allList": "Tous les dossiers",
+      "seeAll": "Voir tout",
       "groupCount": "{{count}} visite(s)",
       "noPatient": "Patient non rattaché",
       "noProfileHint": "Ce compte n'est pas encore rattaché à un individu de l'ontologie.",
@@ -103,6 +104,10 @@
           "subtitle": "{{count}} demande(s) à confirmer ou à annuler",
           "confirm": "Confirmer",
           "cancel": "Annuler",
+          "pagination": "Pages des confirmations",
+          "previous": "Précédente",
+          "next": "Suivante",
+          "page": "Page {{current}} sur {{total}}",
           "empty": "Plus rien à confirmer",
           "emptyHint": "Toutes les demandes des deux prochaines semaines ont déjà une réponse."
         },
@@ -112,7 +117,7 @@
         "departments": {
           "title": "Services"
         },
-        "directoryCount": "{{count}} entrée(s) affichée(s)",
+        "directoryCount": "{{count}} entrée(s) affichée(s) sur {{total}}",
         "directoryEmpty": "L'annuaire est vide",
         "directoryHint": "Demandez à un administrateur d'enregistrer les praticiens et les services."
       }
