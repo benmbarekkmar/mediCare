@@ -40,6 +40,26 @@ describe('public projection', () => {
     expect(publicize(ENTITY_DEFS.hospitals, hospital)).toBe(hospital);
   });
 
+  it('drops appointments from a public department, and keeps its hospital and doctors', () => {
+    const department = {
+      id: 'CardiologyDepartment_01',
+      iri: 'd',
+      label: 'Cardiology',
+      types: ['CardiologyDepartment'],
+      fields: {},
+      relations: {
+        hospital: { id: 'Hospital_CharlesNicolle', iri: 'h', label: 'Charles Nicolle', type: 'PublicHospital' },
+        doctors: [{ id: 'Doctor_Ali', iri: 'doc', label: 'Dr. Ali', type: 'Cardiologist' }],
+        appointments: [{ id: 'Appointment_003', iri: 'a', label: 'Appointment 003', type: 'Consultation' }],
+      },
+    };
+    const out = publicize(ENTITY_DEFS.departments, department);
+    expect(out.relations['appointments']).toBeUndefined();
+    expect(out.relations['hospital']).toBeDefined();
+    expect(out.relations['doctors']).toBeDefined();
+    expect(department.relations['appointments']).toBeDefined();
+  });
+
   it('does not mutate the repository row it is given', () => {
     const source = row();
     publicize(ENTITY_DEFS.diseases, source);

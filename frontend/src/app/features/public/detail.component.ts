@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PublicService } from '../../core/api/entity.service';
 import type { EntityKey, Individual, Ref } from '../../core/api/models';
@@ -10,15 +11,27 @@ import { UiCardComponent } from '../../shared/ui/card/ui-card.component';
 import { UiSkeletonComponent } from '../../shared/ui/skeleton/ui-skeleton.component';
 import { UiErrorStateComponent } from '../../shared/ui/error-state/ui-error-state.component';
 
-/** The catalogues an anonymous visitor may open; clinical rows are never listed. */
-const PUBLIC_PATHS: Record<string, string> = {
-  Disease: 'library',
-  Symptom: 'symptoms',
-  Treatment: 'treatments',
-  Medication: 'medications',
-  Hospital: 'hospitals',
-  Department: 'departments',
-  Doctor: 'find-a-doctor',
+/**
+ * Relation field -> public catalogue. The API types a link with its subclass
+ * (`PublicHospital`, `CardiologyDepartment`, `Cardiologist`), not the base class,
+ * so matching `Hospital` or `Department` never produced a link.
+ */
+const RELATION_PATHS: Record<string, string> = {
+  hospital: 'hospitals',
+  departments: 'departments',
+  doctors: 'find-a-doctor',
+  diseases: 'library',
+  symptoms: 'symptoms',
+  treatments: 'treatments',
+  medications: 'medications',
+};
+
+/** Same catalogues when the caller is already inside the patient portal. */
+const PORTAL_PATHS: Record<string, string> = {
+  hospitals: '/patient/hospitals',
+  departments: '/patient/departments',
+  'find-a-doctor': '/patient/doctors',
+  library: '/patient/library',
 };
 
 /** Read-only view of one knowledge or directory individual, no token needed. */
@@ -149,6 +162,7 @@ const PUBLIC_PATHS: Record<string, string> = {
 })
 export class PublicDetailComponent {
   private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   private readonly api = inject(PublicService);
   private readonly translate = inject(TranslateService);
 
@@ -156,17 +170,20 @@ export class PublicDetailComponent {
   protected readonly loading = signal(true);
   protected readonly failed = signal(false);
 
-  private readonly entity = (this.route.snapshot.data['entity'] ?? 'diseases') as EntityKey;
+  private entity(): EntityKey {
+    return (this.route.snapshot.data['entity'] ?? 'diseases') as EntityKey;
+  }
 
   constructor() {
-    this.load();
+    this.route.paramMap.pipe(takeUntilDestroyed()).subscribe(() => this.load());
   }
 
   protected load(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (!id) return;
     this.loading.set(true);
-    this.api.get(this.entity, id).subscribe({
+    this.failed.set(false);
+    this.api.get(this.entity(), id).subscribe({
       next: (row) => {
         this.row.set(row);
         this.loading.set(false);
@@ -179,7 +196,9 @@ export class PublicDetailComponent {
   }
 
   protected back(): string {
-    return `/${(this.route.snapshot.url[0]?.path ?? 'library').toString()}`;
+    const parts = this.router.url.split('?')[0].split('/').filter(Boolean);
+    parts.pop();
+    return `/${parts.join('/')}`;
   }
 
   protected labelOfValue(value: string): string {
@@ -204,14 +223,17 @@ export class PublicDetailComponent {
         items: (Array.isArray(value) ? value : [value]).filter((ref): ref is Ref => ref !== null && ref !== undefined).map((ref: Ref) => ({
           id: ref.id,
           label: ref.label,
-          href: this.hrefOf(ref),
+          href: this.hrefOf(key, ref),
         })),
       }));
   }
 
   /** Only rows that belong to a published catalogue get a link. */
-  private hrefOf(ref: Ref): string | null {
-    const segment = PUBLIC_PATHS[ref.type ?? ''];
-    return segment ? `/${segment}/${ref.id}` : null;
+  private hrefOf(field: string, ref: Ref): string | null {
+    const segment = RELATION_PATHS[field];
+    if (!segment) return null;
+    const inPortal = this.router.url.startsWith('/patient/');
+    const prefix = inPortal ? PORTAL_PATHS[segment] : undefined;
+    return `${prefix ?? `/${segment}`}/${ref.id}`;
   }
 }

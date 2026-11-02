@@ -102,7 +102,11 @@ export const BACK_OFFICE_NAV: Record<Role, NavGroup[]> = {
     },
     {
       labelKey: 'nav.groups.organisation',
-      items: [entityItem('doctors', '/records/doctors', 'nav.items.doctors', 'stethoscope')],
+      items: [
+        entityItem('doctors', '/records/doctors', 'nav.items.doctors', 'stethoscope'),
+        entityItem('hospitals', '/records/hospitals', 'nav.items.hospitals', 'hospital'),
+        entityItem('departments', '/records/departments', 'nav.items.departments', 'building'),
+      ],
     },
     {
       labelKey: 'nav.groups.tools',

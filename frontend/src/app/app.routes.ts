@@ -374,6 +374,23 @@ export const routes: Routes = [
         data: { entity: 'hospitals' },
       },
       {
+        path: 'departments',
+        loadComponent: () => import('./features/public/browse.component').then((m) => m.PublicBrowseComponent),
+        title: 'departments.title',
+        data: {
+          entity: 'departments',
+          icon: 'building',
+          titleKey: 'departments.title',
+          ledeKey: 'departments.lede',
+        },
+      },
+      {
+        path: 'departments/:id',
+        loadComponent: () => import('./features/public/detail.component').then((m) => m.PublicDetailComponent),
+        title: 'departments.title',
+        data: { entity: 'departments' },
+      },
+      {
         path: 'assistant',
         loadComponent: () => import('./features/tools/assistant.component').then((m) => m.AssistantComponent),
         title: 'assistant.title',
