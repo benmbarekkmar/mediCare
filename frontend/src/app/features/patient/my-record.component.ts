@@ -2,13 +2,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { jsPDF } from 'jspdf';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { EntitiesService } from '../../core/api/entity.service';
 import type { Individual, Page, Ref } from '../../core/api/models';
 import { AuthService } from '../../core/auth/auth.service';
 import { ToastService } from '../../core/toast/toast.service';
-import { downloadCsv } from '../../core/util/csv';
 import { formatDate, formatDateTime } from '../../core/util/format';
 import { labelOf } from '../../core/util/labels';
 import { UiBadgeComponent } from '../../shared/ui/badge/ui-badge.component';
@@ -882,67 +882,181 @@ export class MyRecordComponent implements OnInit {
     window.print();
   }
 
-  /** A flat one-row-per-fact CSV: readable in any spreadsheet, no clinical jargon added. */
   downloadSummary(): void {
     const id = this.patientId();
     if (!id) return;
-    const rows: Record<string, unknown>[] = [];
-    const language = this.lang();
+    const doc = new jsPDF({ format: 'a4', unit: 'mm' });
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const margin = 17;
+    const contentWidth = pageWidth - margin * 2;
+    const colors = {
+      navy: [24, 42, 84] as const,
+      blue: [57, 87, 190] as const,
+      teal: [20, 130, 125] as const,
+      ink: [30, 41, 59] as const,
+      muted: [100, 116, 139] as const,
+      border: [218, 226, 238] as const,
+      pale: [244, 247, 252] as const,
+    };
+    let cursor = 17;
 
-    for (const fact of this.identityFacts()) rows.push({ section: 'identity', date: '', name: fact.label, detail: fact.value });
-    for (const doctor of this.doctors()) {
-      rows.push({
-        section: 'doctor',
-        date: '',
-        name: doctor.label,
-        detail: `${this.specialtyLabel(doctor)} · ${this.departmentLabel(doctor)}`,
-      });
-    }
-    for (const condition of this.conditions()) {
-      rows.push({
-        section: 'condition',
-        date: '',
-        name: condition.label,
-        detail: condition.category ? this.categoryLabel(condition.category) : '',
-      });
-      for (const symptom of condition.symptoms) {
-        rows.push({ section: 'symptom', date: '', name: condition.label, detail: symptom.label });
+    const text = (value: string | null | undefined): string => value?.trim() || '—';
+    const ensureSpace = (height: number): void => {
+      if (cursor + height > pageHeight - 22) {
+        doc.addPage();
+        cursor = 18;
+        drawFooter();
       }
-      for (const treatment of condition.treatments) {
-        rows.push({
-          section: 'treatment',
-          date: '',
-          name: `${condition.label} · ${treatment.label}`,
-          detail: this.durationLabel(treatment),
-        });
-        for (const medication of treatment.medications) {
-          rows.push({
-            section: 'medication',
-            date: '',
-            name: `${treatment.label} · ${medication.label}`,
-            detail: this.dosageLabel(medication),
-          });
+    };
+    const drawFooter = (): void => {
+      const page = doc.getNumberOfPages();
+      doc.setDrawColor(...colors.border);
+      doc.line(margin, pageHeight - 14, pageWidth - margin, pageHeight - 14);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8);
+      doc.setTextColor(...colors.muted);
+      doc.text('MedicCare · ' + this.patientName(), margin, pageHeight - 8);
+      doc.text(`${page}`, pageWidth - margin, pageHeight - 8, { align: 'right' });
+    };
+    const drawSection = (title: string, icon: string): void => {
+      ensureSpace(18);
+      doc.setFillColor(...colors.blue);
+      doc.roundedRect(margin, cursor, 5, 8, 1, 1, 'F');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(14);
+      doc.setTextColor(...colors.navy);
+      doc.text(`${icon}  ${title}`, margin + 9, cursor + 6);
+      cursor += 13;
+    };
+    const drawRow = (label: string, value: string, width = contentWidth): void => {
+      const lines = doc.splitTextToSize(text(value), width - 58) as string[];
+      const height = Math.max(12, lines.length * 4.5 + 7);
+      ensureSpace(height + 2);
+      doc.setFillColor(...colors.pale);
+      doc.setDrawColor(...colors.border);
+      doc.roundedRect(margin, cursor, width, height, 2, 2, 'FD');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9);
+      doc.setTextColor(...colors.muted);
+      doc.text(label.toUpperCase(), margin + 5, cursor + 7);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(...colors.ink);
+      doc.text(lines, margin + 53, cursor + 7);
+      cursor += height + 3;
+    };
+    const drawBullet = (title: string, detail: string): void => {
+      const lines = doc.splitTextToSize(text(detail), contentWidth - 57) as string[];
+      const height = Math.max(12, lines.length * 4.5 + 7);
+      ensureSpace(height + 2);
+      doc.setFillColor(255, 255, 255);
+      doc.setDrawColor(...colors.border);
+      doc.roundedRect(margin, cursor, contentWidth, height, 2, 2, 'FD');
+      doc.setFillColor(...colors.teal);
+      doc.circle(margin + 6, cursor + 6, 1.5, 'F');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(10);
+      doc.setTextColor(...colors.ink);
+      doc.text(text(title), margin + 12, cursor + 7);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+      doc.setTextColor(...colors.muted);
+      doc.text(lines, margin + 53, cursor + 7);
+      cursor += height + 3;
+    };
+    const drawEmpty = (): void => {
+      ensureSpace(15);
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(9);
+      doc.setTextColor(...colors.muted);
+      doc.text(this.translate.instant('patient.record.reportNoData'), margin, cursor + 5);
+      cursor += 12;
+    };
+
+    doc.setFillColor(...colors.navy);
+    doc.rect(0, 0, pageWidth, 43, 'F');
+    doc.setFillColor(...colors.teal);
+    doc.circle(margin + 7, 18, 7, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(18);
+    doc.setTextColor(255, 255, 255);
+    doc.text('MedicCare', margin + 18, 17);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(220, 230, 250);
+    doc.text(this.translate.instant('patient.record.reportSubtitle'), margin + 18, 24);
+    doc.setFontSize(8);
+    doc.text(this.printedOn(), pageWidth - margin, 17, { align: 'right' });
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(16);
+    doc.setTextColor(...colors.ink);
+    doc.text(this.patientName(), margin, 55);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(...colors.muted);
+    doc.text(`${this.translate.instant('patient.record.reportId')}: ${id}`, margin, 62);
+    cursor = 72;
+
+    drawSection(this.translate.instant('patient.record.tabOverview'), '01');
+    for (const fact of this.identityFacts()) drawRow(fact.label, fact.value);
+    if (this.doctors().length > 0) {
+      cursor += 2;
+      drawSection(this.translate.instant('patient.record.reportCareTeam'), '02');
+      for (const doctor of this.doctors()) {
+        drawBullet(doctor.label, `${this.specialtyLabel(doctor)} · ${this.departmentLabel(doctor)}`);
+      }
+    }
+
+    cursor += 3;
+    drawSection(this.translate.instant('patient.record.tabConditions'), '03');
+    if (this.conditions().length === 0) {
+      drawEmpty();
+    } else {
+      for (const condition of this.conditions()) {
+        const details = [
+          condition.category ? this.categoryLabel(condition.category) : '',
+          condition.symptoms.length > 0
+            ? `${this.translate.instant('patient.record.symptoms')}: ${condition.symptoms.map((item) => item.label).join(', ')}`
+            : '',
+        ]
+          .filter(Boolean)
+          .join(' · ');
+        drawBullet(condition.label, details);
+        for (const treatment of condition.treatments) {
+          drawBullet(`  ${treatment.label}`, `${this.translate.instant('patient.record.duration')}: ${this.durationLabel(treatment)}`);
+          for (const medication of treatment.medications) {
+            drawBullet(`    ${medication.label}`, this.dosageLabel(medication));
+          }
         }
       }
     }
-    for (const test of this.tests()) {
-      rows.push({
-        section: 'test',
-        date: formatDate(this.dateValue(test), language),
-        name: test.label,
-        detail: `${this.testTypeLabel(test)} · ${this.resultOf(test)}`,
-      });
-    }
-    for (const visit of this.appointments()) {
-      rows.push({
-        section: 'visit',
-        date: this.dateTimeOf(visit.fields['date']),
-        name: this.departmentRef(visit),
-        detail: this.statusLabel(this.statusOf(visit)),
-      });
+
+    cursor += 3;
+    drawSection(this.translate.instant('patient.record.tabTests'), '04');
+    if (this.tests().length === 0) {
+      drawEmpty();
+    } else {
+      for (const test of this.tests()) {
+        drawBullet(test.label, `${this.testTypeLabel(test)} · ${this.resultOf(test)} · ${formatDate(this.dateValue(test), this.lang())}`);
+      }
     }
 
-    downloadCsv(`medicare-record-${id}`, ['section', 'date', 'name', 'detail'], rows);
+    cursor += 3;
+    drawSection(this.translate.instant('patient.record.tabVisits'), '05');
+    if (this.appointments().length === 0) {
+      drawEmpty();
+    } else {
+      for (const visit of this.appointments()) {
+        drawBullet(this.departmentRef(visit), `${this.statusLabel(this.statusOf(visit))} · ${this.dateTimeOf(visit.fields['date'])}`);
+      }
+    }
+
+    for (let page = 1; page <= doc.getNumberOfPages(); page += 1) {
+      doc.setPage(page);
+      drawFooter();
+    }
+    doc.save(`medicare-medical-record-${id}.pdf`);
     this.toast.success(
       this.translate.instant('patient.record.downloadDoneTitle'),
       this.translate.instant('patient.record.downloadDoneBody'),

@@ -293,7 +293,11 @@
       "treatments": "Treatments and medicines",
       "duration": "Duration: {{duration}}",
       "print": "Print record",
-      "download": "Download summary"
+      "download": "Download summary",
+      "reportSubtitle": "Secure medical record summary",
+      "reportId": "Patient ID",
+      "reportCareTeam": "Care team",
+      "reportNoData": "No information is available for this section."
     },
     "appointments": {
       "title": "My appointments",

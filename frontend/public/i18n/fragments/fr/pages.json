@@ -293,7 +293,11 @@
       "treatments": "Soins et médicaments",
       "duration": "Durée : {{duration}}",
       "print": "Imprimer le dossier",
-      "download": "Télécharger le résumé"
+      "download": "Télécharger le résumé",
+      "reportSubtitle": "Résumé sécurisé du dossier médical",
+      "reportId": "Identifiant patient",
+      "reportCareTeam": "Équipe soignante",
+      "reportNoData": "Aucune information n'est disponible pour cette section."
     },
     "appointments": {
       "title": "Mes rendez-vous",
