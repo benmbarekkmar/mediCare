@@ -34,6 +34,7 @@ export const DEFAULT_PARAMS: ListParams = {
 export class UrlListState {
   readonly params: WritableSignal<ListParams>;
   private sub: Subscription | null = null;
+  private readonly defaults: ListParams;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -41,7 +42,8 @@ export class UrlListState {
     private readonly path: string,
     defaults: Partial<ListParams> = {},
   ) {
-    this.params = signal(readParams(this.route.snapshot.queryParams, { ...DEFAULT_PARAMS, ...defaults }));
+    this.defaults = { ...DEFAULT_PARAMS, ...defaults };
+    this.params = signal(readParams(this.route.snapshot.queryParams, this.defaults));
     // keep the signal in step with navigation the user did with back/forward
     this.sub = this.route.queryParamMap.subscribe((map) => {
       const raw: Record<string, string> = {};
@@ -82,7 +84,7 @@ export class UrlListState {
   }
 
   clearAll(): void {
-    this.params.set({ ...DEFAULT_PARAMS });
+    this.params.set({ ...this.defaults, filters: {} });
     void this.router.navigate([this.path], { queryParams: {}, replaceUrl: true });
   }
 

@@ -25,7 +25,7 @@ import type { Observable } from 'rxjs';
 import { Subject, of } from 'rxjs';
 import { catchError, debounceTime, switchMap } from 'rxjs/operators';
 import type { Ref } from '../../../core/api/models';
-import { translateOrText } from '../../../core/util/labels';
+import { labelOf, translateOrText } from '../../../core/util/labels';
 import { UiIconComponent } from '../icon/ui-icon.component';
 import type { FieldErrorEntry } from '../input/ui-input.component';
 
@@ -72,11 +72,11 @@ const refFromId = (id: string): Ref => ({ id, iri: '', label: id, type: '' });
           <ul class="chips" [attr.aria-label]="'uiforms.combobox.chipsLabel' | translate">
             @for (chip of visibleChips(); track chip.id) {
               <li class="chip">
-                <span class="chip__label">{{ chip.label }}</span>
+                <span class="chip__label">{{ optionLabel(chip) }}</span>
                 <button
                   class="chip__remove"
                   type="button"
-                  [attr.aria-label]="'ui.combobox.remove' | translate: { label: chip.label }"
+                  [attr.aria-label]="'ui.combobox.remove' | translate: { label: optionLabel(chip) }"
                   [disabled]="isDisabled()"
                   (click)="removeChip(chip.id)"
                 >
@@ -149,7 +149,7 @@ const refFromId = (id: string): Ref => ({ id, iri: '', label: id, type: '' });
                   (mousedown)="$event.preventDefault()"
                   (click)="pick(ref)"
                 >
-                  <span class="list__label">{{ ref.label }}</span>
+                  <span class="list__label">{{ optionLabel(ref) }}</span>
                   @if (isSelected(ref.id)) {
                     <ui-icon class="list__check" name="check" size="14" />
                     <span class="visually-hidden">{{ 'uiforms.combobox.selected' | translate }}</span>
@@ -335,6 +335,8 @@ export class UiComboboxComponent implements OnInit, ControlValueAccessor {
   readonly hint = input<string | null>(null);
   readonly placeholder = input<string | null>(null);
   readonly emptyMessage = input<string | null>(null);
+  /** Shows a doctor's specialty beside the name in relationship pickers. */
+  readonly showType = input<boolean>(false);
   readonly required = input<boolean>(false);
   readonly disabled = input<boolean>(false);
   readonly errors = input<readonly string[] | null>(null);
@@ -460,6 +462,13 @@ export class UiComboboxComponent implements OnInit, ControlValueAccessor {
 
   protected displayText(value: string | null | undefined): string {
     return translateOrText(this.translate, value);
+  }
+
+  protected optionLabel(ref: Ref): string {
+    const label = this.displayText(ref.label);
+    if (!this.showType() || !ref.type) return label;
+    const type = labelOf(this.translate, `entities.values.${ref.type}`, ref.type);
+    return `${label} (${type})`;
   }
 
   private readonly seed = computed<Ref[]>(() => {
@@ -592,9 +601,9 @@ export class UiComboboxComponent implements OnInit, ControlValueAccessor {
       this.text.set('');
     } else {
       this.explicitIds.set([ref.id]);
-      this.text.set(ref.label);
-      this.close();
+      this.text.set(this.optionLabel(ref));
     }
+    this.close();
     this.emit();
   }
 
@@ -693,7 +702,7 @@ export class UiComboboxComponent implements OnInit, ControlValueAccessor {
       if (this.text().length > 0 && this.explicitIds() === null) this.text.set('');
       return;
     }
-    this.text.set(this.refOf(first).label);
+    this.text.set(this.optionLabel(this.refOf(first)));
   }
 
   private toIds(raw: unknown): string[] {

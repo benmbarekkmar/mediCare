@@ -3,6 +3,7 @@ import { EnvironmentProviders, Injectable, inject } from '@angular/core';
 import { MissingTranslationHandler, type MissingTranslationHandlerParams, TranslateLoader, TranslateService, provideTranslateService } from '@ngx-translate/core';
 import { firstValueFrom, Observable, of } from 'rxjs';
 import { catchError, shareReplay } from 'rxjs/operators';
+import { humanize } from '../util/labels';
 
 export const SUPPORTED_LANGS = ['en', 'fr'] as const;
 export type Lang = (typeof SUPPORTED_LANGS)[number];
@@ -55,8 +56,9 @@ export class LangService {
 
 @Injectable()
 export class SafeMissingTranslationHandler extends MissingTranslationHandler {
-  override handle({ translateService }: MissingTranslationHandlerParams): string {
-    return translateService.currentLang === 'fr' ? 'Libellé indisponible' : 'Label unavailable';
+  override handle({ key }: MissingTranslationHandlerParams): string {
+    const leaf = key.split('.').at(-1) ?? key;
+    return humanize(leaf);
   }
 }
 

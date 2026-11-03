@@ -81,7 +81,10 @@ export class RecordListComponent implements OnDestroy {
   constructor() {
     const key = this.route.snapshot.paramMap.get('entity') ?? 'patients';
     this.entityKey.set(key as EntityKey);
-    this.state = new UrlListState(this.route, this.router, `/records/${key}`, { pageSize: 20 });
+    this.state = new UrlListState(this.route, this.router, `/records/${key}`, {
+      pageSize: 20,
+      ...(key === 'appointments' ? { sort: 'date', order: 'desc' } : {}),
+    });
     effect(
       () => {
         this.stateVersion();
@@ -99,7 +102,10 @@ export class RecordListComponent implements OnDestroy {
       this.formOpen.set(false);
       this.confirmOpen.set(false);
       this.state.destroy();
-      this.state = new UrlListState(this.route, this.router, `/records/${nextKey}`, { pageSize: 20 });
+      this.state = new UrlListState(this.route, this.router, `/records/${nextKey}`, {
+        pageSize: 20,
+        ...(nextKey === 'appointments' ? { sort: 'date', order: 'desc' } : {}),
+      });
       this.stateVersion.update((version) => version + 1);
     });
     this.route.queryParamMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((map) => {
@@ -175,7 +181,7 @@ export class RecordListComponent implements OnDestroy {
         field: field.field,
         header: labelOf(this.translate, `entities.fields.${field.field}`, field.field),
         sortable: field.sortable,
-        format: this.formatFor(field.datatype),
+        format: this.formatFor(field.datatype, field.field),
         width: field.datatype === 'boolean' ? '90px' : undefined,
       });
     }
@@ -388,7 +394,8 @@ export class RecordListComponent implements OnDestroy {
     return this.editing();
   }
 
-  private formatFor(datatype: string): TableColumn<Individual>['format'] {
+  private formatFor(datatype: string, field?: string): TableColumn<Individual>['format'] {
+    if (field === 'status') return 'status';
     if (datatype === 'date') return 'date';
     if (datatype === 'dateTime') return 'datetime';
     if (datatype === 'boolean') return 'bool';

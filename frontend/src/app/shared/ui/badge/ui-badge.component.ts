@@ -91,7 +91,7 @@ export type BadgeKind = 'status' | 'info' | 'success' | 'warning' | 'danger' | '
         --badge-color: var(--status-color, var(--text-subtle));
         background: var(--surface-alt);
         border-color: var(--border);
-        color: var(--text);
+        color: var(--status-color, var(--text));
       }
     `,
   ],

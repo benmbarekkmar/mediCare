@@ -102,6 +102,7 @@
                 [search]="searchRefs(relation.target)"
                 [initial]="initialRefs(relation)"
                 [multiple]="relation.cardinality === 'many'"
+                [showType]="relation.target === 'doctors'"
                 [required]="relation.required"
                 [placeholder]="searchPlaceholder(relation.target)"
                 [emptyMessage]="'form.noMatch' | translate"

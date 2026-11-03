@@ -41,7 +41,7 @@ export interface SortSpec {
 export function orderBy(vars: Record<string, string>, sort: SortSpec | undefined, fallback: string): string {
   const varName = (sort ? vars[sort.field] : undefined) ?? fallback;
   const direction = sort?.order === 'desc' ? 'DESC' : 'ASC';
-  return `ORDER BY ${direction}(COALESCE(${varName}, ""))`;
+  return `ORDER BY ${direction}(LCASE(STR(COALESCE(${varName}, ""))))`;
 }
 
 export const limitOffset = (limit: number, offset: number): string =>

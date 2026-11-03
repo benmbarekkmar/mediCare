@@ -24,7 +24,9 @@ export function translateOrText(translate: TranslateService, value: string | nul
   // caller-provided value in this case.
   if (translated === value) return value;
   if (!isMissingTranslation(translated, value)) return translated;
-  if (value === 'Label unavailable' || value === 'Libell\u00e9 indisponible') return value;
+  if (value === 'Label unavailable' || value === 'Libell\u00e9 indisponible') {
+    return translate.currentLang === 'fr' ? 'Élément sans nom' : 'Unnamed item';
+  }
   return isTranslationKey(value) ? humanize(value.split('.').at(-1) ?? value) : value;
 }
 
@@ -35,7 +37,9 @@ export function translateOrText(translate: TranslateService, value: string | nul
  */
 export function labelOf(translate: TranslateService, key: string, fallback: string): string {
   const value = translate.instant(key);
-  return value && !isMissingTranslation(value, key) ? value : humanize(fallback);
+  if (value && !isMissingTranslation(value, key)) return value;
+  if (isMissingTranslation(fallback, key)) return translate.currentLang === 'fr' ? 'Élément sans nom' : 'Unnamed item';
+  return humanize(fallback);
 }
 
 function isMissingTranslation(value: string, key: string): boolean {

@@ -10,6 +10,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--sp-2);
+  color: var(--status-color, var(--text-subtle));
 }
 .row {
   display: flex;
@@ -113,10 +114,12 @@
     background: var(--status-color, var(--text-subtle));
   }
 }
-.status-confirmed,
 .status-completed,
 .status-active {
   --status-color: var(--success-500);
+}
+.status-confirmed {
+  --status-color: var(--danger-500);
 }
 .status-pending {
   --status-color: var(--warning-500);

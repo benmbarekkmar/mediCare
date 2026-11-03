@@ -129,7 +129,7 @@ describe('UiComboboxComponent', () => {
 
     expect(host.control.value).toEqual(['pat_1']);
     expect(chips()).toEqual(['Ada Lovelace']);
-    expect(options()[0]?.getAttribute('aria-selected')).toBe('true');
+    expect(listbox()).toBeNull();
 
     key('Escape');
     expect(listbox()).toBeNull();
@@ -191,6 +191,20 @@ describe('UiComboboxComponent', () => {
     expect(host.control.value).toBe('pat_3');
     expect(inputEl.value).toBe('Barbara Liskov');
     expect(listbox()).toBeNull();
+  }));
+
+  it('closes the list after selecting a value in multiple mode', fakeAsync(() => {
+    setup();
+    inputEl.click();
+    tick(300);
+    fixture.detectChanges();
+
+    options()[0]?.click();
+    fixture.detectChanges();
+
+    expect(host.control.value).toEqual(['pat_1']);
+    expect(listbox()).toBeNull();
+    expect(inputEl.getAttribute('aria-expanded')).toBe('false');
   }));
 
   it('disables the field and reports the required error once touched', fakeAsync(() => {
